@@ -76,7 +76,7 @@ def delete_branch_parser() -> ArgShellParser:
     return parser
 
 
-def recurse_files(filenames: list[str]) -> list[str | Pathier]:
+def recurse_files(filenames: list[str]) -> list[str]:
     files = []
     for filename in filenames:
         if not Pathier(filename).exists():
@@ -84,7 +84,7 @@ def recurse_files(filenames: list[str]) -> list[str | Pathier]:
             if not results:
                 print(f"WARNING: Could not find any files with name {filename}")
             else:
-                files.extend(results)
+                files.extend([str(result) for result in results])
         else:
             files.append(filename)
     return files
