@@ -110,6 +110,10 @@ class GitBetter(ArgShell):
         """Print the current working directory."""
         print(Pathier.cwd())
 
+    def do_cmd(self, command: str):
+        """Execute arbitrary command in the terminal so you don't have to quit gitbetter to run other programs/commands."""
+        os.system(command)
+
     def do_git(self, arg: str):
         """Directly execute `git {arg}`.
 
