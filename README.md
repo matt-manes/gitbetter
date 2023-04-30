@@ -102,3 +102,5 @@ Bindings can be accessed programmatically:
 
 ### Future Features
 * Redirect the output of git commands so the bindings return the output instead of only being able to print.
+* Make pushing to remote after creating it smoother (make it so you don't manually have to add the url).
+* Add a command to execute arbitrary shell commands so gitbetter doens't need to be exiting to run other programs/scripts.
