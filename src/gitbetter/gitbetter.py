@@ -100,11 +100,12 @@ class GitBetter(ArgShell):
     """GitBetter Shell."""
 
     intro = "Starting gitbetter...\nEnter 'help' or '?' for command help."
-    prompt = "gitbetter>"
+    prompt = f"gitbetter::{Pathier.cwd()}>"
 
     def do_cd(self, path: str):
         """Change current working directory to `path`."""
         os.chdir(path)
+        self.prompt = f"gitbetter::{Pathier.cwd()}>"
 
     def do_cwd(self, _: str):
         """Print the current working directory."""
