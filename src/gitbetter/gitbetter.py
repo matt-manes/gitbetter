@@ -125,7 +125,7 @@ class GitBetter(ArgShell):
         git.create_new_branch(name)
 
     @with_parser(new_remote_parser)
-    def do_new_remote(self, args: Namespace):
+    def do_new_gh_remote(self, args: Namespace):
         """Create a remote GitHub repository for this repo.
 
         GitHub CLI must be installed and configured for this to work."""
@@ -155,7 +155,7 @@ class GitBetter(ArgShell):
         """Stage and commit a list of files."""
         git.commit_files(args.files, args.message)
 
-    def do_commit_all(self, message: str):
+    def do_commitall(self, message: str):
         """Stage and commit all files with this message."""
         git.add()
         git.commit(f"-m {message}")
@@ -238,12 +238,14 @@ class GitBetter(ArgShell):
         This repo must exist and GitHub CLI must be installed and configured."""
         git.make_public(owner, Pathier.cwd().stem)
 
-    def do_delete_github(self, owner: str):
+    def do_delete_gh_repo(self, owner: str):
         """Delete this repo from GitHub.
 
         Expects an argument for the repo owner, i.e. the `OWNER` in `github.com/{OWNER}/{repo-name}`
 
-        GitHub CLI must be installed and configured."""
+        GitHub CLI must be installed and configured.
+
+        May require you to reauthorize and rerun command."""
         git.delete_remote(owner, Pathier.cwd().stem)
 
 
