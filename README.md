@@ -22,11 +22,12 @@ gitbetter>help
 
 Documented commands (type help <topic>):
 ========================================
-add      commit_all     git            loggy         new_remote   push_new
-add_url  commitf        help           make_private  new_repo     quit
-amend    cwd            ignore         make_public   pull         switch
-cd       delete_branch  initcommit     merge         pull_branch  tag
-commit   delete_github  list_branches  new_branch    push         undo
+add      commitall       help           make_public    pull_branch  undo
+add_url  commitf         ignore         merge          push
+amend    cwd             initcommit     new_branch     push_new
+cd       delete_branch   list_branches  new_gh_remote  quit
+cmd      delete_gh_repo  loggy          new_repo       switch
+commit   git             make_private   pull           tag
 
 gitbetter>help commitf
 Stage and commit a list of files.
@@ -103,4 +104,3 @@ Bindings can be accessed programmatically:
 ### Future Features
 * Redirect the output of git commands so the bindings return the output instead of only being able to print.
 * Make pushing to remote after creating it smoother (make it so you don't manually have to add the url).
-* Add a command to execute arbitrary shell commands so gitbetter doens't need to be exiting to run other programs/scripts.
