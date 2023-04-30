@@ -148,7 +148,11 @@ class GitBetter(ArgShell):
 
     def do_commit(self, message: str):
         """Commit staged files with this message."""
-        git.commit(f'-m "{message}"')
+        if not message.startswith('"'):
+            message = '"' + message
+        if not message.endswith('"'):
+            message += '"'
+        git.commit(f"-m {message}")
 
     @with_parser(commit_files_parser, [files_postparser])
     def do_commitf(self, args: Namespace):
@@ -157,6 +161,10 @@ class GitBetter(ArgShell):
 
     def do_commitall(self, message: str):
         """Stage and commit all files with this message."""
+        if not message.startswith('"'):
+            message = '"' + message
+        if not message.endswith('"'):
+            message += '"'
         git.add()
         git.commit(f"-m {message}")
 
