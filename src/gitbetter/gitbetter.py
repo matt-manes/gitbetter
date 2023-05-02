@@ -118,6 +118,7 @@ class GitBetter(ArgShell):
                 print(
                     "^Essentially makes this shell function as a super-shell of whatever shell you launched gitbetter from.^"
                 )
+        print()
 
     @property
     def unrecognized_command_behavior_status(self):
@@ -136,10 +137,6 @@ class GitBetter(ArgShell):
         """Change current working directory to `path`."""
         os.chdir(path)
         self.prompt = f"gitbetter::{Pathier.cwd()}>"
-
-    def do_cwd(self, _: str):
-        """Print the current working directory."""
-        print(Pathier.cwd())
 
     def do_cmd(self, command: str):
         """Execute arbitrary command in the terminal so you don't have to quit gitbetter to run other programs/commands."""
