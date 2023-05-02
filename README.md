@@ -1,6 +1,6 @@
 # gitbetter
 
-Custom git shell to type less and commit more.
+Custom git shell. Type less, commit more.
 
 ## Installation
 
@@ -14,22 +14,34 @@ pip install gitbetter
 Launch from a terminal by entering `gitbetter`.<br>
 Type `help` or `?` for a list of commands.<br>
 Type `help {command}` for detailed help with a specific command.<br>
+By default, If you enter a command that isn't built into `gitbetter`, it will be executed directly with `os.system()`,
+allowing you to perform any command not defined by `gitbetter` that your shell supports without having to exit.<br>
+To toggle this behavior, run the `toggle_unrecognized_command_behavior` 
+(`gitbetter` uses `tab` for autocomplete, so you can type `"tog"`+`tab` instead of typing out the whole command name).<br>
+When toggled to off, an unrecognized syntax message will be printed if you type in a command `gitbetter` doesn't recognize.<br>
+The current state of this setting is printed at the bottom when running the `help` command.<br>
+You can still execute a command in the shell regardless of this setting with the `cmd` command.
 <pre>
->gitbetter
+C:\gitbetter>gitbetter
 Starting gitbetter...
 Enter 'help' or '?' for command help.
-gitbetter>help
+gitbetter::C:\gitbetter>help
 
 Documented commands (type help <topic>):
 ========================================
-add      commitall       help           make_public    pull_branch  undo
-add_url  commitf         ignore         merge          push
-amend    cwd             initcommit     new_branch     push_new
-cd       delete_branch   list_branches  new_gh_remote  quit
-cmd      delete_gh_repo  loggy          new_repo       switch
-commit   git             make_private   pull           tag
+add        delete_branch   make_private   push
+add_url    delete_gh_repo  make_public    push_new
+amend      git             merge          quit
+cd         help            new_branch     switch
+cmd        ignore          new_gh_remote  tag
+commit     initcommit      new_repo       toggle_unrecognized_command_behavior
+commitall  list_branches   pull           undo
+commitf    loggy           pull_branch
 
-gitbetter>help commitf
+Unrecognized command behavior: Execute with os.system()
+^Essentially makes this shell function as a super-shell of whatever shell you launched gitbetter from.^
+
+gitbetter::C:\gitbetter>help commitf
 Stage and commit a list of files.
 Parser help for commitf:
 usage: gitbetter [-h] -m MESSAGE [-r] [files ...]
@@ -43,9 +55,11 @@ options:
                         The commit message to use.
   -r, --recursive       If a file name is not found in the current working directory, search for it in subfolders. This avoids having to type paths to files in subfolders,
                         but if you have multiple files in different subfolders with the same name that have changes they will all be staged and committed.
-gitbetter>help loggy
+                        
+gitbetter::C:\gitbetter>help loggy
 Execute `git --oneline --name-only --abbrev-commit --graph`.
-gitbetter>loggy
+
+gitbetter::C:\gitbetter>loggy
 *   3e780ec (HEAD -> main, tag: v1.0.0) Merge branch 'my-feature'
 |\
 | * b4478a3 feat: new print statement
