@@ -109,6 +109,16 @@ class GitBetter(ArgShell):
         else:
             super().default(line)
 
+    def do_help(self, arg: str):
+        """List available commands with "help" or detailed help with "help cmd"."""
+        super().do_help(arg)
+        if not arg:
+            print(self.unrecognized_command_behavior_status)
+            if self.execute_in_terminal_if_unrecognized:
+                print(
+                    "^Essentially makes this shell function as a super-shell of whatever shell you launched gitbetter from.^"
+                )
+
     @property
     def unrecognized_command_behavior_status(self):
         return f"Unrecognized command behavior: {'Execute with os.system()' if self.execute_in_terminal_if_unrecognized else 'Print unknown syntax error'}"
