@@ -101,6 +101,13 @@ class GitBetter(ArgShell):
 
     intro = "Starting gitbetter...\nEnter 'help' or '?' for command help."
     prompt = f"gitbetter::{Pathier.cwd()}>"
+    execute_in_terminal_if_unrecognized = True
+
+    def default(self, line: str):
+        if self.execute_in_terminal_if_unrecognized:
+            os.system(line)
+        else:
+            super().default(line)
 
     def do_cd(self, path: str):
         """Change current working directory to `path`."""
