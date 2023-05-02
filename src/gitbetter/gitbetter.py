@@ -109,6 +109,19 @@ class GitBetter(ArgShell):
         else:
             super().default(line)
 
+    @property
+    def unrecognized_command_behavior_status(self):
+        return f"Unrecognized command behavior: {'Execute with os.system()' if self.execute_in_terminal_if_unrecognized else 'Print unknown syntax error'}"
+
+    def do_toggle_unrecognized_command_behavior(self, arg: str):
+        """Toggle whether the shell will attempt to execute unrecognized commands as system commands in the terminal.
+        When on (the default), `GitBetter` will treat unrecognized commands as if you added the `cmd` command in front of the input, i.e. `os.system(your_input)`.
+        When off, an `unknown syntax` message will be printed and no commands will be executed."""
+        self.execute_in_terminal_if_unrecognized = (
+            not self.execute_in_terminal_if_unrecognized
+        )
+        print(self.unrecognized_command_behavior_status)
+
     def do_cd(self, path: str):
         """Change current working directory to `path`."""
         os.chdir(path)
