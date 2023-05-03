@@ -126,7 +126,7 @@ class GitBetter(ArgShell):
 
     def do_toggle_unrecognized_command_behavior(self, arg: str):
         """Toggle whether the shell will attempt to execute unrecognized commands as system commands in the terminal.
-        When on (the default), `GitBetter` will treat unrecognized commands as if you added the `cmd` command in front of the input, i.e. `os.system(your_input)`.
+        When on (the default), `GitBetter` will treat unrecognized commands as if you added the `sys` command in front of the input, i.e. `os.system(your_input)`.
         When off, an `unknown syntax` message will be printed and no commands will be executed."""
         self.execute_in_terminal_if_unrecognized = (
             not self.execute_in_terminal_if_unrecognized
@@ -137,10 +137,6 @@ class GitBetter(ArgShell):
         """Change current working directory to `path`."""
         os.chdir(path)
         self.prompt = f"gitbetter::{Pathier.cwd()}>"
-
-    def do_cmd(self, command: str):
-        """Execute arbitrary command in the terminal so you don't have to quit gitbetter to run other programs/commands."""
-        os.system(command)
 
     def do_git(self, arg: str):
         """Directly execute `git {arg}`.

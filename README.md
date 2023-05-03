@@ -20,7 +20,7 @@ To toggle this behavior, run the `toggle_unrecognized_command_behavior`
 (`gitbetter` uses `tab` for autocomplete, so you can type `"tog"`+`tab` instead of typing out the whole command name).<br>
 When toggled to off, an unrecognized syntax message will be printed if you type in a command `gitbetter` doesn't recognize.<br>
 The current state of this setting is printed at the bottom when running the `help` command.<br>
-You can still execute a command in the shell regardless of this setting with the `cmd` command.
+You can still execute a command in the shell regardless of this setting with the `sys` command.
 <pre>
 C:\gitbetter>gitbetter
 Starting gitbetter...
@@ -29,14 +29,16 @@ gitbetter::C:\gitbetter>help
 
 Documented commands (type help <topic>):
 ========================================
-add        delete_branch   make_private   push
-add_url    delete_gh_repo  make_public    push_new
-amend      git             merge          quit
-cd         help            new_branch     switch
-cmd        ignore          new_gh_remote  tag
-commit     initcommit      new_repo       toggle_unrecognized_command_behavior
-commitall  list_branches   pull           undo
-commitf    loggy           pull_branch
+add             help           new_repo                              undo
+add_url         ignore         pull
+amend           initcommit     pull_branch
+cd              list_branches  push
+commit          loggy          push_new
+commitall       make_private   quit
+commitf         make_public    switch
+delete_branch   merge          sys
+delete_gh_repo  new_branch     tag
+git             new_gh_remote  toggle_unrecognized_command_behavior
 
 Unrecognized command behavior: Execute with os.system()
 ^Essentially makes this shell function as a super-shell of whatever shell you launched gitbetter from.^
