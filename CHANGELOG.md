@@ -1,12 +1,19 @@
 # Changelog
 
-## 0.2.0 (2023-05-02)
+## 0.3.0 (2023-05-02)
+
+#### Refactorings
+
+* remove do_cmd as it's now covered by parent class's do_sys
+
+
+## v0.2.0 (2023-05-02)
 
 #### New Features
 
 * override do_help to display unrecognized_command_behavior_status after standard help message
 * add functionality to toggle unrecognized command behavior
-* add default() override to execute line as system command when unrecognized
+* add default override to execute line as system command when unrecognized
 * display current working directory in prompt
 #### Fixes
 
@@ -17,6 +24,10 @@
 #### Docs
 
 * update readme
+#### Others
+
+* build v0.2.0
+* update changelog
 
 
 ## v0.1.1 (2023-04-30)
