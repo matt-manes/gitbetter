@@ -20,6 +20,11 @@ def loggy():
     execute("log --oneline --name-only --abbrev-commit --graph")
 
 
+def status():
+    """Execute `git status`."""
+    execute("status")
+
+
 # ======================================Staging/Committing======================================
 def commit(args: str):
     """>>> git commit {args}"""

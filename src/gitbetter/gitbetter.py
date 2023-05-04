@@ -229,6 +229,10 @@ class GitBetter(ArgShell):
         """Execute `git --oneline --name-only --abbrev-commit --graph`."""
         git.loggy()
 
+    def do_status(self, _: str):
+        """Execute `git status`."""
+        git.status()
+
     def do_merge(self, branch_name: str):
         """Merge supplied `branch_name` with the currently active branch."""
         git.merge(branch_name)
