@@ -1,10 +1,21 @@
 # Changelog
 
-## 0.3.0 (2023-05-02)
+## 0.4.0 (2023-05-04)
+
+#### New Features
+
+* add status command
+
+
+## v0.3.0 (2023-05-02)
 
 #### Refactorings
 
 * remove do_cmd as it's now covered by parent class's do_sys
+#### Others
+
+* build v0.3.0
+* update changelog
 
 
 ## v0.2.0 (2023-05-02)
