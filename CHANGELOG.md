@@ -1,10 +1,29 @@
 # Changelog
 
-## 0.4.0 (2023-05-04)
+## 0.5.0 (2023-05-11)
+
+#### New Features
+
+* add create_remote_from_cwd()
+#### Refactorings
+
+* rename do_list_branches() to do_branches()
+* do_new_gh_remote invokes create_remote_from_cwd so url no longer needs to be added manually after creating remote
+#### Docs
+
+* update readme
+* update doc string
+
+
+## v0.4.0 (2023-05-04)
 
 #### New Features
 
 * add status command
+#### Others
+
+* build v0.4.0
+* update changelog
 
 
 ## v0.3.0 (2023-05-02)
