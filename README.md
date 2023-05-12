@@ -29,18 +29,19 @@ gitbetter::C:\gitbetter>help
 
 Documented commands (type help <topic>):
 ========================================
-add             help           new_repo                              undo
-add_url         ignore         pull
-amend           initcommit     pull_branch
-cd              list_branches  push
-commit          loggy          push_new
-commitall       make_private   quit
-commitf         make_public    switch
-delete_branch   merge          sys
-delete_gh_repo  new_branch     tag
-git             new_gh_remote  toggle_unrecognized_command_behavior
+add             ignore         pull_branch
+add_url         initcommit     push
+amend           list_branches  push_new
+cd              loggy          quit
+commit          make_private   status
+commitall       make_public    switch
+commitf         merge          sys
+delete_branch   new_branch     tag
+delete_gh_repo  new_gh_remote  toggle_unrecognized_command_behavior
+git             new_repo       undo
+help            pull
 
-Unrecognized command behavior: Execute with os.system()
+Unrecognized command behavior: Execute in shell with os.system()
 ^Essentially makes this shell function as a super-shell of whatever shell you launched gitbetter from.^
 
 gitbetter::C:\gitbetter>help commitf
@@ -119,4 +120,3 @@ Bindings can be accessed programmatically:
 
 ### Future Features
 * Redirect the output of git commands so the bindings return the output instead of only being able to print.
-* Make pushing to remote after creating it smoother (make it so you don't manually have to add the url).
