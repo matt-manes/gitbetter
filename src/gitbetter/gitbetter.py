@@ -122,7 +122,7 @@ class GitBetter(ArgShell):
 
     @property
     def unrecognized_command_behavior_status(self):
-        return f"Unrecognized command behavior: {'Execute with os.system()' if self.execute_in_terminal_if_unrecognized else 'Print unknown syntax error'}"
+        return f"Unrecognized command behavior: {'Execute in shell with os.system()' if self.execute_in_terminal_if_unrecognized else 'Print unknown syntax error'}"
 
     def do_toggle_unrecognized_command_behavior(self, arg: str):
         """Toggle whether the shell will attempt to execute unrecognized commands as system commands in the terminal.
