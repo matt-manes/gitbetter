@@ -171,6 +171,17 @@ def create_remote(name: str, public: bool = False):
     os.system(f"gh repo create {name} {visibility}")
 
 
+def create_remote_from_cwd(public: bool = False):
+    """Use GitHub CLI (must be installed and configured) to create a remote GitHub repo from
+    the current working directory repo and add its url as this repo's remote origin.
+
+    #### :params:
+
+    `public`: Create the GitHub repo as a public repo, default is to create it as private."""
+    visibility = "public" if public else "private"
+    os.system(f"gh repo create --source . --{visibility}")
+
+
 def make_private(owner: str, name: str):
     """Uses GitHub CLI (must be installed and configured) to set the repo's visibility to private.
 
