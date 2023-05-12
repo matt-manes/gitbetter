@@ -220,7 +220,7 @@ class GitBetter(ArgShell):
         `args` can be any additional args that `git pull` accepts."""
         git.pull(args)
 
-    def do_list_branches(self, _: str):
+    def do_branches(self, _: str):
         """Show local and remote branches."""
         git.list_branches()
 
