@@ -157,8 +157,7 @@ class GitBetter(ArgShell):
         """Create a remote GitHub repository for this repo.
 
         GitHub CLI must be installed and configured for this to work."""
-        name = Pathier.cwd().stem
-        git.create_remote(name, args.public)
+        git.create_remote_from_cwd(args.public)
 
     def do_initcommit(self, _: str):
         """Stage and commit all files with message "Initial Commit"."""
@@ -201,7 +200,7 @@ class GitBetter(ArgShell):
         git.switch_branch(branch_name)
 
     def do_add_url(self, url: str):
-        """Add remote url for repo and push repo."""
+        """Add remote origin url for repo and push repo."""
         git.add_remote_url(url)
         git.push("-u origin main")
 
