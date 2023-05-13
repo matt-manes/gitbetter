@@ -179,7 +179,7 @@ def create_remote_from_cwd(public: bool = False):
 
     `public`: Create the GitHub repo as a public repo, default is to create it as private."""
     visibility = "public" if public else "private"
-    os.system(f"gh repo create --source . --{visibility}")
+    os.system(f"gh repo create --source=. --remote=upstream --{visibility}")
 
 
 def make_private(owner: str, name: str):
