@@ -1,6 +1,13 @@
 # Changelog
 
-## 0.5.0 (2023-05-11)
+## 0.5.1 (2023-05-13)
+
+#### Fixes
+
+* fix  create_remote_from_cwd() not setting remote to upstream
+
+
+## v0.5.0 (2023-05-11)
 
 #### New Features
 
@@ -13,6 +20,10 @@
 
 * update readme
 * update doc string
+#### Others
+
+* build v0.5.0
+* update changelog
 
 
 ## v0.4.0 (2023-05-04)
