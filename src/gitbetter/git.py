@@ -1,4 +1,5 @@
 import os
+from pathier import Pathier
 
 
 def execute(command: str) -> int:
@@ -179,7 +180,7 @@ def create_remote_from_cwd(public: bool = False):
 
     `public`: Create the GitHub repo as a public repo, default is to create it as private."""
     visibility = "public" if public else "private"
-    os.system(f"gh repo create --source=. --remote=upstream --{visibility}")
+    os.system(f"gh repo create --source . --{visibility} --push")
 
 
 def make_private(owner: str, name: str):
