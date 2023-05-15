@@ -1,10 +1,21 @@
 # Changelog
 
-## 0.5.1 (2023-05-13)
+## 0.5.2 (2023-05-15)
+
+#### Fixes
+
+* fix create_remote_from_cwd function to properly add remote and push
+
+
+## v0.5.1 (2023-05-13)
 
 #### Fixes
 
 * fix  create_remote_from_cwd() not setting remote to upstream
+#### Others
+
+* build v0.5.1
+* update changelog
 
 
 ## v0.5.0 (2023-05-11)
