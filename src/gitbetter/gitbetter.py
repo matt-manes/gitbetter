@@ -174,13 +174,9 @@ class GitBetter(ArgShell):
         If no files are given, all files will be added."""
         self.git.add(None if not args.files else args.files)
 
-    def do_commit(self, message: str):
-        """Commit staged files with this message."""
-        if not message.startswith('"'):
-            message = '"' + message
-        if not message.endswith('"'):
-            message += '"'
-        self.git.commit(f"-m {message}")
+    def do_commit(self, args: str):
+        """Commit staged files with provided `args` string."""
+        self.git.commit(args)
 
     @with_parser(commit_files_parser, [files_postparser])
     def do_commitf(self, args: Namespace):
