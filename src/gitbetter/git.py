@@ -22,7 +22,7 @@ class Git:
         return self._run(args)
 
     def new_repo(self) -> str | int:
-        """Executes `git init -b main` and returns `stdout`."""
+        """Executes `git init -b main`."""
         return self.execute("init -b main")
 
     def loggy(self) -> str | int:
