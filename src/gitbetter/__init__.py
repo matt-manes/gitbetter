@@ -1,1 +1,1 @@
-from gitbetter import git
+from gitbetter import Git
