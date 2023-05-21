@@ -87,9 +87,10 @@ gitbetter::C:\gitbetter>loggy
   test.txt
 </pre>
 
-Bindings can be accessed programmatically:
+Bindings can be accessed programmatically through the `Git` class.<br>
 <pre>
->>> from gitbetter import git
+>>> from gitbetter import Git
+>>> git = Git()
 >>> git.loggy()
 *   3e780ec (HEAD -> main, tag: v1.0.0) Merge branch 'my-feature'
 |\
@@ -117,6 +118,38 @@ Bindings can be accessed programmatically:
 * main                3e780ec [origin/main: ahead 3] Merge branch 'my-feature'
   remotes/origin/main fc6b7ac docs: update readme
 </pre>
-
-### Future Features
-* Redirect the output of git commands so the bindings return the output instead of only being able to print.
+The `stdout` of `Git` functions can be returned as a string rather than being printed to the terminal
+by passing `True` to the `Git` constructor or setting the member variable `capture_stdout` to `True`.
+<pre>
+>>> from gitbetter import Git
+>>> git = Git(True)
+# or
+>>> git.capture_stdout = True
+>>> log = git.loggy()
+>>> print(log)
+*   3e780ec (HEAD -> main, tag: v1.0.0) Merge branch 'my-feature'
+|\
+| * b4478a3 feat: new print statement
+| | test.py
+* | eb89c2e docs: update readme
+|/
+|   README.md
+* fc6b7ac (origin/main) docs: update readme
+| README.md
+* 2a75c0c docs: added a comment
+| test.py
+* d22129a feat: new print statement
+| gitbetter_test.py
+* 1a002d7 chore: add items to ignore
+| .gitignore
+* 92cb7e7 Initial commit
+  .gitignore
+  LICENSE.txt
+  README.md
+  gitbetter_test.py
+  test.py
+  test.txt
+>>> git.list_branches()
+* main                3e780ec [origin/main: ahead 3] Merge branch 'my-feature'
+  remotes/origin/main fc6b7ac docs: update readme
+</pre>
