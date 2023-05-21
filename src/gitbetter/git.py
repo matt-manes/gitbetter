@@ -8,8 +8,18 @@ class Git:
         Otherwise, the functions return the call's exit code."""
         self.capture_stdout = capture_stdout
 
+    @property
+    def capture_stdout(self) -> bool:
+        """If `True`, member functions will return the generated `stdout` as a string,
+        otherwise they return the command's exit code."""
+        return self._capture_stdout
+
+    @capture_stdout.setter
+    def capture_stdout(self, should_capture: bool):
+        self._capture_stdout = should_capture
+
     def _run(self, args: list[str]) -> str | int:
-        if self.capture_stdout:
+        if self._capture_stdout:
             return subprocess.run(args, stdout=subprocess.PIPE, text=True).stdout
         else:
             return subprocess.run(args).returncode
