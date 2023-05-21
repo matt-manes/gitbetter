@@ -3,7 +3,7 @@ import os
 from argshell import ArgShell, ArgShellParser, Namespace, with_parser
 from pathier import Pathier
 
-from gitbetter import git
+from gitbetter import Git
 
 
 def new_remote_parser() -> ArgShellParser:
@@ -102,6 +102,7 @@ class GitBetter(ArgShell):
     intro = "Starting gitbetter...\nEnter 'help' or '?' for command help."
     prompt = f"gitbetter::{Pathier.cwd()}>"
     execute_in_terminal_if_unrecognized = True
+    git = Git()
 
     def default(self, line: str):
         if self.execute_in_terminal_if_unrecognized:
@@ -142,36 +143,36 @@ class GitBetter(ArgShell):
         """Directly execute `git {arg}`.
 
         i.e. You can still do everything directly invoking git can do."""
-        git.execute(arg)
+        self.git.execute(arg)
 
     def do_new_repo(self, _: str):
         """Create a new git repo in this directory."""
-        git.new_repo()
+        self.git.new_repo()
 
     def do_new_branch(self, name: str):
         """Create and switch to a new branch named after the supplied arg."""
-        git.create_new_branch(name)
+        self.git.create_new_branch(name)
 
     @with_parser(new_remote_parser)
     def do_new_gh_remote(self, args: Namespace):
         """Create a remote GitHub repository for this repo.
 
         GitHub CLI must be installed and configured for this to work."""
-        git.create_remote_from_cwd(args.public)
+        self.git.create_remote_from_cwd(args.public)
 
     def do_initcommit(self, _: str):
         """Stage and commit all files with message "Initial Commit"."""
-        git.initcommit()
+        self.git.initcommit()
 
     def do_undo(self, _: str):
         """Undo all uncommitted changes."""
-        git.undo()
+        self.git.undo()
 
     @with_parser(amend_files_parser, [files_postparser])
     def do_add(self, args: Namespace):
         """Stage a list of files.
         If no files are given, all files will be added."""
-        git.add(None if not args.files else args.files)
+        self.git.add(None if not args.files else args.files)
 
     def do_commit(self, message: str):
         """Commit staged files with this message."""
@@ -179,12 +180,12 @@ class GitBetter(ArgShell):
             message = '"' + message
         if not message.endswith('"'):
             message += '"'
-        git.commit(f"-m {message}")
+        self.git.commit(f"-m {message}")
 
     @with_parser(commit_files_parser, [files_postparser])
     def do_commitf(self, args: Namespace):
         """Stage and commit a list of files."""
-        git.commit_files(args.files, args.message)
+        self.git.commit_files(args.files, args.message)
 
     def do_commitall(self, message: str):
         """Stage and commit all files with this message."""
@@ -192,67 +193,67 @@ class GitBetter(ArgShell):
             message = '"' + message
         if not message.endswith('"'):
             message += '"'
-        git.add()
-        git.commit(f"-m {message}")
+        self.git.add()
+        self.git.commit(f"-m {message}")
 
     def do_switch(self, branch_name: str):
         """Switch to this branch."""
-        git.switch_branch(branch_name)
+        self.git.switch_branch(branch_name)
 
     def do_add_url(self, url: str):
         """Add remote origin url for repo and push repo."""
-        git.add_remote_url(url)
-        git.push("-u origin main")
+        self.git.add_remote_url(url)
+        self.git.push("-u origin main")
 
     def do_push_new(self, branch_name: str):
         """Push this new branch to origin with -u flag."""
-        git.push_new_branch(branch_name)
+        self.git.push_new_branch(branch_name)
 
     def do_push(self, args: str):
         """Execute `git push`.
 
         `args` can be any additional args that `git push` accepts."""
-        git.push(args)
+        self.git.push(args)
 
     def do_pull(self, args: str):
         """Execute `git pull`.
 
         `args` can be any additional args that `git pull` accepts."""
-        git.pull(args)
+        self.git.pull(args)
 
     def do_branches(self, _: str):
         """Show local and remote branches."""
-        git.list_branches()
+        self.git.list_branches()
 
     def do_loggy(self, _: str):
         """Execute `git --oneline --name-only --abbrev-commit --graph`."""
-        git.loggy()
+        self.git.loggy()
 
     def do_status(self, _: str):
         """Execute `git status`."""
-        git.status()
+        self.git.status()
 
     def do_merge(self, branch_name: str):
         """Merge supplied `branch_name` with the currently active branch."""
-        git.merge(branch_name)
+        self.git.merge(branch_name)
 
     def do_tag(self, tag_id: str):
         """Tag current commit with `tag_id`."""
-        git.tag(tag_id)
+        self.git.tag(tag_id)
 
     @with_parser(amend_files_parser, [files_postparser])
     def do_amend(self, args: Namespace):
         """Stage files and add to previous commit."""
-        git.amend(args.files)
+        self.git.amend(args.files)
 
     @with_parser(delete_branch_parser)
     def do_delete_branch(self, args: Namespace):
         """Delete branch."""
-        git.delete_branch(args.branch, not args.remote)
+        self.git.delete_branch(args.branch, not args.remote)
 
     def do_pull_branch(self, branch: str):
         """Pull this branch from the origin."""
-        git.pull_branch(branch)
+        self.git.pull_branch(branch)
 
     def do_ignore(self, patterns: str):
         """Add the list of patterns to `.gitignore`."""
@@ -267,7 +268,7 @@ class GitBetter(ArgShell):
         Expects an argument for the repo owner, i.e. the `OWNER` in `github.com/{OWNER}/{repo-name}`
 
         This repo must exist and GitHub CLI must be installed and configured."""
-        git.make_private(owner, Pathier.cwd().stem)
+        self.git.make_private(owner, Pathier.cwd().stem)
 
     def do_make_public(self, owner: str):
         """Make the GitHub remote for this repo public.
@@ -275,7 +276,7 @@ class GitBetter(ArgShell):
         Expects an argument for the repo owner, i.e. the `OWNER` in `github.com/{OWNER}/{repo-name}`
 
         This repo must exist and GitHub CLI must be installed and configured."""
-        git.make_public(owner, Pathier.cwd().stem)
+        self.git.make_public(owner, Pathier.cwd().stem)
 
     def do_delete_gh_repo(self, owner: str):
         """Delete this repo from GitHub.
@@ -285,7 +286,7 @@ class GitBetter(ArgShell):
         GitHub CLI must be installed and configured.
 
         May require you to reauthorize and rerun command."""
-        git.delete_remote(owner, Pathier.cwd().stem)
+        self.git.delete_remote(owner, Pathier.cwd().stem)
 
 
 def main():
