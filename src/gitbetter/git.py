@@ -1,63 +1,62 @@
-import os
+import subprocess
+import shlex
 
-from pathier import Pathier
 
-
-def execute(command: str) -> int:
+def execute(command: str) -> str:
     """Execute git command.
 
-    Equivalent to `os.system(f"git {command}")`
+    Equivalent to executing `git {command}` in the shell.
 
-    Returns the output of the `os.system` call."""
-    return os.system(f"git {command}")
-
-
-def new_repo():
-    """>>> git init -b main"""
-    execute("init -b main")
+    Returns `stdout`."""
+    args = ["git"] + shlex.split(command)
+    output = subprocess.run(args, stdout=subprocess.PIPE, text=True).stdout
+    return output
 
 
-def loggy():
+def new_repo() -> str:
+    """Executes `git init -b main` and returns `stdout`."""
+    return execute("init -b main")
+
+
+def loggy() -> str:
     """Equivalent to `git log --oneline --name-only --abbrev-commit --graph`."""
-    execute("log --oneline --name-only --abbrev-commit --graph")
+    return execute("log --oneline --name-only --abbrev-commit --graph")
 
 
-def status():
+def status() -> str:
     """Execute `git status`."""
-    execute("status")
+    return execute("status")
 
 
 # ======================================Staging/Committing======================================
-def commit(args: str):
+def commit(args: str) -> str:
     """>>> git commit {args}"""
-    execute(f"commit {args}")
+    return execute(f"commit {args}")
 
 
-def add(files: list[str] | None = None):
+def add(files: list[str] | None = None) -> str:
     """Stage a list of files.
 
     If no files are given (`files=None`), all files will be staged."""
     if not files:
-        execute("add .")
+        return execute("add .")
     else:
-        execute(f'add {" ".join(files)}')
+        return execute(f'add {" ".join(files)}')
 
 
-def commit_files(files: list[str], message: str):
+def commit_files(files: list[str], message: str) -> str:
     """Stage and commit a list of files with commit message `message`."""
-    add(files)
-    commit(f'-m "{message}"')
+    return add(files) + commit(f'-m "{message}"')
 
 
-def initcommit():
+def initcommit() -> str:
     """Equivalent to
     >>> git add .
     >>> git commit -m "Initial commit" """
-    add()
-    commit('-m "Initial commit"')
+    return add() + commit('-m "Initial commit"')
 
 
-def amend(files: list[str] | None = None):
+def amend(files: list[str] | None = None) -> str:
     """Stage and commit changes to the previous commit.
 
     If `files` is `None`, all files will be staged.
@@ -66,102 +65,102 @@ def amend(files: list[str] | None = None):
     >>> git add {files}
     >>> git commit --amend --no-edit
     """
-    add(files)
-    commit("--amend --no-edit")
+    return add(files) + commit("--amend --no-edit")
 
 
-def tag(id_: str):
+def tag(id_: str) -> str:
     """Tag the current commit with `id_`.
 
     Equivalent to `git tag {id_}`."""
-    execute(f"tag {id_}")
+    return execute(f"tag {id_}")
 
 
 # ==========================================Push/Pull==========================================
-def add_remote_url(url: str, name: str = "origin"):
+def add_remote_url(url: str, name: str = "origin") -> str:
     """Add remote url to repo."""
-    execute(f"remote add {name} {url}")
+    return execute(f"remote add {name} {url}")
 
 
-def push(args: str = ""):
+def push(args: str = "") -> str:
     """Equivalent to `git push {args}`."""
-    execute(f"push {args}")
+    return execute(f"push {args}")
 
 
-def pull(args: str = ""):
+def pull(args: str = "") -> str:
     """Equivalent to `git pull {args}`."""
-    execute(f"pull {args}")
+    return execute(f"pull {args}")
 
 
-def push_new_branch(branch: str):
+def push_new_branch(branch: str) -> str:
     """Push a new branch to origin with tracking.
 
     Equivalent to `git push -u origin {branch}`."""
-    push(f"-u origin {branch}")
+    return push(f"-u origin {branch}")
 
 
-def pull_branch(branch: str):
+def pull_branch(branch: str) -> str:
     """Pull `branch` from origin."""
-    pull(f"origin {branch}")
+    return pull(f"origin {branch}")
 
 
 # ============================================Checkout/Branches============================================
-def branch(args: str):
+def branch(args: str) -> str:
     """Equivalent to `git branch {args}`."""
-    execute(f"branch {args}")
+    return execute(f"branch {args}")
 
 
-def list_branches():
+def list_branches() -> str:
     """Print a list of branches."""
-    branch("-vva")
+    return branch("-vva")
 
 
-def checkout(args: str):
+def checkout(args: str) -> str:
     """Equivalent to `git checkout {args}`."""
-    execute(f"checkout {args}")
+    return execute(f"checkout {args}")
 
 
-def switch_branch(branch_name: str):
+def switch_branch(branch_name: str) -> str:
     """Switch to the branch specified by `branch_name`.
 
     Equivalent to `git checkout {branch_name}`."""
-    checkout(branch_name)
+    return checkout(branch_name)
 
 
-def create_new_branch(branch_name: str):
+def create_new_branch(branch_name: str) -> str:
     """Create and switch to a new branch named with `branch_name`.
 
     Equivalent to `git checkout -b {branch_name} --track`."""
-    checkout(f"-b {branch_name} --track")
+    return checkout(f"-b {branch_name} --track")
 
 
-def delete_branch(branch_name: str, local_only: bool = True):
+def delete_branch(branch_name: str, local_only: bool = True) -> str:
     """Delete `branch_name` from repo.
 
     #### :params:
 
     `local_only`: Only delete the local copy of `branch`, otherwise also delete the remote branch on origin and remote-tracking branch."""
-    branch(f"--delete {branch_name}")
+    output = branch(f"--delete {branch_name}")
     if not local_only:
-        push(f"origin --delete {branch_name}")
+        return output + push(f"origin --delete {branch_name}")
+    return output
 
 
-def undo():
+def undo() -> str:
     """Undo uncommitted changes.
 
     Equivalent to `git checkout .`."""
-    checkout(".")
+    return checkout(".")
 
 
-def merge(branch_name: str):
+def merge(branch_name: str) -> str:
     """Merge branch `branch_name` with currently active branch."""
-    execute(f"merge {branch_name}")
+    return execute(f"merge {branch_name}")
 
 
 # ===============================Requires GitHub CLI to be installed and configured===============================
 
 
-def create_remote(name: str, public: bool = False):
+def create_remote(name: str, public: bool = False) -> str:
     """Uses GitHub CLI (must be installed and configured) to create a remote GitHub repo.
 
     #### :params:
@@ -170,10 +169,12 @@ def create_remote(name: str, public: bool = False):
 
     `public`: Set to `True` to create the repo as public, otherwise it'll be created as private."""
     visibility = "--public" if public else "--private"
-    os.system(f"gh repo create {name} {visibility}")
+    return subprocess.run(
+        ["gh", "repo", "create", name, visibility], stdout=subprocess.PIPE, text=True
+    ).stdout
 
 
-def create_remote_from_cwd(public: bool = False):
+def create_remote_from_cwd(public: bool = False) -> str:
     """Use GitHub CLI (must be installed and configured) to create a remote GitHub repo from
     the current working directory repo and add its url as this repo's remote origin.
 
@@ -181,10 +182,22 @@ def create_remote_from_cwd(public: bool = False):
 
     `public`: Create the GitHub repo as a public repo, default is to create it as private."""
     visibility = "public" if public else "private"
-    os.system(f"gh repo create --source . --{visibility} --push")
+    return subprocess.run(
+        ["gh", "repo", "create", "--source", ".", f"--{visibility}", "--push"],
+        stdout=subprocess.PIPE,
+        text=True,
+    ).stdout
 
 
-def make_private(owner: str, name: str):
+def _change_visibility(owner: str, name: str, visibility: str) -> str:
+    return subprocess.run(
+        ["gh", "repo", "edit", f"{owner}/{name}", "--visibility", visibility],
+        stdout=subprocess.PIPE,
+        text=True,
+    ).stdout
+
+
+def make_private(owner: str, name: str) -> str:
     """Uses GitHub CLI (must be installed and configured) to set the repo's visibility to private.
 
     #### :params:
@@ -192,10 +205,10 @@ def make_private(owner: str, name: str):
     `owner`: The repo owner.
 
     `name`: The name of the repo to edit."""
-    os.system(f"gh repo edit {owner}/{name} --visibility private")
+    return _change_visibility(owner, name, "private")
 
 
-def make_public(owner: str, name: str):
+def make_public(owner: str, name: str) -> str:
     """Uses GitHub CLI (must be installed and configured) to set the repo's visibility to public.
 
     #### :params:
@@ -203,10 +216,10 @@ def make_public(owner: str, name: str):
     `owner`: The repo owner.
 
     `name`: The name of the repo to edit."""
-    os.system(f"gh repo edit {owner}/{name} --visibility public")
+    return _change_visibility(owner, name, "public")
 
 
-def delete_remote(owner: str, name: str):
+def delete_remote(owner: str, name: str) -> str:
     """Uses GitHub CLI (must be isntalled and configured) to delete the remote for this repo.
 
     #### :params:
@@ -214,4 +227,8 @@ def delete_remote(owner: str, name: str):
     `owner`: The repo owner.
 
     `name`: The name of the remote repo to delete."""
-    os.system(f"gh repo delete {owner}/{name} --yes")
+    return subprocess.run(
+        ["gh", "repo", "delete", f"{owner}/{name}", "--yes"],
+        stdout=subprocess.PIPE,
+        text=True,
+    ).stdout
