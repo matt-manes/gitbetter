@@ -1,5 +1,25 @@
 # Changelog
 
+## v1.0.0 (2023-05-21)
+
+#### New Features
+
+* all git functions can return stdout as a string
+#### Fixes
+
+* fix issue where git.add() would remove path separators
+#### Refactorings
+
+* git bindings are now contained in the `Git` class
+* do_commit() doesn't assume arg string is a message
+* make capture_stdout a class property
+* update shell to use Git class
+* move git functions into a class so dev can specify whether to capture stdout or not
+#### Docs
+
+* update readme
+
+
 ## v0.5.2 (2023-05-15)
 
 #### Fixes
@@ -12,10 +32,6 @@
 #### Fixes
 
 * fix  create_remote_from_cwd() not setting remote to upstream
-#### Others
-
-* build v0.5.1
-* update changelog
 
 
 ## v0.5.0 (2023-05-11)
@@ -31,10 +47,6 @@
 
 * update readme
 * update doc string
-#### Others
-
-* build v0.5.0
-* update changelog
 
 
 ## v0.4.0 (2023-05-04)
@@ -42,10 +54,6 @@
 #### New Features
 
 * add status command
-#### Others
-
-* build v0.4.0
-* update changelog
 
 
 ## v0.3.0 (2023-05-02)
@@ -53,10 +61,6 @@
 #### Refactorings
 
 * remove do_cmd as it's now covered by parent class's do_sys
-#### Others
-
-* build v0.3.0
-* update changelog
 
 
 ## v0.2.0 (2023-05-02)
@@ -76,10 +80,6 @@
 #### Docs
 
 * update readme
-#### Others
-
-* build v0.2.0
-* update changelog
 
 
 ## v0.1.1 (2023-04-30)
@@ -87,10 +87,6 @@
 #### Fixes
 
 * cast Pathier objects to strings in recurse_files()
-#### Others
-
-* build v0.1.1
-* update changelog
 
 
 ## v0.1.0 (2023-04-30)
@@ -106,10 +102,6 @@
 
 * update readme
 * add future feature to list in readme
-#### Others
-
-* build v0.1.0
-* update changelog
 
 
 ## v0.0.0 (2023-04-29)
