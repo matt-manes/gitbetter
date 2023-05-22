@@ -55,7 +55,8 @@ class Git:
         if not files:
             return self.execute("add .")
         else:
-            return self.execute(f'add {" ".join(files)}')
+            files = " ".join(f'"{file}"' for file in files)  # type: ignore
+            return self.execute(f"add {files}")
 
     def commit_files(self, files: list[str], message: str) -> str | int:
         """Stage and commit a list of files with commit message `message`."""
