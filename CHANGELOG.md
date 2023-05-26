@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.1.0 (2023-05-26)
+
+#### Refactorings
+
+* change tag function parameter default and doc string
 ## v1.0.0 (2023-05-21)
 
 #### New Features
