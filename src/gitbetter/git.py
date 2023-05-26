@@ -79,11 +79,15 @@ class Git:
         """
         return self.add(files) + self.commit("--amend --no-edit")  # type: ignore
 
-    def tag(self, id_: str) -> str | int:
-        """Tag the current commit with `id_`.
+    def tag(self, args: str = "") -> str | int:
+        """Execute the `tag` command with `args`.
 
-        Equivalent to `git tag {id_}`."""
-        return self.execute(f"tag {id_}")
+        e.g.
+
+        `self.tag("--sort=-committerdate")`
+
+        will list all the tags for this repository in descending commit date."""
+        return self.execute(f"tag {args}")
 
     # ==========================================Push/Pull==========================================
     def add_remote_url(self, url: str, name: str = "origin") -> str | int:
