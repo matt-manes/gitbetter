@@ -153,3 +153,25 @@ by passing `True` to the `Git` constructor or setting the member variable `captu
 * main                3e780ec [origin/main: ahead 3] Merge branch 'my-feature'
   remotes/origin/main fc6b7ac docs: update readme
 </pre>
+
+If capturing stdout is only desired for a set of functions, 
+the `capture_output` function can be used as a context manager.
+Upon entering the context, the `capture_stdout` property is set to `True`
+and then set back to `False` upon exiting the context.
+<pre>
+>>> git = Git()
+>>> with git.capture_output():
+...  status = git.status()
+...
+>>> print(status)
+On branch stdout-context-manager
+Your branch is up to date with 'main'.
+
+Changes not staged for commit:
+  (use "git add <\file>..." to update what will be committed)
+  (use "git restore <\file>..." to discard changes in working directory)
+        modified:   src/gitbetter/git.py
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+</pre>
