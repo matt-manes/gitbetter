@@ -120,7 +120,7 @@ class Git:
         return self.pull(f"origin {branch}")
 
     # ============================================Checkout/Branches============================================
-    def branch(self, args: str) -> str | int:
+    def branch(self, args: str = "") -> str | int:
         """Equivalent to `git branch {args}`."""
         return self.execute(f"branch {args}")
 
