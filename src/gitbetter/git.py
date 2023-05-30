@@ -1,5 +1,6 @@
 import shlex
 import subprocess
+from contextlib import contextmanager
 
 
 class Git:
@@ -7,6 +8,12 @@ class Git:
         """If `capture_stdout` is `True`, all functions will return their generated `stdout` as a string.
         Otherwise, the functions return the call's exit code."""
         self.capture_stdout = capture_stdout
+
+    @contextmanager
+    def capture_output(self):
+        self.capture_stdout = True
+        yield self
+        self.capture_stdout = False
 
     @property
     def capture_stdout(self) -> bool:
