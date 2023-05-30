@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.2.0 (2023-05-30)
+
+#### New Features
+
+* add context manager to turn stdout capture on then back off
+#### Docs
+
+* update readme
+
+
 ## v1.1.0 (2023-05-26)
 
 #### Refactorings
