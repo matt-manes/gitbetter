@@ -1,6 +1,7 @@
 import shlex
 import subprocess
 from contextlib import contextmanager
+import sys
 
 
 class Git:
@@ -123,6 +124,20 @@ class Git:
     def branch(self, args: str = "") -> str | int:
         """Equivalent to `git branch {args}`."""
         return self.execute(f"branch {args}")
+
+    @property
+    def current_branch(self) -> str:
+        """Returns the name of the currently active branch."""
+        capturing_output = self.capture_stdout
+        current_branch = ""
+        with self.capture_output():
+            branches = self.branch().splitlines()  # type: ignore
+            for branch in branches:
+                if branch.startswith("*"):
+                    current_branch = branch[2:]
+                    break
+        self.capture_stdout = capturing_output
+        return current_branch
 
     def list_branches(self) -> str | int:
         """Print a list of branches."""
