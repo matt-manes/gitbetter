@@ -1,7 +1,7 @@
 import shlex
 import subprocess
-from contextlib import contextmanager
 import sys
+from contextlib import contextmanager
 
 
 class Git:
