@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.3.0 (2023-05-30)
+
+#### New Features
+
+* add current_branch property to Git class
+#### Refactorings
+
+* Git().branch() arg defaults to empty string
+
+
 ## v1.2.0 (2023-05-30)
 
 #### New Features
