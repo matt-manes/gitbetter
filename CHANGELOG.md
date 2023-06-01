@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.4.0 (2023-06-01)
+
+#### Refactorings
+
+* no longer necessary to specify the -f/--files flag before listing files when using the add command
 ## v1.3.0 (2023-05-30)
 
 #### New Features
