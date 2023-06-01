@@ -40,14 +40,15 @@ def commit_files_parser() -> ArgShellParser:
     return parser
 
 
-def amend_files_parser() -> ArgShellParser:
+def add_files_parser() -> ArgShellParser:
     parser = ArgShellParser()
     parser.add_argument(
-        "-f",
-        "--files",
+        "files",
         type=str,
         nargs="*",
-        help=""" List of files to stage and commit. """,
+        default=None,
+        help=""" List of files to stage and commit. 
+        If not given, all files will be added.""",
     )
     parser.add_argument(
         "-r",
@@ -168,7 +169,7 @@ class GitBetter(ArgShell):
         """Undo all uncommitted changes."""
         self.git.undo()
 
-    @with_parser(amend_files_parser, [files_postparser])
+    @with_parser(add_files_parser, [files_postparser])
     def do_add(self, args: Namespace):
         """Stage a list of files.
         If no files are given, all files will be added."""
@@ -237,7 +238,7 @@ class GitBetter(ArgShell):
         """Tag current commit with `tag_id`."""
         self.git.tag(tag_id)
 
-    @with_parser(amend_files_parser, [files_postparser])
+    @with_parser(add_files_parser, [files_postparser])
     def do_amend(self, args: Namespace):
         """Stage files and add to previous commit."""
         self.git.amend(args.files)
