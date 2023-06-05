@@ -129,7 +129,8 @@ class GitBetter(ArgShell):
     def do_toggle_unrecognized_command_behavior(self, arg: str):
         """Toggle whether the shell will attempt to execute unrecognized commands as system commands in the terminal.
         When on (the default), `GitBetter` will treat unrecognized commands as if you added the `sys` command in front of the input, i.e. `os.system(your_input)`.
-        When off, an `unknown syntax` message will be printed and no commands will be executed."""
+        When off, an `unknown syntax` message will be printed and no commands will be executed.
+        """
         self.execute_in_terminal_if_unrecognized = (
             not self.execute_in_terminal_if_unrecognized
         )
@@ -173,7 +174,10 @@ class GitBetter(ArgShell):
     def do_add(self, args: Namespace):
         """Stage a list of files.
         If no files are given, all files will be added."""
-        self.git.add(None if not args.files else args.files)
+        if not args.files:
+            self.git.add_all()
+        else:
+            self.git.add_files(args.files)
 
     def do_commit(self, args: str):
         """Commit staged files with provided `args` string."""
@@ -190,7 +194,7 @@ class GitBetter(ArgShell):
             message = '"' + message
         if not message.endswith('"'):
             message += '"'
-        self.git.add()
+        self.git.add_all()
         self.git.commit(f"-m {message}")
 
     def do_switch(self, branch_name: str):
@@ -248,10 +252,6 @@ class GitBetter(ArgShell):
         """Delete branch."""
         self.git.delete_branch(args.branch, not args.remote)
 
-    def do_pull_branch(self, branch: str):
-        """Pull this branch from the origin."""
-        self.git.pull_branch(branch)
-
     def do_ignore(self, patterns: str):
         """Add the list of patterns to `.gitignore`."""
         patterns = "\n".join(patterns.split())
@@ -265,7 +265,7 @@ class GitBetter(ArgShell):
         Expects an argument for the repo owner, i.e. the `OWNER` in `github.com/{OWNER}/{repo-name}`
 
         This repo must exist and GitHub CLI must be installed and configured."""
-        self.git.make_private(owner, Pathier.cwd().stem)
+        self.git.make_private()
 
     def do_make_public(self, owner: str):
         """Make the GitHub remote for this repo public.
@@ -273,7 +273,7 @@ class GitBetter(ArgShell):
         Expects an argument for the repo owner, i.e. the `OWNER` in `github.com/{OWNER}/{repo-name}`
 
         This repo must exist and GitHub CLI must be installed and configured."""
-        self.git.make_public(owner, Pathier.cwd().stem)
+        self.git.make_public()
 
     def do_delete_gh_repo(self, owner: str):
         """Delete this repo from GitHub.
@@ -283,7 +283,7 @@ class GitBetter(ArgShell):
         GitHub CLI must be installed and configured.
 
         May require you to reauthorize and rerun command."""
-        self.git.delete_remote(owner, Pathier.cwd().stem)
+        self.git.delete_remote()
 
 
 def main():
