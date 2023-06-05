@@ -3,6 +3,7 @@ import subprocess
 from contextlib import contextmanager
 from pathier import Pathier
 from pathlib import Path
+from urllib.parse import urlparse
 
 
 class Git:
@@ -432,6 +433,10 @@ class Git:
         Equivalent to `git checkout .`."""
         return self.checkout(".")
 
+    def origin_url(self) -> str | int:
+        """>>>  git remote get-url origin"""
+        return self.remote("get-url origin")
+
     # ===============================Requires GitHub CLI to be installed and configured===============================
 
     def create_remote(self, name: str, public: bool = False) -> str | int:
@@ -458,6 +463,19 @@ class Git:
         return self._run(
             ["gh", "repo", "create", "--source", ".", f"--{visibility}", "--push"]
         )
+
+    def _owner_reponame(self) -> str:
+        """Returns "owner/repo-name", assuming there's one remote origin url and it's for github."""
+        with self.capture_output():
+            return urlparse(self.origin_url().strip("\n")).path.strip("/")  # type: ignore
+
+    @property
+    def owner(self) -> str:
+        return self._owner_reponame().split("/")[0]
+
+    @property
+    def repo_name(self) -> str:
+        return self._owner_reponame().split("/")[1]
 
     def _change_visibility(self, owner: str, name: str, visibility: str) -> str | int:
         return self._run(
