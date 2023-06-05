@@ -477,37 +477,28 @@ class Git:
     def repo_name(self) -> str:
         return self._owner_reponame().split("/")[1]
 
-    def _change_visibility(self, owner: str, name: str, visibility: str) -> str | int:
+    def _change_visibility(self, visibility: str) -> str | int:
         return self._run(
-            ["gh", "repo", "edit", f"{owner}/{name}", "--visibility", visibility]
+            [
+                "gh",
+                "repo",
+                "edit",
+                f"{self.owner}/{self.repo_name}",
+                "--visibility",
+                visibility,
+            ]
         )
 
-    def make_private(self, owner: str, name: str) -> str | int:
-        """Uses GitHub CLI (must be installed and configured) to set the repo's visibility to private.
+    def make_private(self) -> str | int:
+        """Uses GitHub CLI (must be installed and configured) to set the repo's visibility to private."""
+        return self._change_visibility("private")
 
-        #### :params:
+    def make_public(self) -> str | int:
+        """Uses GitHub CLI (must be installed and configured) to set the repo's visibility to public."""
+        return self._change_visibility("public")
 
-        `owner`: The repo owner.
-
-        `name`: The name of the repo to edit."""
-        return self._change_visibility(owner, name, "private")
-
-    def make_public(self, owner: str, name: str) -> str | int:
-        """Uses GitHub CLI (must be installed and configured) to set the repo's visibility to public.
-
-        #### :params:
-
-        `owner`: The repo owner.
-
-        `name`: The name of the repo to edit."""
-        return self._change_visibility(owner, name, "public")
-
-    def delete_remote(self, owner: str, name: str) -> str | int:
-        """Uses GitHub CLI (must be isntalled and configured) to delete the remote for this repo.
-
-        #### :params:
-
-        `owner`: The repo owner.
-
-        `name`: The name of the remote repo to delete."""
-        return self._run(["gh", "repo", "delete", f"{owner}/{name}", "--yes"])
+    def delete_remote(self) -> str | int:
+        """Uses GitHub CLI (must be isntalled and configured) to delete the remote for this repo."""
+        return self._run(
+            ["gh", "repo", "delete", f"{self.owner}/{self.repo_name}", "--yes"]
+        )
