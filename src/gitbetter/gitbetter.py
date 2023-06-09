@@ -57,6 +57,44 @@ class GitBetter(ArgShell):
         i.e. You can still do everything directly invoking git can do."""
         self.git.git(arg)
 
+    def do_add(self, args: Namespace):
+        """Stage a list of files.
+        If no files are given, all files will be added."""
+        if not args.files:
+            self.git.add_all()
+        else:
+            self.git.add_files(args.files)
+
+    def do_commit(self, args: str):
+        """Commit staged files with provided `args` string."""
+        self.git.commit(args)
+
+    def do_push(self, args: str):
+        """Execute `git push`.
+
+        `args` can be any additional args that `git push` accepts."""
+        self.git.push(args)
+
+    def do_pull(self, args: str):
+        """Execute `git pull`.
+
+        `args` can be any additional args that `git pull` accepts."""
+        self.git.pull(args)
+
+    def do_status(self, _: str):
+        """Execute `git status`."""
+        self.git.status()
+
+    def do_merge(self, args: str):
+        """Perform merge operation with supplied `args`."""
+        self.git.merge(args)
+
+    def do_tag(self, args: str):
+        """Tag current commit with `tag_id`."""
+        self.git.tag(args)
+
+    # |==================================Convenience==================================|
+
     def do_new_repo(self, _: str):
         """Create a new git repo in this directory."""
         self.git.new_repo()
@@ -79,19 +117,6 @@ class GitBetter(ArgShell):
     def do_undo(self, _: str):
         """Undo all uncommitted changes."""
         self.git.undo()
-
-    @with_parser(parsers.add_files_parser, [parsers.files_postparser])
-    def do_add(self, args: Namespace):
-        """Stage a list of files.
-        If no files are given, all files will be added."""
-        if not args.files:
-            self.git.add_all()
-        else:
-            self.git.add_files(args.files)
-
-    def do_commit(self, args: str):
-        """Commit staged files with provided `args` string."""
-        self.git.commit(args)
 
     @with_parser(parsers.commit_files_parser, [parsers.files_postparser])
     def do_commitf(self, args: Namespace):
@@ -120,18 +145,6 @@ class GitBetter(ArgShell):
         """Push this new branch to origin with -u flag."""
         self.git.push_new_branch(branch_name)
 
-    def do_push(self, args: str):
-        """Execute `git push`.
-
-        `args` can be any additional args that `git push` accepts."""
-        self.git.push(args)
-
-    def do_pull(self, args: str):
-        """Execute `git pull`.
-
-        `args` can be any additional args that `git pull` accepts."""
-        self.git.pull(args)
-
     def do_branches(self, _: str):
         """Show local and remote branches."""
         self.git.list_branches()
@@ -139,18 +152,6 @@ class GitBetter(ArgShell):
     def do_loggy(self, _: str):
         """Execute `git --oneline --name-only --abbrev-commit --graph`."""
         self.git.loggy()
-
-    def do_status(self, _: str):
-        """Execute `git status`."""
-        self.git.status()
-
-    def do_merge(self, args: str):
-        """Perform merge operation with supplied `args`."""
-        self.git.merge(args)
-
-    def do_tag(self, tag_id: str):
-        """Tag current commit with `tag_id`."""
-        self.git.tag(tag_id)
 
     @with_parser(parsers.add_files_parser, [parsers.files_postparser])
     def do_amend(self, args: Namespace):

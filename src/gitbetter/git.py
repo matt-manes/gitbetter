@@ -335,6 +335,7 @@ class Git:
         return self.git(f"worktree {args}")
 
     # |=================================================Convenience=================================================|
+
     def new_repo(self) -> str | int:
         """Executess `git init -b main`."""
         return self.init("-b main")
