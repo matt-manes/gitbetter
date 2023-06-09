@@ -145,7 +145,7 @@ class GitBetter(ArgShell):
         """Directly execute `git {arg}`.
 
         i.e. You can still do everything directly invoking git can do."""
-        self.git.execute(arg)
+        self.git.git(arg)
 
     def do_new_repo(self, _: str):
         """Create a new git repo in this directory."""

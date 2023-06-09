@@ -35,8 +35,8 @@ class Git:
             return subprocess.run(args).returncode
 
     # |===================================================Core===================================================|
-    def execute(self, command: str) -> str | int:
-        """Execute git command.
+    def git(self, command: str) -> str | int:
+        """git git command.
 
         Equivalent to executing `git {command}` in the shell."""
         args = ["git"] + shlex.split(command)
@@ -44,304 +44,304 @@ class Git:
 
     def add(self, args: str = "") -> str | int:
         """>>> git add {args}"""
-        return self.execute(f"add {args}")
+        return self.git(f"add {args}")
 
     def am(self, args: str = "") -> str | int:
         """>>> git am {args}"""
-        return self.execute(f"am {args}")
+        return self.git(f"am {args}")
 
     def annotate(self, args: str = "") -> str | int:
         """>>> git annotate {args}"""
-        return self.execute(f"annotate {args}")
+        return self.git(f"annotate {args}")
 
     def archive(self, args: str = "") -> str | int:
         """>>> git archive {args}"""
-        return self.execute(f"archive {args}")
+        return self.git(f"archive {args}")
 
     def bisect(self, args: str = "") -> str | int:
         """>>> git bisect {args}"""
-        return self.execute(f"bisect {args}")
+        return self.git(f"bisect {args}")
 
     def blame(self, args: str = "") -> str | int:
         """>>> git blame {args}"""
-        return self.execute(f"blame {args}")
+        return self.git(f"blame {args}")
 
     def branch(self, args: str = "") -> str | int:
         """>>> git branch {args}"""
-        return self.execute(f"branch {args}")
+        return self.git(f"branch {args}")
 
     def bugreport(self, args: str = "") -> str | int:
         """>>> git bugreport {args}"""
-        return self.execute(f"bugreport {args}")
+        return self.git(f"bugreport {args}")
 
     def bundle(self, args: str = "") -> str | int:
         """>>> git bundle {args}"""
-        return self.execute(f"bundle {args}")
+        return self.git(f"bundle {args}")
 
     def checkout(self, args: str = "") -> str | int:
         """>>> git checkout {args}"""
-        return self.execute(f"checkout {args}")
+        return self.git(f"checkout {args}")
 
     def cherry_pick(self, args: str = "") -> str | int:
         """>>> git cherry-pick {args}"""
-        return self.execute(f"cherry-pick {args}")
+        return self.git(f"cherry-pick {args}")
 
     def citool(self, args: str = "") -> str | int:
         """>>> git citool {args}"""
-        return self.execute(f"citool {args}")
+        return self.git(f"citool {args}")
 
     def clean(self, args: str = "") -> str | int:
         """>>> git clean {args}"""
-        return self.execute(f"clean {args}")
+        return self.git(f"clean {args}")
 
     def clone(self, args: str = "") -> str | int:
         """>>> git clone {args}"""
-        return self.execute(f"clone {args}")
+        return self.git(f"clone {args}")
 
     def commit(self, args: str = "") -> str | int:
         """>>> git commit {args}"""
-        return self.execute(f"commit {args}")
+        return self.git(f"commit {args}")
 
     def config(self, args: str = "") -> str | int:
         """>>> git config {args}"""
-        return self.execute(f"config {args}")
+        return self.git(f"config {args}")
 
     def count_objects(self, args: str = "") -> str | int:
         """>>> git count-objects {args}"""
-        return self.execute(f"count-objects {args}")
+        return self.git(f"count-objects {args}")
 
     def describe(self, args: str = "") -> str | int:
         """>>> git describe {args}"""
-        return self.execute(f"describe {args}")
+        return self.git(f"describe {args}")
 
     def diagnose(self, args: str = "") -> str | int:
         """>>> git diagnose {args}"""
-        return self.execute(f"diagnose {args}")
+        return self.git(f"diagnose {args}")
 
     def diff(self, args: str = "") -> str | int:
         """>>> git diff {args}"""
-        return self.execute(f"diff {args}")
+        return self.git(f"diff {args}")
 
     def difftool(self, args: str = "") -> str | int:
         """>>> git difftool {args}"""
-        return self.execute(f"difftool {args}")
+        return self.git(f"difftool {args}")
 
     def fast_export(self, args: str = "") -> str | int:
         """>>> git fast-export {args}"""
-        return self.execute(f"fast-export {args}")
+        return self.git(f"fast-export {args}")
 
     def fast_import(self, args: str = "") -> str | int:
         """>>> git fast-import {args}"""
-        return self.execute(f"fast-import {args}")
+        return self.git(f"fast-import {args}")
 
     def fetch(self, args: str = "") -> str | int:
         """>>> git fetch {args}"""
-        return self.execute(f"fetch {args}")
+        return self.git(f"fetch {args}")
 
     def filter_branch(self, args: str = "") -> str | int:
         """>>> git filter-branch {args}"""
-        return self.execute(f"filter-branch {args}")
+        return self.git(f"filter-branch {args}")
 
     def format_patch(self, args: str = "") -> str | int:
         """>>> git format-patch {args}"""
-        return self.execute(f"format-patch {args}")
+        return self.git(f"format-patch {args}")
 
     def fsck(self, args: str = "") -> str | int:
         """>>> git fsck {args}"""
-        return self.execute(f"fsck {args}")
+        return self.git(f"fsck {args}")
 
     def gc(self, args: str = "") -> str | int:
         """>>> git gc {args}"""
-        return self.execute(f"gc {args}")
+        return self.git(f"gc {args}")
 
     def gitk(self, args: str = "") -> str | int:
         """>>> git gitk {args}"""
-        return self.execute(f"gitk {args}")
+        return self.git(f"gitk {args}")
 
     def gitweb(self, args: str = "") -> str | int:
         """>>> git gitweb {args}"""
-        return self.execute(f"gitweb {args}")
+        return self.git(f"gitweb {args}")
 
     def grep(self, args: str = "") -> str | int:
         """>>> git grep {args}"""
-        return self.execute(f"grep {args}")
+        return self.git(f"grep {args}")
 
     def gui(self, args: str = "") -> str | int:
         """>>> git gui {args}"""
-        return self.execute(f"gui {args}")
+        return self.git(f"gui {args}")
 
     def help(self, args: str = "") -> str | int:
         """>>> git help {args}"""
-        return self.execute(f"help {args}")
+        return self.git(f"help {args}")
 
     def init(self, args: str = "") -> str | int:
         """>>> git init {args}"""
-        return self.execute(f"init {args}")
+        return self.git(f"init {args}")
 
     def instaweb(self, args: str = "") -> str | int:
         """>>> git instaweb {args}"""
-        return self.execute(f"instaweb {args}")
+        return self.git(f"instaweb {args}")
 
     def log(self, args: str = "") -> str | int:
         """>>> git log {args}"""
-        return self.execute(f"log {args}")
+        return self.git(f"log {args}")
 
     def maintenance(self, args: str = "") -> str | int:
         """>>> git maintenance {args}"""
-        return self.execute(f"maintenance {args}")
+        return self.git(f"maintenance {args}")
 
     def merge(self, args: str = "") -> str | int:
         """>>> git merge {args}"""
-        return self.execute(f"merge {args}")
+        return self.git(f"merge {args}")
 
     def merge_tree(self, args: str = "") -> str | int:
         """>>> git merge-tree {args}"""
-        return self.execute(f"merge-tree {args}")
+        return self.git(f"merge-tree {args}")
 
     def mergetool(self, args: str = "") -> str | int:
         """>>> git mergetool {args}"""
-        return self.execute(f"mergetool {args}")
+        return self.git(f"mergetool {args}")
 
     def mv(self, args: str = "") -> str | int:
         """>>> git mv {args}"""
-        return self.execute(f"mv {args}")
+        return self.git(f"mv {args}")
 
     def notes(self, args: str = "") -> str | int:
         """>>> git notes {args}"""
-        return self.execute(f"notes {args}")
+        return self.git(f"notes {args}")
 
     def pack_refs(self, args: str = "") -> str | int:
         """>>> git pack-refs {args}"""
-        return self.execute(f"pack-refs {args}")
+        return self.git(f"pack-refs {args}")
 
     def prune(self, args: str = "") -> str | int:
         """>>> git prune {args}"""
-        return self.execute(f"prune {args}")
+        return self.git(f"prune {args}")
 
     def pull(self, args: str = "") -> str | int:
         """>>> git pull {args}"""
-        return self.execute(f"pull {args}")
+        return self.git(f"pull {args}")
 
     def push(self, args: str = "") -> str | int:
         """>>> git push {args}"""
-        return self.execute(f"push {args}")
+        return self.git(f"push {args}")
 
     def range_diff(self, args: str = "") -> str | int:
         """>>> git range-diff {args}"""
-        return self.execute(f"range-diff {args}")
+        return self.git(f"range-diff {args}")
 
     def rebase(self, args: str = "") -> str | int:
         """>>> git rebase {args}"""
-        return self.execute(f"rebase {args}")
+        return self.git(f"rebase {args}")
 
     def reflog(self, args: str = "") -> str | int:
         """>>> git reflog {args}"""
-        return self.execute(f"reflog {args}")
+        return self.git(f"reflog {args}")
 
     def remote(self, args: str = "") -> str | int:
         """>>> git remote {args}"""
-        return self.execute(f"remote {args}")
+        return self.git(f"remote {args}")
 
     def repack(self, args: str = "") -> str | int:
         """>>> git repack {args}"""
-        return self.execute(f"repack {args}")
+        return self.git(f"repack {args}")
 
     def replace(self, args: str = "") -> str | int:
         """>>> git replace {args}"""
-        return self.execute(f"replace {args}")
+        return self.git(f"replace {args}")
 
     def request_pull(self, args: str = "") -> str | int:
         """>>> git request-pull {args}"""
-        return self.execute(f"request-pull {args}")
+        return self.git(f"request-pull {args}")
 
     def rerere(self, args: str = "") -> str | int:
         """>>> git rerere {args}"""
-        return self.execute(f"rerere {args}")
+        return self.git(f"rerere {args}")
 
     def reset(self, args: str = "") -> str | int:
         """>>> git reset {args}"""
-        return self.execute(f"reset {args}")
+        return self.git(f"reset {args}")
 
     def restore(self, args: str = "") -> str | int:
         """>>> git restore {args}"""
-        return self.execute(f"restore {args}")
+        return self.git(f"restore {args}")
 
     def revert(self, args: str = "") -> str | int:
         """>>> git revert {args}"""
-        return self.execute(f"revert {args}")
+        return self.git(f"revert {args}")
 
     def rm(self, args: str = "") -> str | int:
         """>>> git rm {args}"""
-        return self.execute(f"rm {args}")
+        return self.git(f"rm {args}")
 
     def scalar(self, args: str = "") -> str | int:
         """>>> git scalar {args}"""
-        return self.execute(f"scalar {args}")
+        return self.git(f"scalar {args}")
 
     def shortlog(self, args: str = "") -> str | int:
         """>>> git shortlog {args}"""
-        return self.execute(f"shortlog {args}")
+        return self.git(f"shortlog {args}")
 
     def show(self, args: str = "") -> str | int:
         """>>> git show {args}"""
-        return self.execute(f"show {args}")
+        return self.git(f"show {args}")
 
     def show_branch(self, args: str = "") -> str | int:
         """>>> git show-branch {args}"""
-        return self.execute(f"show-branch {args}")
+        return self.git(f"show-branch {args}")
 
     def sparse_checkout(self, args: str = "") -> str | int:
         """>>> git sparse-checkout {args}"""
-        return self.execute(f"sparse-checkout {args}")
+        return self.git(f"sparse-checkout {args}")
 
     def stash(self, args: str = "") -> str | int:
         """>>> git stash {args}"""
-        return self.execute(f"stash {args}")
+        return self.git(f"stash {args}")
 
     def status(self, args: str = "") -> str | int:
         """>>> git status {args}"""
-        return self.execute(f"status {args}")
+        return self.git(f"status {args}")
 
     def submodule(self, args: str = "") -> str | int:
         """>>> git submodule {args}"""
-        return self.execute(f"submodule {args}")
+        return self.git(f"submodule {args}")
 
     def switch(self, args: str = "") -> str | int:
         """>>> git switch {args}"""
-        return self.execute(f"switch {args}")
+        return self.git(f"switch {args}")
 
     def tag(self, args: str = "") -> str | int:
         """>>> git tag {args}"""
-        return self.execute(f"tag {args}")
+        return self.git(f"tag {args}")
 
     def verify_commit(self, args: str = "") -> str | int:
         """>>> git verify-commit {args}"""
-        return self.execute(f"verify-commit {args}")
+        return self.git(f"verify-commit {args}")
 
     def verify_tag(self, args: str = "") -> str | int:
         """>>> git verify-tag {args}"""
-        return self.execute(f"verify-tag {args}")
+        return self.git(f"verify-tag {args}")
 
     def version(self, args: str = "") -> str | int:
         """>>> git version {args}"""
-        return self.execute(f"version {args}")
+        return self.git(f"version {args}")
 
     def whatchanged(self, args: str = "") -> str | int:
         """>>> git whatchanged {args}"""
-        return self.execute(f"whatchanged {args}")
+        return self.git(f"whatchanged {args}")
 
     def worktree(self, args: str = "") -> str | int:
         """>>> git worktree {args}"""
-        return self.execute(f"worktree {args}")
+        return self.git(f"worktree {args}")
 
     # |=================================================Convenience=================================================|
     def new_repo(self) -> str | int:
-        """Executes `git init -b main`."""
-        return self.execute("init -b main")
+        """Executess `git init -b main`."""
+        return self.git("init -b main")
 
     def loggy(self) -> str | int:
         """Equivalent to `git log --oneline --name-only --abbrev-commit --graph`."""
-        return self.execute("log --oneline --name-only --abbrev-commit --graph")
+        return self.git("log --oneline --name-only --abbrev-commit --graph")
 
     def add_all(self) -> str | int:
         """Stage all modified and untracked files."""
@@ -377,7 +377,7 @@ class Git:
 
     def add_remote_url(self, url: str, name: str = "origin") -> str | int:
         """Add remote url to repo."""
-        return self.execute(f"remote add {name} {url}")
+        return self.git(f"remote add {name} {url}")
 
     def push_new_branch(self, branch: str) -> str | int:
         """Push a new branch to origin with tracking.
