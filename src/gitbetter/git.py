@@ -337,11 +337,11 @@ class Git:
     # |=================================================Convenience=================================================|
     def new_repo(self) -> str | int:
         """Executess `git init -b main`."""
-        return self.git("init -b main")
+        return self.init("-b main")
 
     def loggy(self) -> str | int:
         """Equivalent to `git log --oneline --name-only --abbrev-commit --graph`."""
-        return self.git("log --oneline --name-only --abbrev-commit --graph")
+        return self.log("--oneline --name-only --abbrev-commit --graph")
 
     def add_all(self) -> str | int:
         """Stage all modified and untracked files."""
@@ -377,7 +377,7 @@ class Git:
 
     def add_remote_url(self, url: str, name: str = "origin") -> str | int:
         """Add remote url to repo."""
-        return self.git(f"remote add {name} {url}")
+        return self.remote(f"add {name} {url}")
 
     def push_new_branch(self, branch: str) -> str | int:
         """Push a new branch to origin with tracking.
