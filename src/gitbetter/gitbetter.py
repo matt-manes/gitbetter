@@ -234,9 +234,9 @@ class GitBetter(ArgShell):
         """Execute `git status`."""
         self.git.status()
 
-    def do_merge(self, branch_name: str):
-        """Merge supplied `branch_name` with the currently active branch."""
-        self.git.merge(branch_name)
+    def do_merge(self, args: str):
+        """Perform merge operation with supplied `args`."""
+        self.git.merge(args)
 
     def do_tag(self, tag_id: str):
         """Tag current commit with `tag_id`."""
