@@ -399,9 +399,10 @@ class GitBetter(ArgShell):
         path.append("\n")
         path.append(patterns, False)
 
-    def do_initcommit(self, _: str):
+    @with_parser(parsers.add_files_parser)
+    def do_initcommit(self, args: Namespace):
         """Stage and commit all files with message "Initial Commit"."""
-        self.git.initcommit()
+        self.git.initcommit(args.files)
 
     def do_loggy(self, _: str):
         """>>> git --oneline --name-only --abbrev-commit --graph"""
