@@ -1,5 +1,4 @@
-from argshell import ArgShellParser, Namespace
-from pathier import Pathier
+from argshell import ArgShellParser
 
 
 def new_remote_parser() -> ArgShellParser:
