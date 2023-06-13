@@ -12,12 +12,6 @@ class Git:
         Otherwise, the functions return the call's exit code."""
         self.capture_stdout = capture_stdout
 
-    @contextmanager
-    def capture_output(self):
-        self.capture_stdout = True
-        yield self
-        self.capture_stdout = False
-
     @property
     def capture_stdout(self) -> bool:
         """If `True`, member functions will return the generated `stdout` as a string,
@@ -34,13 +28,22 @@ class Git:
         else:
             return subprocess.run(args).returncode
 
-    # |===================================================Core===================================================|
+    @contextmanager
+    def capture_output(self):
+        self.capture_stdout = True
+        yield self
+        self.capture_stdout = False
+
+    # Seat |===================================================Core===================================================|
+
     def git(self, command: str) -> str | int:
         """git git command.
 
         Equivalent to executing `git {command}` in the shell."""
         args = ["git"] + shlex.split(command)
         return self._run(args)
+
+    # Seat
 
     def add(self, args: str = "") -> str | int:
         """>>> git add {args}"""
@@ -334,57 +337,7 @@ class Git:
         """>>> git worktree {args}"""
         return self.git(f"worktree {args}")
 
-    # |=================================================Convenience=================================================|
-
-    def new_repo(self) -> str | int:
-        """Executess `git init -b main`."""
-        return self.init("-b main")
-
-    def loggy(self) -> str | int:
-        """Equivalent to `git log --oneline --name-only --abbrev-commit --graph`."""
-        return self.log("--oneline --name-only --abbrev-commit --graph")
-
-    def add_all(self) -> str | int:
-        """Stage all modified and untracked files."""
-        return self.add(".")
-
-    def add_files(self, files: list[str | Pathier | Path]) -> str | int:
-        """Stage a list of files."""
-        args = " ".join([str(file) for file in files])
-        return self.add(args)
-
-    def commit_files(
-        self, files: list[str | Pathier | Path], message: str
-    ) -> str | int:
-        """Stage and commit a list of files with commit message `message`."""
-        return self.add_files(files) + self.commit(f'-m "{message}"')  # type: ignore
-
-    def initcommit(self) -> str | int:
-        """Equivalent to
-        >>> git add .
-        >>> git commit -m "Initial commit" """
-        return self.add_all() + self.commit('-m "Initial commit"')  # type: ignore
-
-    def amend(self, files: list[str | Pathier | Path] | None = None) -> str | int:
-        """Stage and commit changes to the previous commit.
-
-        If `files` is `None`, all files will be staged.
-
-        Equivalent to:
-        >>> git add {files}
-        >>> git commit --amend --no-edit
-        """
-        return (self.add(files) if files else self.add_all()) + self.commit("--amend --no-edit")  # type: ignore
-
-    def add_remote_url(self, url: str, name: str = "origin") -> str | int:
-        """Add remote url to repo."""
-        return self.remote(f"add {name} {url}")
-
-    def push_new_branch(self, branch: str) -> str | int:
-        """Push a new branch to origin with tracking.
-
-        Equivalent to `git push -u origin {branch}`."""
-        return self.push(f"-u origin {branch}")
+    # Seat |=================================================Convenience=================================================|
 
     @property
     def current_branch(self) -> str:
@@ -400,15 +353,35 @@ class Git:
         self.capture_stdout = capturing_output
         return current_branch
 
-    def list_branches(self) -> str | int:
-        """>>> git branch -vva"""
-        return self.branch("-vva")
+    def add_all(self) -> str | int:
+        """Stage all modified and untracked files."""
+        return self.add(".")
 
-    def switch_branch(self, branch_name: str) -> str | int:
-        """Switch to the branch specified by `branch_name`.
+    def add_files(self, files: list[str | Pathier | Path]) -> str | int:
+        """Stage a list of files."""
+        args = " ".join([str(file) for file in files])
+        return self.add(args)
 
-        Equivalent to `git checkout {branch_name}`."""
-        return self.checkout(branch_name)
+    def add_remote_url(self, url: str, name: str = "origin") -> str | int:
+        """Add remote url to repo."""
+        return self.remote(f"add {name} {url}")
+
+    def amend(self, files: list[str | Pathier | Path] | None = None) -> str | int:
+        """Stage and commit changes to the previous commit.
+
+        If `files` is `None`, all files will be staged.
+
+        Equivalent to:
+        >>> git add {files}
+        >>> git commit --amend --no-edit
+        """
+        return (self.add(files) if files else self.add_all()) + self.commit("--amend --no-edit")  # type: ignore
+
+    def commit_files(
+        self, files: list[str | Pathier | Path], message: str
+    ) -> str | int:
+        """Stage and commit a list of files with commit message `message`."""
+        return self.add_files(files) + self.commit(f'-m "{message}"')  # type: ignore
 
     def create_new_branch(self, branch_name: str) -> str | int:
         """Create and switch to a new branch named with `branch_name`.
@@ -425,8 +398,42 @@ class Git:
         """
         output = self.branch(f"--delete {branch_name}")
         if not local_only:
-            return output + self.push(f"origin --delete {branch_name}")  # type:ignore
+            return output + self.push(f"origin --delete {branch_name}")  # type: ignore
         return output
+
+    def initcommit(self) -> str | int:
+        """Equivalent to
+        >>> git add .
+        >>> git commit -m "Initial commit" """
+        return self.add_all() + self.commit('-m "Initial commit"')  # type: ignore
+
+    def list_branches(self) -> str | int:
+        """>>> git branch -vva"""
+        return self.branch("-vva")
+
+    def loggy(self) -> str | int:
+        """Equivalent to `git log --oneline --name-only --abbrev-commit --graph`."""
+        return self.log("--oneline --name-only --abbrev-commit --graph")
+
+    def new_repo(self) -> str | int:
+        """Executess `git init -b main`."""
+        return self.init("-b main")
+
+    def origin_url(self) -> str | int:
+        """>>>  git remote get-url origin"""
+        return self.remote("get-url origin")
+
+    def push_new_branch(self, branch: str) -> str | int:
+        """Push a new branch to origin with tracking.
+
+        Equivalent to `git push -u origin {branch}`."""
+        return self.push(f"-u origin {branch}")
+
+    def switch_branch(self, branch_name: str) -> str | int:
+        """Switch to the branch specified by `branch_name`.
+
+        Equivalent to `git checkout {branch_name}`."""
+        return self.checkout(branch_name)
 
     def undo(self) -> str | int:
         """Undo uncommitted changes.
@@ -434,11 +441,32 @@ class Git:
         Equivalent to `git checkout .`."""
         return self.checkout(".")
 
-    def origin_url(self) -> str | int:
-        """>>>  git remote get-url origin"""
-        return self.remote("get-url origin")
+    # Seat |===============================Requires GitHub CLI to be installed and configured===============================|
 
-    # ===============================Requires GitHub CLI to be installed and configured===============================
+    @property
+    def owner(self) -> str:
+        return self._owner_reponame().split("/")[0]
+
+    @property
+    def repo_name(self) -> str:
+        return self._owner_reponame().split("/")[1]
+
+    def _change_visibility(self, visibility: str) -> str | int:
+        return self._run(
+            [
+                "gh",
+                "repo",
+                "edit",
+                f"{self.owner}/{self.repo_name}",
+                "--visibility",
+                visibility,
+            ]
+        )
+
+    def _owner_reponame(self) -> str:
+        """Returns "owner/repo-name", assuming there's one remote origin url and it's for github."""
+        with self.capture_output():
+            return urlparse(self.origin_url().strip("\n")).path.strip("/")  # type: ignore
 
     def create_remote(self, name: str, public: bool = False) -> str | int:
         """Uses GitHub CLI (must be installed and configured) to create a remote GitHub repo.
@@ -465,29 +493,10 @@ class Git:
             ["gh", "repo", "create", "--source", ".", f"--{visibility}", "--push"]
         )
 
-    def _owner_reponame(self) -> str:
-        """Returns "owner/repo-name", assuming there's one remote origin url and it's for github."""
-        with self.capture_output():
-            return urlparse(self.origin_url().strip("\n")).path.strip("/")  # type: ignore
-
-    @property
-    def owner(self) -> str:
-        return self._owner_reponame().split("/")[0]
-
-    @property
-    def repo_name(self) -> str:
-        return self._owner_reponame().split("/")[1]
-
-    def _change_visibility(self, visibility: str) -> str | int:
+    def delete_remote(self) -> str | int:
+        """Uses GitHub CLI (must be isntalled and configured) to delete the remote for this repo."""
         return self._run(
-            [
-                "gh",
-                "repo",
-                "edit",
-                f"{self.owner}/{self.repo_name}",
-                "--visibility",
-                visibility,
-            ]
+            ["gh", "repo", "delete", f"{self.owner}/{self.repo_name}", "--yes"]
         )
 
     def make_private(self) -> str | int:
@@ -497,9 +506,3 @@ class Git:
     def make_public(self) -> str | int:
         """Uses GitHub CLI (must be installed and configured) to set the repo's visibility to public."""
         return self._change_visibility("public")
-
-    def delete_remote(self) -> str | int:
-        """Uses GitHub CLI (must be isntalled and configured) to delete the remote for this repo."""
-        return self._run(
-            ["gh", "repo", "delete", f"{self.owner}/{self.repo_name}", "--yes"]
-        )
