@@ -353,6 +353,12 @@ class Git:
         self.capture_stdout = capturing_output
         return current_branch
 
+    @property
+    def origin_url(self) -> str | int:
+        """The remote origin url for this repo
+        >>> git remote get-url origin"""
+        return self.remote("get-url origin")
+
     def add_all(self) -> str | int:
         """Stage all modified and untracked files.
         >>> git add ."""
@@ -423,11 +429,6 @@ class Git:
         """Initialize a new repo in current directory
         >>> git init -b main"""
         return self.init("-b main")
-
-    def origin_url(self) -> str | int:
-        """The remote origin url for this repo
-        >>> git remote get-url origin"""
-        return self.remote("get-url origin")
 
     def push_new_branch(self, branch: str) -> str | int:
         """Push a new branch to origin with tracking.
