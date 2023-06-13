@@ -382,7 +382,7 @@ class GitBetter(ArgShell):
         """Delete branch."""
         self.git.delete_branch(args.branch, not args.remote)
 
-    def do_delete_gh_repo(self, owner: str):
+    def do_delete_gh_repo(self):
         """Delete this repo from GitHub.
 
         Expects an argument for the repo owner, i.e. the `OWNER` in `github.com/{OWNER}/{repo-name}`
