@@ -434,9 +434,10 @@ class GitBetter(ArgShell):
         """Create a new git repo in this directory."""
         self.git.new_repo()
 
-    def do_push_new(self, branch_name: str):
-        """Push this new branch to origin with -u flag."""
-        self.git.push_new_branch(branch_name)
+    def do_push_new(self, _: str):
+        """Push current branch to origin with `-u` flag.
+        >>> git push -u origin {this_branch}"""
+        self.git.push_new_branch(self.git.current_branch)
 
     def do_undo(self, _: str):
         """Undo all uncommitted changes.
