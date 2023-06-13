@@ -350,7 +350,9 @@ class GitBetter(ArgShell):
     # Seat |==================================Convenience==================================|
 
     def do_add_url(self, url: str):
-        """Add remote origin url for repo and push repo."""
+        """Add remote origin url for repo and push repo.
+        >>> git remote add origin {url}
+        >>> git push -u origin main"""
         self.git.add_remote_url(url)
         self.git.push("-u origin main")
 
@@ -360,11 +362,15 @@ class GitBetter(ArgShell):
         self.git.amend(args.files)
 
     def do_branches(self, _: str):
-        """Show local and remote branches."""
+        """Show local and remote branches.
+        >>> git branch -vva"""
         self.git.list_branches()
 
     def do_commitall(self, message: str):
-        """Stage and commit all files with this message."""
+        """Stage and commit all modified and untracked files with this message.
+        >>> git add .
+        >>> git commit -m \"{message}\" """
+        message = message.strip('"').replace('"', "'")
         self.git.add_all()
         self.git.commit(f'-m "{message}"')
 
@@ -381,15 +387,13 @@ class GitBetter(ArgShell):
     def do_delete_gh_repo(self):
         """Delete this repo from GitHub.
 
-        Expects an argument for the repo owner, i.e. the `OWNER` in `github.com/{OWNER}/{repo-name}`
-
         GitHub CLI must be installed and configured.
 
         May require you to reauthorize and rerun command."""
         self.git.delete_remote()
 
     def do_ignore(self, patterns: str):
-        """Add the list of patterns to `.gitignore`."""
+        """Add the list of patterns/file names to `.gitignore`."""
         patterns = "\n".join(patterns.split())
         path = Pathier(".gitignore")
         path.append("\n")
@@ -400,13 +404,11 @@ class GitBetter(ArgShell):
         self.git.initcommit()
 
     def do_loggy(self, _: str):
-        """Execute `git --oneline --name-only --abbrev-commit --graph`."""
+        """>>> git --oneline --name-only --abbrev-commit --graph"""
         self.git.loggy()
 
     def do_make_private(self):
         """Make the GitHub remote for this repo private.
-
-        Expects an argument for the repo owner, i.e. the `OWNER` in `github.com/{OWNER}/{repo-name}`
 
         This repo must exist and GitHub CLI must be installed and configured."""
         self.git.make_private()
@@ -414,13 +416,11 @@ class GitBetter(ArgShell):
     def do_make_public(self):
         """Make the GitHub remote for this repo public.
 
-        Expects an argument for the repo owner, i.e. the `OWNER` in `github.com/{OWNER}/{repo-name}`
-
         This repo must exist and GitHub CLI must be installed and configured."""
         self.git.make_public()
 
     def do_new_branch(self, name: str):
-        """Create and switch to a new branch named after the supplied arg."""
+        """Create and switch to a new branch with this `name`."""
         self.git.create_new_branch(name)
 
     @with_parser(parsers.new_remote_parser)
@@ -439,7 +439,8 @@ class GitBetter(ArgShell):
         self.git.push_new_branch(branch_name)
 
     def do_undo(self, _: str):
-        """Undo all uncommitted changes."""
+        """Undo all uncommitted changes.
+        >>> git checkout ."""
         self.git.undo()
 
 

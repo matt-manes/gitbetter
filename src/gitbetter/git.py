@@ -371,7 +371,7 @@ class Git:
 
     def add_remote_url(self, url: str, name: str = "origin") -> str | int:
         """Add remote url to repo.
-        >>> git add {name} {url}"""
+        >>> git remote add {name} {url}"""
         return self.remote(f"add {name} {url}")
 
     def amend(self, files: list[Pathish] | None = None) -> str | int:
@@ -403,7 +403,7 @@ class Git:
         `local_only`: Only delete the local copy of `branch`, otherwise also delete the remote branch on origin and remote-tracking branch.
         >>> git branch --delete {branch_name}
 
-        Then if `local_only`:
+        Then if not `local_only`:
         >>> git push origin --delete {branch_name}
         """
         output = self.branch(f"--delete {branch_name}")
