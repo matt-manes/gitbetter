@@ -6,3 +6,5 @@ generate.py
 commands.txt
 generated.txt
 gitlist.txt
+generate_shell_commands.py
+shellcommands.txt
