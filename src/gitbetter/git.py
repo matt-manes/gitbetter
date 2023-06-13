@@ -1,7 +1,7 @@
 import shlex
 import subprocess
 from contextlib import contextmanager
-from pathier import Pathier
+from pathier import Pathier, Pathish
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -37,9 +37,9 @@ class Git:
     # Seat |===================================================Core===================================================|
 
     def git(self, command: str) -> str | int:
-        """git git command.
-
-        Equivalent to executing `git {command}` in the shell."""
+        """Base function for executing git commands.
+        Use this if another function doesn't meet your needs.
+        >>> git {command}"""
         args = ["git"] + shlex.split(command)
         return self._run(args)
 
@@ -354,39 +354,39 @@ class Git:
         return current_branch
 
     def add_all(self) -> str | int:
-        """Stage all modified and untracked files."""
+        """Stage all modified and untracked files.
+        >>> git add ."""
         return self.add(".")
 
-    def add_files(self, files: list[str | Pathier | Path]) -> str | int:
+    def add_files(self, files: list[Pathish]) -> str | int:
         """Stage a list of files."""
         args = " ".join([str(file) for file in files])
         return self.add(args)
 
     def add_remote_url(self, url: str, name: str = "origin") -> str | int:
-        """Add remote url to repo."""
+        """Add remote url to repo.
+        >>> git add {name} {url}"""
         return self.remote(f"add {name} {url}")
 
-    def amend(self, files: list[str | Pathier | Path] | None = None) -> str | int:
+    def amend(self, files: list[Pathish] | None = None) -> str | int:
         """Stage and commit changes to the previous commit.
 
         If `files` is `None`, all files will be staged.
 
-        Equivalent to:
-        >>> git add {files}
+        >>> git add {files} or git add .
         >>> git commit --amend --no-edit
         """
         return (self.add(files) if files else self.add_all()) + self.commit("--amend --no-edit")  # type: ignore
 
-    def commit_files(
-        self, files: list[str | Pathier | Path], message: str
-    ) -> str | int:
-        """Stage and commit a list of files with commit message `message`."""
+    def commit_files(self, files: list[Pathish], message: str) -> str | int:
+        """Stage and commit a list of files with commit message `message`.
+        >>> git add {files}
+        >>> git commit -m {message}"""
         return self.add_files(files) + self.commit(f'-m "{message}"')  # type: ignore
 
     def create_new_branch(self, branch_name: str) -> str | int:
         """Create and switch to a new branch named with `branch_name`.
-
-        Equivalent to `git checkout -b {branch_name} --track`."""
+        >>> git checkout -b {branch_name} --track"""
         return self.checkout(f"-b {branch_name} --track")
 
     def delete_branch(self, branch_name: str, local_only: bool = True) -> str | int:
@@ -395,6 +395,10 @@ class Git:
         #### :params:
 
         `local_only`: Only delete the local copy of `branch`, otherwise also delete the remote branch on origin and remote-tracking branch.
+        >>> git branch --delete {branch_name}
+
+        Then if `local_only`:
+        >>> git push origin --delete {branch_name}
         """
         output = self.branch(f"--delete {branch_name}")
         if not local_only:
@@ -402,7 +406,7 @@ class Git:
         return output
 
     def initcommit(self) -> str | int:
-        """Equivalent to
+        """Stage and commit all files with the message `Initial commit`.
         >>> git add .
         >>> git commit -m "Initial commit" """
         return self.add_all() + self.commit('-m "Initial commit"')  # type: ignore
@@ -412,33 +416,32 @@ class Git:
         return self.branch("-vva")
 
     def loggy(self) -> str | int:
-        """Equivalent to `git log --oneline --name-only --abbrev-commit --graph`."""
+        """>>> git log --oneline --name-only --abbrev-commit --graph"""
         return self.log("--oneline --name-only --abbrev-commit --graph")
 
     def new_repo(self) -> str | int:
-        """Executess `git init -b main`."""
+        """Initialize a new repo in current directory
+        >>> git init -b main"""
         return self.init("-b main")
 
     def origin_url(self) -> str | int:
-        """>>>  git remote get-url origin"""
+        """The remote origin url for this repo
+        >>> git remote get-url origin"""
         return self.remote("get-url origin")
 
     def push_new_branch(self, branch: str) -> str | int:
         """Push a new branch to origin with tracking.
-
-        Equivalent to `git push -u origin {branch}`."""
+        >>> git push -u origin {branch}"""
         return self.push(f"-u origin {branch}")
 
     def switch_branch(self, branch_name: str) -> str | int:
         """Switch to the branch specified by `branch_name`.
-
-        Equivalent to `git checkout {branch_name}`."""
+        >>> git checkout {branch_name}"""
         return self.checkout(branch_name)
 
     def undo(self) -> str | int:
         """Undo uncommitted changes.
-
-        Equivalent to `git checkout .`."""
+        >>> git checkout ."""
         return self.checkout(".")
 
     # Seat |===============================Requires GitHub CLI to be installed and configured===============================|
