@@ -394,10 +394,7 @@ class GitBetter(ArgShell):
 
     def do_ignore(self, patterns: str):
         """Add the list of patterns/file names to `.gitignore`."""
-        patterns = "\n".join(patterns.split())
-        path = Pathier(".gitignore")
-        path.append("\n")
-        path.append(patterns, False)
+        self.git.ignore(patterns.split())
 
     @with_parser(parsers.add_files_parser)
     def do_initcommit(self, args: Namespace):

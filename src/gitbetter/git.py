@@ -505,6 +505,15 @@ class Git:
             ["gh", "repo", "delete", f"{self.owner}/{self.repo_name}", "--yes"]
         )
 
+    def ignore(self, patterns: list[str]):
+        """Add `patterns` to `.gitignore`."""
+        gitignore = Pathier(".gitignore")
+        if not gitignore.exists():
+            gitignore.touch()
+        ignores = gitignore.split()
+        ignores += [pattern for pattern in patterns if pattern not in ignores]
+        gitignore.join(ignores)
+
     def make_private(self) -> str | int:
         """Uses GitHub CLI (must be installed and configured) to set the repo's visibility to private."""
         return self._change_visibility("private")
