@@ -354,7 +354,7 @@ class GitBetter(ArgShell):
         self.git.add_remote_url(url)
         self.git.push("-u origin main")
 
-    @with_parser(parsers.add_files_parser, [parsers.files_postparser])
+    @with_parser(parsers.add_files_parser)
     def do_amend(self, args: Namespace):
         """Stage files and add to previous commit."""
         self.git.amend(args.files)
@@ -368,7 +368,7 @@ class GitBetter(ArgShell):
         self.git.add_all()
         self.git.commit(f'-m "{message}"')
 
-    @with_parser(parsers.commit_files_parser, [parsers.files_postparser])
+    @with_parser(parsers.commit_files_parser)
     def do_commitf(self, args: Namespace):
         """Stage and commit a list of files."""
         self.git.commit_files(args.files, args.message)
