@@ -384,10 +384,16 @@ class Git:
         """
         return (self.add(files) if files else self.add_all()) + self.commit("--amend --no-edit")  # type: ignore
 
+    def commit_all(self, message: str) -> str | int:
+        """Stage and commit all files with `message`.
+        >>> git add .
+        >>> git commit -m \"{message}\" """
+        return self.add_all() + self.commit(f'-m "{message}"')  # type: ignore
+
     def commit_files(self, files: list[Pathish], message: str) -> str | int:
         """Stage and commit a list of files with commit message `message`.
         >>> git add {files}
-        >>> git commit -m {message}"""
+        >>> git commit -m \"{message}\" """
         return self.add_files(files) + self.commit(f'-m "{message}"')  # type: ignore
 
     def create_new_branch(self, branch_name: str) -> str | int:
