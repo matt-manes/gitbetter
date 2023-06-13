@@ -411,11 +411,13 @@ class Git:
             return output + self.push(f"origin --delete {branch_name}")  # type: ignore
         return output
 
-    def initcommit(self) -> str | int:
-        """Stage and commit all files with the message `Initial commit`.
-        >>> git add .
+    def initcommit(self, files: list[Pathish] | None = None) -> str | int:
+        """Stage and commit `files` with the message `Initial commit`.
+
+        If `files` is not given, all files will be added and committed.
+        >>> git add {files} or git add .
         >>> git commit -m "Initial commit" """
-        return self.add_all() + self.commit('-m "Initial commit"')  # type: ignore
+        return (self.add_files(files) if files else self.add_all()) + self.commit('-m "Initial commit"')  # type: ignore
 
     def list_branches(self) -> str | int:
         """>>> git branch -vva"""
