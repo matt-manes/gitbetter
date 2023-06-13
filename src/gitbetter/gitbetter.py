@@ -365,12 +365,8 @@ class GitBetter(ArgShell):
 
     def do_commitall(self, message: str):
         """Stage and commit all files with this message."""
-        if not message.startswith('"'):
-            message = '"' + message
-        if not message.endswith('"'):
-            message += '"'
         self.git.add_all()
-        self.git.commit(f"-m {message}")
+        self.git.commit(f'-m "{message}"')
 
     @with_parser(parsers.commit_files_parser, [parsers.files_postparser])
     def do_commitf(self, args: Namespace):
