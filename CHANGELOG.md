@@ -1,5 +1,44 @@
 # Changelog
 
+## v2.0.0 (2023-06-13)
+
+#### New Features
+
+* help command shows built in git commands and convenience commands separately
+* add commit_all()
+* add ignore() to Git
+* do_initcommit can take a list of files instead of only operating on all files
+* add all core git commands to gitbetter shell
+* initcommit() can accept a list of files
+* add owner and repo name properties
+* add all porcelain git commands
+#### Fixes
+
+* fix faulty import statement
+* replace backslashes with forward slashes in add_files if there are any
+#### Refactorings
+
+* do_push_new() will use current_branch property instead of needing branch name supplied
+* remove recursive options from shell parsers in favor of native wildcard usage
+* remove quote check from do_commitall
+* make origin_url a property
+* move shell parsers to separate file
+* change some convenience functions to use newly added core functions
+* change execute method name to git
+* update to revised Git functions
+* remove owner and name params from github cli functions
+#### Docs
+
+* update readme
+* update and improve docstrings
+#### Others
+
+* remove unused imports
+* remove unused arg from do_delete_gh_repo
+* add to ignore
+* update ignores
+
+
 ## v1.4.0 (2023-06-01)
 
 #### Refactorings
