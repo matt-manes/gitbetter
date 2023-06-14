@@ -366,7 +366,7 @@ class Git:
 
     def add_files(self, files: list[Pathish]) -> str | int:
         """Stage a list of files."""
-        args = " ".join([str(file) for file in files])
+        args = " ".join([str(file).replace("\\", "/") for file in files])
         return self.add(args)
 
     def add_remote_url(self, url: str, name: str = "origin") -> str | int:
@@ -434,7 +434,7 @@ class Git:
         return self.log("--oneline --name-only --abbrev-commit --graph")
 
     def new_repo(self) -> str | int:
-        """Initialize a new repo in current directory
+        """Initialize a new repo in current directory.
         >>> git init -b main"""
         return self.init("-b main")
 
@@ -452,6 +452,15 @@ class Git:
         """Undo uncommitted changes.
         >>> git checkout ."""
         return self.checkout(".")
+
+    def ignore(self, patterns: list[str]):
+        """Add `patterns` to `.gitignore`."""
+        gitignore = Pathier(".gitignore")
+        if not gitignore.exists():
+            gitignore.touch()
+        ignores = gitignore.split()
+        ignores += [pattern for pattern in patterns if pattern not in ignores]
+        gitignore.join(ignores)
 
     # Seat |===============================Requires GitHub CLI to be installed and configured===============================|
 
@@ -510,15 +519,6 @@ class Git:
         return self._run(
             ["gh", "repo", "delete", f"{self.owner}/{self.repo_name}", "--yes"]
         )
-
-    def ignore(self, patterns: list[str]):
-        """Add `patterns` to `.gitignore`."""
-        gitignore = Pathier(".gitignore")
-        if not gitignore.exists():
-            gitignore.touch()
-        ignores = gitignore.split()
-        ignores += [pattern for pattern in patterns if pattern not in ignores]
-        gitignore.join(ignores)
 
     def make_private(self) -> str | int:
         """Uses GitHub CLI (must be installed and configured) to set the repo's visibility to private."""
