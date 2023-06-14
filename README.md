@@ -27,19 +27,39 @@ Starting gitbetter...
 Enter 'help' or '?' for command help.
 gitbetter::C:\gitbetter>help
 
-Documented commands (type help <topic>):
-========================================
-add             ignore         pull_branch
-add_url         initcommit     push
-amend           list_branches  push_new
-cd              loggy          quit
-commit          make_private   status
-commitall       make_public    switch
-commitf         merge          sys
-delete_branch   new_branch     tag
-delete_gh_repo  new_gh_remote  toggle_unrecognized_command_behavior
-git             new_repo       undo
-help            pull
+Built in Git commands (type '{command} -h' or '{command} --help'):
+==================================================================
+add            filter_branch  rebase                                version
+am             format_patch   reflog                                whatchanged
+annotate       fsck           remote                                worktree
+archive        gc             repack
+bisect         git            replace
+blame          gitk           request_pull
+branch         gitweb         rerere
+bugreport      grep           reset
+bundle         gui            restore
+cd             help           revert
+checkout       init           rm
+cherry_pick    instaweb       scalar
+citool         log            shortlog
+clean          maintenance    show
+clone          merge          show_branch
+commit         merge_tree     sparse_checkout
+config         mergetool      stash
+count_objects  mv             status
+describe       notes          submodule
+diagnose       pack_refs      switch
+diff           prune          sys
+difftool       pull           tag
+fast_export    push           toggle_unrecognized_command_behavior
+fast_import    quit           verify_commit
+fetch          range_diff     verify_tag
+
+Convenience commands (type 'help {command}'):
+=============================================
+add_url   commitall      delete_gh_repo  loggy         new_branch     push_new
+amend     commitf        ignore          make_private  new_gh_remote  undo
+branches  delete_branch  initcommit      make_public   new_repo
 
 Unrecognized command behavior: Execute in shell with os.system()
 ^Essentially makes this shell function as a super-shell of whatever shell you launched gitbetter from.^
@@ -47,7 +67,7 @@ Unrecognized command behavior: Execute in shell with os.system()
 gitbetter::C:\gitbetter>help commitf
 Stage and commit a list of files.
 Parser help for commitf:
-usage: gitbetter [-h] -m MESSAGE [-r] [files ...]
+usage: gitbetter [-h] -m MESSAGE [files ...]
 
 positional arguments:
   files                 List of files to stage and commit.
@@ -56,11 +76,9 @@ options:
   -h, --help            show this help message and exit
   -m MESSAGE, --message MESSAGE
                         The commit message to use.
-  -r, --recursive       If a file name is not found in the current working directory, search for it in subfolders. This avoids having to type paths to files in subfolders,
-                        but if you have multiple files in different subfolders with the same name that have changes they will all be staged and committed.
-                        
+
 gitbetter::C:\gitbetter>help loggy
-Execute `git --oneline --name-only --abbrev-commit --graph`.
+>>> git --oneline --name-only --abbrev-commit --graph
 
 gitbetter::C:\gitbetter>loggy
 *   3e780ec (HEAD -> main, tag: v1.0.0) Merge branch 'my-feature'
