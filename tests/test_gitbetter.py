@@ -1,8 +1,9 @@
+import os
+
 import pytest
+from pathier import Pathier
 
 from gitbetter import Git
-from pathier import Pathier
-import os
 
 root = Pathier(__file__).parent
 

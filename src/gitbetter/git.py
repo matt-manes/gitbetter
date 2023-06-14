@@ -1,9 +1,10 @@
 import shlex
 import subprocess
 from contextlib import contextmanager
-from pathier import Pathier, Pathish
 from pathlib import Path
 from urllib.parse import urlparse
+
+from pathier import Pathier, Pathish
 
 
 class Git:
