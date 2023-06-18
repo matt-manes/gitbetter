@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.0.1 (2023-06-18)
+
+#### Fixes
+
+* fix amend() calling wrong add function
+
 ## v2.0.0 (2023-06-13)
 
 #### New Features
