@@ -383,7 +383,7 @@ class Git:
         >>> git add {files} or git add .
         >>> git commit --amend --no-edit
         """
-        return (self.add(files) if files else self.add_all()) + self.commit("--amend --no-edit")  # type: ignore
+        return (self.add_files(files) if files else self.add_all()) + self.commit("--amend --no-edit")  # type: ignore
 
     def commit_all(self, message: str) -> str | int:
         """Stage and commit all files with `message`.
