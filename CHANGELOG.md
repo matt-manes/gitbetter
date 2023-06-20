@@ -1,5 +1,14 @@
 # Changelog
 
+## v2.1.0 (2023-06-20)
+
+#### Performance improvements
+
+* do_ignore will commit the gitignore file after adding patterns
+#### Refactorings
+
+* sort class contents and remove unused import
+
 ## v2.0.1 (2023-06-18)
 
 #### Fixes
