@@ -1,7 +1,6 @@
 import shlex
 import subprocess
 from contextlib import contextmanager
-from pathlib import Path
 from urllib.parse import urlparse
 
 from pathier import Pathier, Pathish
@@ -388,13 +387,13 @@ class Git:
     def commit_all(self, message: str) -> str | int:
         """Stage and commit all files with `message`.
         >>> git add .
-        >>> git commit -m \"{message}\" """
+        >>> git commit -m "{message}" """
         return self.add_all() + self.commit(f'-m "{message}"')  # type: ignore
 
     def commit_files(self, files: list[Pathish], message: str) -> str | int:
         """Stage and commit a list of files with commit message `message`.
         >>> git add {files}
-        >>> git commit -m \"{message}\" """
+        >>> git commit -m "{message}" """
         return self.add_files(files) + self.commit(f'-m "{message}"')  # type: ignore
 
     def create_new_branch(self, branch_name: str) -> str | int:
@@ -417,6 +416,15 @@ class Git:
         if not local_only:
             return output + self.push(f"origin --delete {branch_name}")  # type: ignore
         return output
+
+    def ignore(self, patterns: list[str]):
+        """Add `patterns` to `.gitignore`."""
+        gitignore = Pathier(".gitignore")
+        if not gitignore.exists():
+            gitignore.touch()
+        ignores = gitignore.split()
+        ignores += [pattern for pattern in patterns if pattern not in ignores]
+        gitignore.join(ignores)
 
     def initcommit(self, files: list[Pathish] | None = None) -> str | int:
         """Stage and commit `files` with the message `Initial commit`.
@@ -453,15 +461,6 @@ class Git:
         """Undo uncommitted changes.
         >>> git checkout ."""
         return self.checkout(".")
-
-    def ignore(self, patterns: list[str]):
-        """Add `patterns` to `.gitignore`."""
-        gitignore = Pathier(".gitignore")
-        if not gitignore.exists():
-            gitignore.touch()
-        ignores = gitignore.split()
-        ignores += [pattern for pattern in patterns if pattern not in ignores]
-        gitignore.join(ignores)
 
     # Seat |===============================Requires GitHub CLI to be installed and configured===============================|
 
