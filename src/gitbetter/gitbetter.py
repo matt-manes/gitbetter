@@ -468,8 +468,9 @@ class GitBetter(GitArgShell):
         self.git.delete_remote()
 
     def do_ignore(self, patterns: str):
-        """Add the list of patterns/file names to `.gitignore`."""
+        """Add the list of patterns/file names to `.gitignore` and commit with the message `chore: add to gitignore`."""
         self.git.ignore(patterns.split())
+        self.git.commit_files([".gitignore"], "chore: add to gitignore")
 
     @with_parser(parsers.add_files_parser)
     def do_initcommit(self, args: Namespace):
