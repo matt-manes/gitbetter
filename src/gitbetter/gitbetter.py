@@ -449,11 +449,6 @@ class GitBetter(GitArgShell):
         self.git.add_all()
         self.git.commit(f'-m "{message}"')
 
-    @with_parser(parsers.commit_files_parser)
-    def do_commitf(self, args: Namespace):
-        """Stage and commit a list of files."""
-        self.git.commit_files(args.files, args.message)
-
     @with_parser(parsers.delete_branch_parser)
     def do_delete_branch(self, args: Namespace):
         """Delete branch."""

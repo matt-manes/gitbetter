@@ -11,21 +11,6 @@ def new_remote_parser() -> ArgShellParser:
     return parser
 
 
-def commit_files_parser() -> ArgShellParser:
-    parser = ArgShellParser()
-    parser.add_argument(
-        "files", type=str, nargs="*", help=""" List of files to stage and commit. """
-    )
-    parser.add_argument(
-        "-m",
-        "--message",
-        type=str,
-        required=True,
-        help=""" The commit message to use. """,
-    )
-    return parser
-
-
 def add_files_parser() -> ArgShellParser:
     parser = ArgShellParser()
     parser.add_argument(
