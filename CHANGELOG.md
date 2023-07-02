@@ -1,5 +1,15 @@
 # Changelog
 
+## v2.1.1 (2023-07-01)
+
+#### Refactorings
+
+* remove redundant shell command and parser
+#### Others
+
+* cleanup test directory
+
+
 ## v2.1.0 (2023-06-20)
 
 #### Performance improvements
