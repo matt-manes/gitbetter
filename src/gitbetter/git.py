@@ -434,6 +434,19 @@ class Git(Morbin):
         >>> git checkout ."""
         return self.checkout(".")
 
+    def untrack(self, *paths: Pathish) -> Output:
+        """Remove any number of `paths` from the index.
+
+        Equivalent to
+        >>> git rm --cached {path}
+
+        for each path in `paths`."""
+        paths_ = [str(path).replace("\\", "/") for path in paths]
+        return sum(
+            [self.rm(f"--cached {path}") for path in paths_[1:]],
+            self.rm(f"--cached {paths_[0]}"),
+        )
+
     # Seat |===============================Requires GitHub CLI to be installed and configured===============================|
 
     @property
