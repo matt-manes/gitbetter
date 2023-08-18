@@ -31,10 +31,10 @@ def test_basics():
     git.amend()
     git.switch_branch("main")
     git.merge("new-test")
-    with git.capture_output():
-        assert len(git.list_branches().splitlines()) == 2  # type: ignore
+    with git.capturing_output():
+        assert len(git.list_branches().stdout.splitlines()) == 2
     git.delete_branch("new-test")
-    with git.capture_output():
-        assert len(git.list_branches().splitlines()) == 1  # type: ignore
+    with git.capturing_output():
+        assert len(git.list_branches().stdout.splitlines()) == 1
     git.loggy()
     git.status()
