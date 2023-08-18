@@ -38,3 +38,9 @@ def test_basics():
         assert len(git.list_branches().stdout.splitlines()) == 1
     git.loggy()
     git.status()
+
+
+def test__untrack():
+    git = Git()
+    output = git.untrack(*list((root / "proj").glob("*.py")))
+    assert len(output.return_code) == 2
