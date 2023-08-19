@@ -1,5 +1,3 @@
-import os
-
 import pytest
 from pathier import Pathier
 
@@ -7,40 +5,79 @@ from gitbetter import Git
 
 root = Pathier(__file__).parent
 
+""" All tests should be run sequentially in the order written. """
 
-def test_basics():
-    proj = root / "proj"
-    proj.delete()
-    proj.mkdir()
-    proj.mkcwd()
-    git = Git()
-    git.new_repo()
-    (proj / "file.py").write_text("file = 'test'")
-    git.initcommit([proj / "file.py"])
+# Everything should use `dummyrepo` b/c it ensures it's the cwd before running tests
+@pytest.fixture(scope="module")
+def dummyrepo(tmp_path_factory) -> Pathier:
+    dummyrepo = Pathier(tmp_path_factory.mktemp("dummyrepo"))
+    dummyrepo.mkcwd()
+    return dummyrepo
+
+
+@pytest.fixture(scope="module")
+def git() -> Git:
+    return Git()
+
+
+def test__new_repo(dummyrepo: Pathier, git: Git):
+    assert git.new_repo().return_code[0] == 0
+
+
+def test__init_commit(dummyrepo: Pathier, git: Git):
+    (dummyrepo / "file.py").write_text("file = 'test'")
+    assert git.initcommit(["file.py"]).return_code[0] == 0
+
+
+def test__current_branch(dummyrepo: Pathier, git: Git):
     assert git.current_branch == "main"
-    git.create_new_branch("new-test")
-    assert git.current_branch == "new-test"
-    (proj / "file.py").write_text("file = 'test2'")
-    git.commit_files([proj / "file.py"], "refactor: change string value")
-    (proj / "file2.py").write_text("import gitbetter")
-    git.initcommit([proj / "file2.py"])
-    (proj / "stuff.txt").write_text("stuff")
-    git.ignore(["stuff.txt"])
-    git.commit_all("chore: add to gitignore")
-    git.ignore(["*.txt"])
-    git.amend()
-    git.switch_branch("main")
-    git.merge("new-test")
+
+
+def test__create_new_branch(dummyrepo: Pathier, git: Git):
+    assert git.create_new_branch("new-branch").return_code[0] == 0
+    assert git.current_branch == "new-branch"
+
+
+def test__commit_files(dummyrepo: Pathier, git: Git):
+    (dummyrepo / "file.py").write_text("file = 'test2'")
+    assert (
+        git.commit_files(["file.py"], "refactor: change string value").return_code[0]
+        == 0
+    )
+
+
+def test__commit_all(dummyrepo: Pathier, git: Git):
+    (dummyrepo / "file2.py").write_text("import time")
+    assert git.commit_all("Init commit").return_code[0] == 0
+
+
+def test__undo(dummyrepo: Pathier, git: Git):
+    file = dummyrepo / "file2.py"
+    original_text = file.read_text()
+    file.write_text("import datetime")
+    assert file.read_text() == "import datetime"
+    assert git.undo().return_code[0] == 0
+    assert file.read_text() == original_text
+
+
+def test__switch_branch(dummyrepo: Pathier, git: Git):
+    assert git.switch_branch("main").return_code[0] == 0
+    assert git.current_branch == "main"
+
+
+def test__merge(dummyrepo: Pathier, git: Git):
+    assert git.merge("new-branch").return_code[0] == 0
+
+
+def test__delete_branch(dummyrepo: Pathier, git: Git):
     with git.capturing_output():
         assert len(git.list_branches().stdout.splitlines()) == 2
-    git.delete_branch("new-test")
+    assert git.delete_branch("new-branch").return_code[0] == 0
     with git.capturing_output():
         assert len(git.list_branches().stdout.splitlines()) == 1
-    git.loggy()
-    git.status()
 
 
-def test__untrack():
-    git = Git()
-    output = git.untrack(*list((root / "proj").glob("*.py")))
-    assert len(output.return_code) == 2
+def test__untrack(dummyrepo: Pathier, git: Git):
+    assert all(
+        code == 0 for code in git.untrack(*list(dummyrepo.rglob("*.py"))).return_code
+    )
