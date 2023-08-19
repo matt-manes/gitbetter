@@ -7,7 +7,7 @@ name = "gitbetter"
 description = "Custom git shell to type less and commit more."
 version = "2.1.1"
 requires-python = ">=3.10"
-dependencies = ["argshell", "pathier", "pytest"]
+dependencies = ["argshell", "pathier", "pytest", "morbin"]
 readme = "README.md"
 keywords = ["git", "shell", "cli", "terminal", "commit"]
 classifiers = ["Programming Language :: Python :: 3", "License :: OSI Approved :: MIT License", "Operating System :: OS Independent"]
