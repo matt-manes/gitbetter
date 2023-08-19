@@ -1,5 +1,14 @@
 # Changelog
 
+## v3.0.0 (2023-08-19)
+
+#### New Features
+
+* add untrack() method
+#### Refactorings
+
+* BREAKING: Git class inherits from [`morbin.Morbin`](https://github.com/matt-manes/morbin) and all member functions previously having return type `str | int` now return a `morbin.Output` object
+
 ## v2.1.1 (2023-07-01)
 
 #### Refactorings
