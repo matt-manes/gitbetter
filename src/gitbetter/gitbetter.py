@@ -513,6 +513,14 @@ class GitBetter(GitArgShell):
         >>> git checkout ."""
         self.git.undo()
 
+    @with_parser(parsers.add_files_parser)
+    def do_untrack(self, args: Namespace):
+        """Untrack files matching provided path/pattern list.
+
+        For each path/pattern, equivalent to:
+        >>> git rm --cached {path}"""
+        self.git.untrack(*args.files)
+
 
 def main():
     GitBetter().cmdloop()
