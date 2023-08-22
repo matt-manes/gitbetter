@@ -321,6 +321,9 @@
                         <li>
                                 <a class="function" href="#GitBetter.do_undo">do_undo</a>
                         </li>
+                        <li>
+                                <a class="function" href="#GitBetter.do_untrack">do_untrack</a>
+                        </li>
                 </ul>
 
             </li>
@@ -863,13 +866,21 @@
 </span><span id="L-513"><a href="#L-513"><span class="linenos">513</span></a><span class="sd">        &gt;&gt;&gt; git checkout .&quot;&quot;&quot;</span>
 </span><span id="L-514"><a href="#L-514"><span class="linenos">514</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">undo</span><span class="p">()</span>
 </span><span id="L-515"><a href="#L-515"><span class="linenos">515</span></a>
-</span><span id="L-516"><a href="#L-516"><span class="linenos">516</span></a>
-</span><span id="L-517"><a href="#L-517"><span class="linenos">517</span></a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-</span><span id="L-518"><a href="#L-518"><span class="linenos">518</span></a>    <span class="n">GitBetter</span><span class="p">()</span><span class="o">.</span><span class="n">cmdloop</span><span class="p">()</span>
+</span><span id="L-516"><a href="#L-516"><span class="linenos">516</span></a>    <span class="nd">@with_parser</span><span class="p">(</span><span class="n">parsers</span><span class="o">.</span><span class="n">add_files_parser</span><span class="p">)</span>
+</span><span id="L-517"><a href="#L-517"><span class="linenos">517</span></a>    <span class="k">def</span> <span class="nf">do_untrack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">):</span>
+</span><span id="L-518"><a href="#L-518"><span class="linenos">518</span></a>        <span class="sd">&quot;&quot;&quot;Untrack files matching provided path/pattern list.</span>
 </span><span id="L-519"><a href="#L-519"><span class="linenos">519</span></a>
-</span><span id="L-520"><a href="#L-520"><span class="linenos">520</span></a>
-</span><span id="L-521"><a href="#L-521"><span class="linenos">521</span></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-</span><span id="L-522"><a href="#L-522"><span class="linenos">522</span></a>    <span class="n">main</span><span class="p">()</span>
+</span><span id="L-520"><a href="#L-520"><span class="linenos">520</span></a><span class="sd">        For each path/pattern, equivalent to:</span>
+</span><span id="L-521"><a href="#L-521"><span class="linenos">521</span></a><span class="sd">        &gt;&gt;&gt; git rm --cached {path}&quot;&quot;&quot;</span>
+</span><span id="L-522"><a href="#L-522"><span class="linenos">522</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">untrack</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">files</span><span class="p">)</span>
+</span><span id="L-523"><a href="#L-523"><span class="linenos">523</span></a>
+</span><span id="L-524"><a href="#L-524"><span class="linenos">524</span></a>
+</span><span id="L-525"><a href="#L-525"><span class="linenos">525</span></a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span><span id="L-526"><a href="#L-526"><span class="linenos">526</span></a>    <span class="n">GitBetter</span><span class="p">()</span><span class="o">.</span><span class="n">cmdloop</span><span class="p">()</span>
+</span><span id="L-527"><a href="#L-527"><span class="linenos">527</span></a>
+</span><span id="L-528"><a href="#L-528"><span class="linenos">528</span></a>
+</span><span id="L-529"><a href="#L-529"><span class="linenos">529</span></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+</span><span id="L-530"><a href="#L-530"><span class="linenos">530</span></a>    <span class="n">main</span><span class="p">()</span>
 </span></pre></div>
 
 
@@ -1526,6 +1537,14 @@ If using 'help cmd' and the cmd is decorated with a parser, the parser help will
 </span><span id="GitBetter-513"><a href="#GitBetter-513"><span class="linenos">513</span></a>        <span class="sd">&quot;&quot;&quot;Undo all uncommitted changes.</span>
 </span><span id="GitBetter-514"><a href="#GitBetter-514"><span class="linenos">514</span></a><span class="sd">        &gt;&gt;&gt; git checkout .&quot;&quot;&quot;</span>
 </span><span id="GitBetter-515"><a href="#GitBetter-515"><span class="linenos">515</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">undo</span><span class="p">()</span>
+</span><span id="GitBetter-516"><a href="#GitBetter-516"><span class="linenos">516</span></a>
+</span><span id="GitBetter-517"><a href="#GitBetter-517"><span class="linenos">517</span></a>    <span class="nd">@with_parser</span><span class="p">(</span><span class="n">parsers</span><span class="o">.</span><span class="n">add_files_parser</span><span class="p">)</span>
+</span><span id="GitBetter-518"><a href="#GitBetter-518"><span class="linenos">518</span></a>    <span class="k">def</span> <span class="nf">do_untrack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">):</span>
+</span><span id="GitBetter-519"><a href="#GitBetter-519"><span class="linenos">519</span></a>        <span class="sd">&quot;&quot;&quot;Untrack files matching provided path/pattern list.</span>
+</span><span id="GitBetter-520"><a href="#GitBetter-520"><span class="linenos">520</span></a>
+</span><span id="GitBetter-521"><a href="#GitBetter-521"><span class="linenos">521</span></a><span class="sd">        For each path/pattern, equivalent to:</span>
+</span><span id="GitBetter-522"><a href="#GitBetter-522"><span class="linenos">522</span></a><span class="sd">        &gt;&gt;&gt; git rm --cached {path}&quot;&quot;&quot;</span>
+</span><span id="GitBetter-523"><a href="#GitBetter-523"><span class="linenos">523</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">untrack</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">files</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -3889,6 +3908,40 @@ When off, an <code>unknown syntax</code> message will be printed and no commands
 
 
                             </div>
+                            <div id="GitBetter.do_untrack" class="classattr">
+                                        <input id="GitBetter.do_untrack-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+                    <div class="decorator">@with_parser(parsers.add_files_parser)</div>
+
+        <span class="def">def</span>
+        <span class="name">do_untrack</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">args</span><span class="p">:</span> <span class="n">argshell</span><span class="o">.</span><span class="n">argshell</span><span class="o">.</span><span class="n">Namespace</span></span><span class="return-annotation">):</span></span>
+
+                <label class="view-source-button" for="GitBetter.do_untrack-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#GitBetter.do_untrack"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="GitBetter.do_untrack-517"><a href="#GitBetter.do_untrack-517"><span class="linenos">517</span></a>    <span class="nd">@with_parser</span><span class="p">(</span><span class="n">parsers</span><span class="o">.</span><span class="n">add_files_parser</span><span class="p">)</span>
+</span><span id="GitBetter.do_untrack-518"><a href="#GitBetter.do_untrack-518"><span class="linenos">518</span></a>    <span class="k">def</span> <span class="nf">do_untrack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">):</span>
+</span><span id="GitBetter.do_untrack-519"><a href="#GitBetter.do_untrack-519"><span class="linenos">519</span></a>        <span class="sd">&quot;&quot;&quot;Untrack files matching provided path/pattern list.</span>
+</span><span id="GitBetter.do_untrack-520"><a href="#GitBetter.do_untrack-520"><span class="linenos">520</span></a>
+</span><span id="GitBetter.do_untrack-521"><a href="#GitBetter.do_untrack-521"><span class="linenos">521</span></a><span class="sd">        For each path/pattern, equivalent to:</span>
+</span><span id="GitBetter.do_untrack-522"><a href="#GitBetter.do_untrack-522"><span class="linenos">522</span></a><span class="sd">        &gt;&gt;&gt; git rm --cached {path}&quot;&quot;&quot;</span>
+</span><span id="GitBetter.do_untrack-523"><a href="#GitBetter.do_untrack-523"><span class="linenos">523</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">untrack</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">files</span><span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Untrack files matching provided path/pattern list.</p>
+
+<p>For each path/pattern, equivalent to:</p>
+
+<div class="pdoc-code codehilite">
+<pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">git</span> <span class="n">rm</span> <span class="o">--</span><span class="n">cached</span> <span class="p">{</span><span class="n">path</span><span class="p">}</span>
+</code></pre>
+</div>
+</div>
+
+
+                            </div>
                             <div class="inherited">
                                 <h5>Inherited Members</h5>
                                 <dl>
@@ -3930,8 +3983,8 @@ When off, an <code>unknown syntax</code> message will be printed and no commands
 
     </div>
     <a class="headerlink" href="#main"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="main-518"><a href="#main-518"><span class="linenos">518</span></a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-</span><span id="main-519"><a href="#main-519"><span class="linenos">519</span></a>    <span class="n">GitBetter</span><span class="p">()</span><span class="o">.</span><span class="n">cmdloop</span><span class="p">()</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="main-526"><a href="#main-526"><span class="linenos">526</span></a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span><span id="main-527"><a href="#main-527"><span class="linenos">527</span></a>    <span class="n">GitBetter</span><span class="p">()</span><span class="o">.</span><span class="n">cmdloop</span><span class="p">()</span>
 </span></pre></div>
 
 
