@@ -1,5 +1,10 @@
 # Changelog
 
+## v3.1.0 (2023-08-22)
+
+#### New Features
+
+* add untrack method to gitbetter shell
 ## v3.0.0 (2023-08-19)
 
 #### New Features
