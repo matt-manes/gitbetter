@@ -37,3 +37,10 @@ def delete_branch_parser() -> ArgShellParser:
         By default only the local branch is deleted.""",
     )
     return parser
+
+
+def rename_file_parser() -> ArgShellParser:
+    parser = ArgShellParser()
+    parser.add_argument("file", type=str, help=""" The file to be renamed. """)
+    parser.add_argument("new_name", type=str, help=""" The new name for the file. """)
+    return parser

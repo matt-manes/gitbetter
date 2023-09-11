@@ -334,7 +334,7 @@ class Git(Morbin):
 
     def add_files(self, files: list[Pathish]) -> Output:
         """Stage a list of files."""
-        args = " ".join([str(file).replace("\\", "/") for file in files])
+        args = " ".join([str(file) for file in files])
         return self.add(args)
 
     def add_remote_url(self, url: str, name: str = "origin") -> Output:
@@ -441,11 +441,23 @@ class Git(Morbin):
         >>> git rm --cached {path}
 
         for each path in `paths`."""
-        paths_ = [str(path).replace("\\", "/") for path in paths]
+        paths_ = [str(path) for path in paths]
         return sum(
             [self.rm(f"--cached {path}") for path in paths_[1:]],
             self.rm(f"--cached {paths_[0]}"),
         )
+
+    def rename_file(self, file: Pathish, new_name: str) -> Output:
+        """Rename `file` to `new_name` and add renaming to staging index.
+
+        `new_name` should include the file suffix.
+
+        Equivalent to renaming `old_file.py` to `new_file.py` then executing
+        >>> git add new_file.py
+        >>> git rm old_file.py"""
+        file = Pathier(file)
+        new_file = file.replace(file.with_name(new_name))
+        return self.add_files([new_file]) + self.rm(str(file))
 
     # Seat |===============================Requires GitHub CLI to be installed and configured===============================|
 

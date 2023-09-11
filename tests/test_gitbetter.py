@@ -77,6 +77,13 @@ def test__delete_branch(dummyrepo: Pathier, git: Git):
         assert len(git.list_branches().stdout.splitlines()) == 1
 
 
+def test__rename(dummyrepo: Pathier, git: Git):
+    git.rename_file("file2.py", "file9000.py")
+    assert "file9000.py" in [path.name for path in dummyrepo.glob("*.py")]
+    assert "file2.py" not in [path.name for path in dummyrepo.glob("*.py")]
+    git.commit('-m "file test"')
+
+
 def test__untrack(dummyrepo: Pathier, git: Git):
     assert all(
         code == 0 for code in git.untrack(*list(dummyrepo.rglob("*.py"))).return_code

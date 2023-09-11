@@ -521,6 +521,12 @@ class GitBetter(GitArgShell):
         >>> git rm --cached {path}"""
         self.git.untrack(*args.files)
 
+    @with_parser(parsers.rename_file_parser)
+    def do_rename_file(self, args: Namespace):
+        """Renames a file.
+        After renaming the file, the renaming change is staged for commit."""
+        self.git.rename_file(args.file, args.new_name)
+
 
 def main():
     GitBetter().cmdloop()
