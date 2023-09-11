@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.2.0 (2023-09-11)
+
+#### New Features
+
+* add renaming function
+
 ## v3.1.0 (2023-08-22)
 
 #### New Features
