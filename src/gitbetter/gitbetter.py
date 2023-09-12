@@ -454,7 +454,7 @@ class GitBetter(GitArgShell):
         """Delete branch."""
         self.git.delete_branch(args.branch, not args.remote)
 
-    def do_delete_gh_repo(self):
+    def do_delete_gh_repo(self, _: str):
         """Delete this repo from GitHub.
 
         GitHub CLI must be installed and configured.
@@ -476,13 +476,13 @@ class GitBetter(GitArgShell):
         """>>> git --oneline --name-only --abbrev-commit --graph"""
         self.git.loggy()
 
-    def do_make_private(self):
+    def do_make_private(self, _: str):
         """Make the GitHub remote for this repo private.
 
         This repo must exist and GitHub CLI must be installed and configured."""
         self.git.make_private()
 
-    def do_make_public(self):
+    def do_make_public(self, _: str):
         """Make the GitHub remote for this repo public.
 
         This repo must exist and GitHub CLI must be installed and configured."""
