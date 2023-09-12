@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.2.1 (2023-09-12)
+
+#### Fixes
+
+* add missing parameter to shell commands
+
 ## v3.2.0 (2023-09-11)
 
 #### New Features
