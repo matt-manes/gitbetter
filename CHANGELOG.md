@@ -1,5 +1,15 @@
 # Changelog
 
+## v3.3.0 (2023-10-29)
+
+#### Refactorings
+
+* commit files directly in commit_files so that other files added to the index aren't committed with them
+#### Others
+
+* add __version__
+
+
 ## v3.2.1 (2023-09-12)
 
 #### Fixes
