@@ -361,10 +361,10 @@ class Git(Morbin):
         return self.add_all() + self.commit(f'-m "{message}"')
 
     def commit_files(self, files: list[Pathish], message: str) -> Output:
-        """Stage and commit a list of files with commit message `message`.
-        >>> git add {files}
-        >>> git commit -m "{message}" """
-        return self.add_files(files) + self.commit(f'-m "{message}"')
+        """Commit a list of files or file patterns with commit message `message`.
+        >>> git commit {files} -m "{message}" """
+        files_arg = " ".join(str(file) for file in files)
+        return self.commit(f'{files_arg} -m "{message}"')
 
     def create_new_branch(self, branch_name: str) -> Output:
         """Create and switch to a new branch named with `branch_name`.
