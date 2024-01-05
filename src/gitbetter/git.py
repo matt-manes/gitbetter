@@ -1,3 +1,4 @@
+from datetime import datetime
 from urllib.parse import urlparse
 
 from morbin import Morbin, Output
@@ -320,6 +321,13 @@ class Git(Morbin):
                     current_branch = branch[2:]
                     break
         return current_branch
+
+    @property
+    def dob(self) -> datetime:
+        """Date of this repo's first commit."""
+        with self.capturing_output():
+            output = self.log("--pretty=format:'%cs'")
+            return datetime.strptime(output.stdout.splitlines()[-1], "%Y-%m-%d")
 
     @property
     def origin_url(self) -> Output:

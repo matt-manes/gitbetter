@@ -1,11 +1,13 @@
 import pytest
 from pathier import Pathier
+from datetime import datetime
 
 from gitbetter import Git
 
 root = Pathier(__file__).parent
 
 """ All tests should be run sequentially in the order written. """
+
 
 # Everything should use `dummyrepo` b/c it ensures it's the cwd before running tests
 @pytest.fixture(scope="module")
@@ -88,3 +90,7 @@ def test__untrack(dummyrepo: Pathier, git: Git):
     assert all(
         code == 0 for code in git.untrack(*list(dummyrepo.rglob("*.py"))).return_code
     )
+
+
+def test__dob(dummyrepo: Pathier, git: Git):
+    assert datetime.now().strftime("%Y-%m-%d") == git.dob.strftime("%Y-%m-%d")

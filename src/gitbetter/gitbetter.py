@@ -1,6 +1,8 @@
 import os
+from datetime import datetime
 
 from argshell import ArgShell, Namespace, with_parser
+from noiftimer import Timer
 from pathier import Pathier
 
 from gitbetter import Git, parsers
@@ -12,7 +14,8 @@ class GitArgShell(ArgShell):
 
     def do_help(self, arg):
         """List available commands with "help" or detailed help with "help cmd".
-        If using 'help cmd' and the cmd is decorated with a parser, the parser help will also be printed."""
+        If using 'help cmd' and the cmd is decorated with a parser, the parser help will also be printed.
+        """
         if arg:
             # XXX check arg syntax
             try:
@@ -461,6 +464,12 @@ class GitBetter(GitArgShell):
 
         May require you to reauthorize and rerun command."""
         self.git.delete_remote()
+
+    def do_dob(self, _: str):
+        """Date of this repo's first commit."""
+        dob = self.git.dob
+        elapsed = Timer.format_time((datetime.now() - dob).total_seconds())
+        print(f"{dob:%m/%d/%Y}|{elapsed} ago")
 
     def do_ignore(self, patterns: str):
         """Add the list of patterns/file names to `.gitignore` and commit with the message `chore: add to gitignore`."""
