@@ -411,8 +411,10 @@ class Git(Morbin):
         return self.branch("-vva")
 
     def loggy(self) -> Output:
-        """>>> git log --oneline --name-only --abbrev-commit --graph"""
-        return self.log("--oneline --name-only --abbrev-commit --graph")
+        """>>> git log --graph --abbrev-commit --name-only --pretty=tformat:'%C(auto)%h %C(green)(%cs|%cr)%C(auto)%d %C(magenta)%s'"""
+        return self.log(
+            "--graph --abbrev-commit --name-only --pretty=tformat:'%C(auto)%h %C(green)(%cs|%cr)%C(auto)%d %C(magenta)%s'"
+        )
 
     def new_repo(self) -> Output:
         """Initialize a new repo in current directory.
