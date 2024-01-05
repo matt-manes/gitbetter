@@ -1,6 +1,7 @@
+from datetime import datetime
+
 import pytest
 from pathier import Pathier
-from datetime import datetime
 
 from gitbetter import Git
 
