@@ -1,5 +1,15 @@
 # Changelog
 
+## v3.4.0 (2024-01-05)
+
+#### New Features
+
+* add dob functionality
+#### Refactorings
+
+* loggy() includes commit date
+
+
 ## v3.3.0 (2023-10-29)
 
 #### Refactorings
