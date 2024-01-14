@@ -2,7 +2,7 @@
 name = "gitbetter"
 description = "Custom git shell to type less and commit more."
 version = "3.4.0"
-dependencies = ["argshell", "pathier", "pytest", "morbin", "noiftimer"]
+dependencies = ["argshell", "pathier", "morbin", "noiftimer"]
 readme = "README.md"
 keywords = ["git", "shell", "cli", "terminal", "commit"]
 classifiers = ["Programming Language :: Python :: 3", "License :: OSI Approved :: MIT License", "Operating System :: OS Independent"]
