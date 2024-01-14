@@ -1,5 +1,15 @@
 # Changelog
 
+## v3.5.0 (2024-01-14)
+
+#### New Features
+
+* add `merge_to()` method
+#### Others
+
+* remove pytest from dependencies
+
+
 ## v3.4.0 (2024-01-05)
 
 #### New Features
