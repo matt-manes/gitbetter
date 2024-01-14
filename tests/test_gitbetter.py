@@ -66,10 +66,12 @@ def test__undo(dummyrepo: Pathier, git: Git):
 def test__switch_branch(dummyrepo: Pathier, git: Git):
     assert git.switch_branch("main").return_code[0] == 0
     assert git.current_branch == "main"
+    git.switch_branch("new-branch")
 
 
-def test__merge(dummyrepo: Pathier, git: Git):
-    assert git.merge("new-branch").return_code[0] == 0
+def test__merge_to(dummyrepo: Pathier, git: Git):
+    output = git.merge_to()
+    assert all(return_code == 0 for return_code in output.return_code)
 
 
 def test__delete_branch(dummyrepo: Pathier, git: Git):

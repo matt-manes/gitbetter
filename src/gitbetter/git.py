@@ -424,6 +424,18 @@ class Git(Morbin):
             "--graph --abbrev-commit --name-only --pretty=tformat:'%C(auto)%h %C(green)(%cs|%cr)%C(auto)%d %C(magenta)%s'"
         )
 
+    def merge_to(self, branch: str = "main") -> Output:
+        """Merge the current branch with `branch` after switching to `branch`.
+
+        i.e. If on branch `my-feature`,
+        >>> git.merge_to()
+
+        will switch to `main` and merge `my-feature` into `main`."""
+        current_branch = self.current_branch
+        output = self.switch(branch)
+        output += self.merge(current_branch)
+        return output
+
     def new_repo(self) -> Output:
         """Initialize a new repo in current directory.
         >>> git init -b main"""

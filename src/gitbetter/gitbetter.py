@@ -497,6 +497,12 @@ class GitBetter(GitArgShell):
         This repo must exist and GitHub CLI must be installed and configured."""
         self.git.make_public()
 
+    def do_merge_to(self, branch: str):
+        """Merge the current branch into the provided branch after switching to the provided branch.
+
+        If no branch name is given, "main" will be used."""
+        self.git.merge_to(branch or "main")
+
     def do_new_branch(self, name: str):
         """Create and switch to a new branch with this `name`."""
         self.git.create_new_branch(name)
