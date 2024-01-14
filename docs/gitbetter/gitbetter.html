@@ -310,6 +310,9 @@
                                 <a class="function" href="#GitBetter.do_make_public">do_make_public</a>
                         </li>
                         <li>
+                                <a class="function" href="#GitBetter.do_merge_to">do_merge_to</a>
+                        </li>
+                        <li>
                                 <a class="function" href="#GitBetter.do_new_branch">do_new_branch</a>
                         </li>
                         <li>
@@ -856,52 +859,58 @@
 </span><span id="L-497"><a href="#L-497"><span class="linenos">497</span></a><span class="sd">        This repo must exist and GitHub CLI must be installed and configured.&quot;&quot;&quot;</span>
 </span><span id="L-498"><a href="#L-498"><span class="linenos">498</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">make_public</span><span class="p">()</span>
 </span><span id="L-499"><a href="#L-499"><span class="linenos">499</span></a>
-</span><span id="L-500"><a href="#L-500"><span class="linenos">500</span></a>    <span class="k">def</span> <span class="nf">do_new_branch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="L-501"><a href="#L-501"><span class="linenos">501</span></a>        <span class="sd">&quot;&quot;&quot;Create and switch to a new branch with this `name`.&quot;&quot;&quot;</span>
-</span><span id="L-502"><a href="#L-502"><span class="linenos">502</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">create_new_branch</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-</span><span id="L-503"><a href="#L-503"><span class="linenos">503</span></a>
-</span><span id="L-504"><a href="#L-504"><span class="linenos">504</span></a>    <span class="nd">@with_parser</span><span class="p">(</span><span class="n">parsers</span><span class="o">.</span><span class="n">new_remote_parser</span><span class="p">)</span>
-</span><span id="L-505"><a href="#L-505"><span class="linenos">505</span></a>    <span class="k">def</span> <span class="nf">do_new_gh_remote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">):</span>
-</span><span id="L-506"><a href="#L-506"><span class="linenos">506</span></a>        <span class="sd">&quot;&quot;&quot;Create a remote GitHub repository for this repo.</span>
-</span><span id="L-507"><a href="#L-507"><span class="linenos">507</span></a>
-</span><span id="L-508"><a href="#L-508"><span class="linenos">508</span></a><span class="sd">        GitHub CLI must be installed and configured for this to work.&quot;&quot;&quot;</span>
-</span><span id="L-509"><a href="#L-509"><span class="linenos">509</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">create_remote_from_cwd</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">public</span><span class="p">)</span>
-</span><span id="L-510"><a href="#L-510"><span class="linenos">510</span></a>
-</span><span id="L-511"><a href="#L-511"><span class="linenos">511</span></a>    <span class="k">def</span> <span class="nf">do_new_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="L-512"><a href="#L-512"><span class="linenos">512</span></a>        <span class="sd">&quot;&quot;&quot;Create a new git repo in this directory.&quot;&quot;&quot;</span>
-</span><span id="L-513"><a href="#L-513"><span class="linenos">513</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">new_repo</span><span class="p">()</span>
-</span><span id="L-514"><a href="#L-514"><span class="linenos">514</span></a>
-</span><span id="L-515"><a href="#L-515"><span class="linenos">515</span></a>    <span class="k">def</span> <span class="nf">do_push_new</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="L-516"><a href="#L-516"><span class="linenos">516</span></a>        <span class="sd">&quot;&quot;&quot;Push current branch to origin with `-u` flag.</span>
-</span><span id="L-517"><a href="#L-517"><span class="linenos">517</span></a><span class="sd">        &gt;&gt;&gt; git push -u origin {this_branch}&quot;&quot;&quot;</span>
-</span><span id="L-518"><a href="#L-518"><span class="linenos">518</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">push_new_branch</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">current_branch</span><span class="p">)</span>
-</span><span id="L-519"><a href="#L-519"><span class="linenos">519</span></a>
-</span><span id="L-520"><a href="#L-520"><span class="linenos">520</span></a>    <span class="k">def</span> <span class="nf">do_undo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="L-521"><a href="#L-521"><span class="linenos">521</span></a>        <span class="sd">&quot;&quot;&quot;Undo all uncommitted changes.</span>
-</span><span id="L-522"><a href="#L-522"><span class="linenos">522</span></a><span class="sd">        &gt;&gt;&gt; git checkout .&quot;&quot;&quot;</span>
-</span><span id="L-523"><a href="#L-523"><span class="linenos">523</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">undo</span><span class="p">()</span>
-</span><span id="L-524"><a href="#L-524"><span class="linenos">524</span></a>
-</span><span id="L-525"><a href="#L-525"><span class="linenos">525</span></a>    <span class="nd">@with_parser</span><span class="p">(</span><span class="n">parsers</span><span class="o">.</span><span class="n">add_files_parser</span><span class="p">)</span>
-</span><span id="L-526"><a href="#L-526"><span class="linenos">526</span></a>    <span class="k">def</span> <span class="nf">do_untrack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">):</span>
-</span><span id="L-527"><a href="#L-527"><span class="linenos">527</span></a>        <span class="sd">&quot;&quot;&quot;Untrack files matching provided path/pattern list.</span>
-</span><span id="L-528"><a href="#L-528"><span class="linenos">528</span></a>
-</span><span id="L-529"><a href="#L-529"><span class="linenos">529</span></a><span class="sd">        For each path/pattern, equivalent to:</span>
-</span><span id="L-530"><a href="#L-530"><span class="linenos">530</span></a><span class="sd">        &gt;&gt;&gt; git rm --cached {path}&quot;&quot;&quot;</span>
-</span><span id="L-531"><a href="#L-531"><span class="linenos">531</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">untrack</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">files</span><span class="p">)</span>
-</span><span id="L-532"><a href="#L-532"><span class="linenos">532</span></a>
-</span><span id="L-533"><a href="#L-533"><span class="linenos">533</span></a>    <span class="nd">@with_parser</span><span class="p">(</span><span class="n">parsers</span><span class="o">.</span><span class="n">rename_file_parser</span><span class="p">)</span>
-</span><span id="L-534"><a href="#L-534"><span class="linenos">534</span></a>    <span class="k">def</span> <span class="nf">do_rename_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">):</span>
-</span><span id="L-535"><a href="#L-535"><span class="linenos">535</span></a>        <span class="sd">&quot;&quot;&quot;Renames a file.</span>
-</span><span id="L-536"><a href="#L-536"><span class="linenos">536</span></a><span class="sd">        After renaming the file, the renaming change is staged for commit.&quot;&quot;&quot;</span>
-</span><span id="L-537"><a href="#L-537"><span class="linenos">537</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">rename_file</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">file</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">new_name</span><span class="p">)</span>
+</span><span id="L-500"><a href="#L-500"><span class="linenos">500</span></a>    <span class="k">def</span> <span class="nf">do_merge_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="L-501"><a href="#L-501"><span class="linenos">501</span></a>        <span class="sd">&quot;&quot;&quot;Merge the current branch into the provided branch after switching to the provided branch.</span>
+</span><span id="L-502"><a href="#L-502"><span class="linenos">502</span></a>
+</span><span id="L-503"><a href="#L-503"><span class="linenos">503</span></a><span class="sd">        If no branch name is given, &quot;main&quot; will be used.&quot;&quot;&quot;</span>
+</span><span id="L-504"><a href="#L-504"><span class="linenos">504</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">merge_to</span><span class="p">(</span><span class="n">branch</span> <span class="ow">or</span> <span class="s2">&quot;main&quot;</span><span class="p">)</span>
+</span><span id="L-505"><a href="#L-505"><span class="linenos">505</span></a>
+</span><span id="L-506"><a href="#L-506"><span class="linenos">506</span></a>    <span class="k">def</span> <span class="nf">do_new_branch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="L-507"><a href="#L-507"><span class="linenos">507</span></a>        <span class="sd">&quot;&quot;&quot;Create and switch to a new branch with this `name`.&quot;&quot;&quot;</span>
+</span><span id="L-508"><a href="#L-508"><span class="linenos">508</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">create_new_branch</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</span><span id="L-509"><a href="#L-509"><span class="linenos">509</span></a>
+</span><span id="L-510"><a href="#L-510"><span class="linenos">510</span></a>    <span class="nd">@with_parser</span><span class="p">(</span><span class="n">parsers</span><span class="o">.</span><span class="n">new_remote_parser</span><span class="p">)</span>
+</span><span id="L-511"><a href="#L-511"><span class="linenos">511</span></a>    <span class="k">def</span> <span class="nf">do_new_gh_remote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">):</span>
+</span><span id="L-512"><a href="#L-512"><span class="linenos">512</span></a>        <span class="sd">&quot;&quot;&quot;Create a remote GitHub repository for this repo.</span>
+</span><span id="L-513"><a href="#L-513"><span class="linenos">513</span></a>
+</span><span id="L-514"><a href="#L-514"><span class="linenos">514</span></a><span class="sd">        GitHub CLI must be installed and configured for this to work.&quot;&quot;&quot;</span>
+</span><span id="L-515"><a href="#L-515"><span class="linenos">515</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">create_remote_from_cwd</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">public</span><span class="p">)</span>
+</span><span id="L-516"><a href="#L-516"><span class="linenos">516</span></a>
+</span><span id="L-517"><a href="#L-517"><span class="linenos">517</span></a>    <span class="k">def</span> <span class="nf">do_new_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="L-518"><a href="#L-518"><span class="linenos">518</span></a>        <span class="sd">&quot;&quot;&quot;Create a new git repo in this directory.&quot;&quot;&quot;</span>
+</span><span id="L-519"><a href="#L-519"><span class="linenos">519</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">new_repo</span><span class="p">()</span>
+</span><span id="L-520"><a href="#L-520"><span class="linenos">520</span></a>
+</span><span id="L-521"><a href="#L-521"><span class="linenos">521</span></a>    <span class="k">def</span> <span class="nf">do_push_new</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="L-522"><a href="#L-522"><span class="linenos">522</span></a>        <span class="sd">&quot;&quot;&quot;Push current branch to origin with `-u` flag.</span>
+</span><span id="L-523"><a href="#L-523"><span class="linenos">523</span></a><span class="sd">        &gt;&gt;&gt; git push -u origin {this_branch}&quot;&quot;&quot;</span>
+</span><span id="L-524"><a href="#L-524"><span class="linenos">524</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">push_new_branch</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">current_branch</span><span class="p">)</span>
+</span><span id="L-525"><a href="#L-525"><span class="linenos">525</span></a>
+</span><span id="L-526"><a href="#L-526"><span class="linenos">526</span></a>    <span class="k">def</span> <span class="nf">do_undo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="L-527"><a href="#L-527"><span class="linenos">527</span></a>        <span class="sd">&quot;&quot;&quot;Undo all uncommitted changes.</span>
+</span><span id="L-528"><a href="#L-528"><span class="linenos">528</span></a><span class="sd">        &gt;&gt;&gt; git checkout .&quot;&quot;&quot;</span>
+</span><span id="L-529"><a href="#L-529"><span class="linenos">529</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">undo</span><span class="p">()</span>
+</span><span id="L-530"><a href="#L-530"><span class="linenos">530</span></a>
+</span><span id="L-531"><a href="#L-531"><span class="linenos">531</span></a>    <span class="nd">@with_parser</span><span class="p">(</span><span class="n">parsers</span><span class="o">.</span><span class="n">add_files_parser</span><span class="p">)</span>
+</span><span id="L-532"><a href="#L-532"><span class="linenos">532</span></a>    <span class="k">def</span> <span class="nf">do_untrack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">):</span>
+</span><span id="L-533"><a href="#L-533"><span class="linenos">533</span></a>        <span class="sd">&quot;&quot;&quot;Untrack files matching provided path/pattern list.</span>
+</span><span id="L-534"><a href="#L-534"><span class="linenos">534</span></a>
+</span><span id="L-535"><a href="#L-535"><span class="linenos">535</span></a><span class="sd">        For each path/pattern, equivalent to:</span>
+</span><span id="L-536"><a href="#L-536"><span class="linenos">536</span></a><span class="sd">        &gt;&gt;&gt; git rm --cached {path}&quot;&quot;&quot;</span>
+</span><span id="L-537"><a href="#L-537"><span class="linenos">537</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">untrack</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">files</span><span class="p">)</span>
 </span><span id="L-538"><a href="#L-538"><span class="linenos">538</span></a>
-</span><span id="L-539"><a href="#L-539"><span class="linenos">539</span></a>
-</span><span id="L-540"><a href="#L-540"><span class="linenos">540</span></a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-</span><span id="L-541"><a href="#L-541"><span class="linenos">541</span></a>    <span class="n">GitBetter</span><span class="p">()</span><span class="o">.</span><span class="n">cmdloop</span><span class="p">()</span>
-</span><span id="L-542"><a href="#L-542"><span class="linenos">542</span></a>
-</span><span id="L-543"><a href="#L-543"><span class="linenos">543</span></a>
-</span><span id="L-544"><a href="#L-544"><span class="linenos">544</span></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-</span><span id="L-545"><a href="#L-545"><span class="linenos">545</span></a>    <span class="n">main</span><span class="p">()</span>
+</span><span id="L-539"><a href="#L-539"><span class="linenos">539</span></a>    <span class="nd">@with_parser</span><span class="p">(</span><span class="n">parsers</span><span class="o">.</span><span class="n">rename_file_parser</span><span class="p">)</span>
+</span><span id="L-540"><a href="#L-540"><span class="linenos">540</span></a>    <span class="k">def</span> <span class="nf">do_rename_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">):</span>
+</span><span id="L-541"><a href="#L-541"><span class="linenos">541</span></a>        <span class="sd">&quot;&quot;&quot;Renames a file.</span>
+</span><span id="L-542"><a href="#L-542"><span class="linenos">542</span></a><span class="sd">        After renaming the file, the renaming change is staged for commit.&quot;&quot;&quot;</span>
+</span><span id="L-543"><a href="#L-543"><span class="linenos">543</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">rename_file</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">file</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">new_name</span><span class="p">)</span>
+</span><span id="L-544"><a href="#L-544"><span class="linenos">544</span></a>
+</span><span id="L-545"><a href="#L-545"><span class="linenos">545</span></a>
+</span><span id="L-546"><a href="#L-546"><span class="linenos">546</span></a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span><span id="L-547"><a href="#L-547"><span class="linenos">547</span></a>    <span class="n">GitBetter</span><span class="p">()</span><span class="o">.</span><span class="n">cmdloop</span><span class="p">()</span>
+</span><span id="L-548"><a href="#L-548"><span class="linenos">548</span></a>
+</span><span id="L-549"><a href="#L-549"><span class="linenos">549</span></a>
+</span><span id="L-550"><a href="#L-550"><span class="linenos">550</span></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+</span><span id="L-551"><a href="#L-551"><span class="linenos">551</span></a>    <span class="n">main</span><span class="p">()</span>
 </span></pre></div>
 
 
@@ -1542,44 +1551,50 @@ If using 'help cmd' and the cmd is decorated with a parser, the parser help will
 </span><span id="GitBetter-498"><a href="#GitBetter-498"><span class="linenos">498</span></a><span class="sd">        This repo must exist and GitHub CLI must be installed and configured.&quot;&quot;&quot;</span>
 </span><span id="GitBetter-499"><a href="#GitBetter-499"><span class="linenos">499</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">make_public</span><span class="p">()</span>
 </span><span id="GitBetter-500"><a href="#GitBetter-500"><span class="linenos">500</span></a>
-</span><span id="GitBetter-501"><a href="#GitBetter-501"><span class="linenos">501</span></a>    <span class="k">def</span> <span class="nf">do_new_branch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="GitBetter-502"><a href="#GitBetter-502"><span class="linenos">502</span></a>        <span class="sd">&quot;&quot;&quot;Create and switch to a new branch with this `name`.&quot;&quot;&quot;</span>
-</span><span id="GitBetter-503"><a href="#GitBetter-503"><span class="linenos">503</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">create_new_branch</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-</span><span id="GitBetter-504"><a href="#GitBetter-504"><span class="linenos">504</span></a>
-</span><span id="GitBetter-505"><a href="#GitBetter-505"><span class="linenos">505</span></a>    <span class="nd">@with_parser</span><span class="p">(</span><span class="n">parsers</span><span class="o">.</span><span class="n">new_remote_parser</span><span class="p">)</span>
-</span><span id="GitBetter-506"><a href="#GitBetter-506"><span class="linenos">506</span></a>    <span class="k">def</span> <span class="nf">do_new_gh_remote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">):</span>
-</span><span id="GitBetter-507"><a href="#GitBetter-507"><span class="linenos">507</span></a>        <span class="sd">&quot;&quot;&quot;Create a remote GitHub repository for this repo.</span>
-</span><span id="GitBetter-508"><a href="#GitBetter-508"><span class="linenos">508</span></a>
-</span><span id="GitBetter-509"><a href="#GitBetter-509"><span class="linenos">509</span></a><span class="sd">        GitHub CLI must be installed and configured for this to work.&quot;&quot;&quot;</span>
-</span><span id="GitBetter-510"><a href="#GitBetter-510"><span class="linenos">510</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">create_remote_from_cwd</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">public</span><span class="p">)</span>
-</span><span id="GitBetter-511"><a href="#GitBetter-511"><span class="linenos">511</span></a>
-</span><span id="GitBetter-512"><a href="#GitBetter-512"><span class="linenos">512</span></a>    <span class="k">def</span> <span class="nf">do_new_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="GitBetter-513"><a href="#GitBetter-513"><span class="linenos">513</span></a>        <span class="sd">&quot;&quot;&quot;Create a new git repo in this directory.&quot;&quot;&quot;</span>
-</span><span id="GitBetter-514"><a href="#GitBetter-514"><span class="linenos">514</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">new_repo</span><span class="p">()</span>
-</span><span id="GitBetter-515"><a href="#GitBetter-515"><span class="linenos">515</span></a>
-</span><span id="GitBetter-516"><a href="#GitBetter-516"><span class="linenos">516</span></a>    <span class="k">def</span> <span class="nf">do_push_new</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="GitBetter-517"><a href="#GitBetter-517"><span class="linenos">517</span></a>        <span class="sd">&quot;&quot;&quot;Push current branch to origin with `-u` flag.</span>
-</span><span id="GitBetter-518"><a href="#GitBetter-518"><span class="linenos">518</span></a><span class="sd">        &gt;&gt;&gt; git push -u origin {this_branch}&quot;&quot;&quot;</span>
-</span><span id="GitBetter-519"><a href="#GitBetter-519"><span class="linenos">519</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">push_new_branch</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">current_branch</span><span class="p">)</span>
-</span><span id="GitBetter-520"><a href="#GitBetter-520"><span class="linenos">520</span></a>
-</span><span id="GitBetter-521"><a href="#GitBetter-521"><span class="linenos">521</span></a>    <span class="k">def</span> <span class="nf">do_undo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="GitBetter-522"><a href="#GitBetter-522"><span class="linenos">522</span></a>        <span class="sd">&quot;&quot;&quot;Undo all uncommitted changes.</span>
-</span><span id="GitBetter-523"><a href="#GitBetter-523"><span class="linenos">523</span></a><span class="sd">        &gt;&gt;&gt; git checkout .&quot;&quot;&quot;</span>
-</span><span id="GitBetter-524"><a href="#GitBetter-524"><span class="linenos">524</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">undo</span><span class="p">()</span>
-</span><span id="GitBetter-525"><a href="#GitBetter-525"><span class="linenos">525</span></a>
-</span><span id="GitBetter-526"><a href="#GitBetter-526"><span class="linenos">526</span></a>    <span class="nd">@with_parser</span><span class="p">(</span><span class="n">parsers</span><span class="o">.</span><span class="n">add_files_parser</span><span class="p">)</span>
-</span><span id="GitBetter-527"><a href="#GitBetter-527"><span class="linenos">527</span></a>    <span class="k">def</span> <span class="nf">do_untrack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">):</span>
-</span><span id="GitBetter-528"><a href="#GitBetter-528"><span class="linenos">528</span></a>        <span class="sd">&quot;&quot;&quot;Untrack files matching provided path/pattern list.</span>
-</span><span id="GitBetter-529"><a href="#GitBetter-529"><span class="linenos">529</span></a>
-</span><span id="GitBetter-530"><a href="#GitBetter-530"><span class="linenos">530</span></a><span class="sd">        For each path/pattern, equivalent to:</span>
-</span><span id="GitBetter-531"><a href="#GitBetter-531"><span class="linenos">531</span></a><span class="sd">        &gt;&gt;&gt; git rm --cached {path}&quot;&quot;&quot;</span>
-</span><span id="GitBetter-532"><a href="#GitBetter-532"><span class="linenos">532</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">untrack</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">files</span><span class="p">)</span>
-</span><span id="GitBetter-533"><a href="#GitBetter-533"><span class="linenos">533</span></a>
-</span><span id="GitBetter-534"><a href="#GitBetter-534"><span class="linenos">534</span></a>    <span class="nd">@with_parser</span><span class="p">(</span><span class="n">parsers</span><span class="o">.</span><span class="n">rename_file_parser</span><span class="p">)</span>
-</span><span id="GitBetter-535"><a href="#GitBetter-535"><span class="linenos">535</span></a>    <span class="k">def</span> <span class="nf">do_rename_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">):</span>
-</span><span id="GitBetter-536"><a href="#GitBetter-536"><span class="linenos">536</span></a>        <span class="sd">&quot;&quot;&quot;Renames a file.</span>
-</span><span id="GitBetter-537"><a href="#GitBetter-537"><span class="linenos">537</span></a><span class="sd">        After renaming the file, the renaming change is staged for commit.&quot;&quot;&quot;</span>
-</span><span id="GitBetter-538"><a href="#GitBetter-538"><span class="linenos">538</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">rename_file</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">file</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">new_name</span><span class="p">)</span>
+</span><span id="GitBetter-501"><a href="#GitBetter-501"><span class="linenos">501</span></a>    <span class="k">def</span> <span class="nf">do_merge_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="GitBetter-502"><a href="#GitBetter-502"><span class="linenos">502</span></a>        <span class="sd">&quot;&quot;&quot;Merge the current branch into the provided branch after switching to the provided branch.</span>
+</span><span id="GitBetter-503"><a href="#GitBetter-503"><span class="linenos">503</span></a>
+</span><span id="GitBetter-504"><a href="#GitBetter-504"><span class="linenos">504</span></a><span class="sd">        If no branch name is given, &quot;main&quot; will be used.&quot;&quot;&quot;</span>
+</span><span id="GitBetter-505"><a href="#GitBetter-505"><span class="linenos">505</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">merge_to</span><span class="p">(</span><span class="n">branch</span> <span class="ow">or</span> <span class="s2">&quot;main&quot;</span><span class="p">)</span>
+</span><span id="GitBetter-506"><a href="#GitBetter-506"><span class="linenos">506</span></a>
+</span><span id="GitBetter-507"><a href="#GitBetter-507"><span class="linenos">507</span></a>    <span class="k">def</span> <span class="nf">do_new_branch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="GitBetter-508"><a href="#GitBetter-508"><span class="linenos">508</span></a>        <span class="sd">&quot;&quot;&quot;Create and switch to a new branch with this `name`.&quot;&quot;&quot;</span>
+</span><span id="GitBetter-509"><a href="#GitBetter-509"><span class="linenos">509</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">create_new_branch</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</span><span id="GitBetter-510"><a href="#GitBetter-510"><span class="linenos">510</span></a>
+</span><span id="GitBetter-511"><a href="#GitBetter-511"><span class="linenos">511</span></a>    <span class="nd">@with_parser</span><span class="p">(</span><span class="n">parsers</span><span class="o">.</span><span class="n">new_remote_parser</span><span class="p">)</span>
+</span><span id="GitBetter-512"><a href="#GitBetter-512"><span class="linenos">512</span></a>    <span class="k">def</span> <span class="nf">do_new_gh_remote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">):</span>
+</span><span id="GitBetter-513"><a href="#GitBetter-513"><span class="linenos">513</span></a>        <span class="sd">&quot;&quot;&quot;Create a remote GitHub repository for this repo.</span>
+</span><span id="GitBetter-514"><a href="#GitBetter-514"><span class="linenos">514</span></a>
+</span><span id="GitBetter-515"><a href="#GitBetter-515"><span class="linenos">515</span></a><span class="sd">        GitHub CLI must be installed and configured for this to work.&quot;&quot;&quot;</span>
+</span><span id="GitBetter-516"><a href="#GitBetter-516"><span class="linenos">516</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">create_remote_from_cwd</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">public</span><span class="p">)</span>
+</span><span id="GitBetter-517"><a href="#GitBetter-517"><span class="linenos">517</span></a>
+</span><span id="GitBetter-518"><a href="#GitBetter-518"><span class="linenos">518</span></a>    <span class="k">def</span> <span class="nf">do_new_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="GitBetter-519"><a href="#GitBetter-519"><span class="linenos">519</span></a>        <span class="sd">&quot;&quot;&quot;Create a new git repo in this directory.&quot;&quot;&quot;</span>
+</span><span id="GitBetter-520"><a href="#GitBetter-520"><span class="linenos">520</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">new_repo</span><span class="p">()</span>
+</span><span id="GitBetter-521"><a href="#GitBetter-521"><span class="linenos">521</span></a>
+</span><span id="GitBetter-522"><a href="#GitBetter-522"><span class="linenos">522</span></a>    <span class="k">def</span> <span class="nf">do_push_new</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="GitBetter-523"><a href="#GitBetter-523"><span class="linenos">523</span></a>        <span class="sd">&quot;&quot;&quot;Push current branch to origin with `-u` flag.</span>
+</span><span id="GitBetter-524"><a href="#GitBetter-524"><span class="linenos">524</span></a><span class="sd">        &gt;&gt;&gt; git push -u origin {this_branch}&quot;&quot;&quot;</span>
+</span><span id="GitBetter-525"><a href="#GitBetter-525"><span class="linenos">525</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">push_new_branch</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">current_branch</span><span class="p">)</span>
+</span><span id="GitBetter-526"><a href="#GitBetter-526"><span class="linenos">526</span></a>
+</span><span id="GitBetter-527"><a href="#GitBetter-527"><span class="linenos">527</span></a>    <span class="k">def</span> <span class="nf">do_undo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="GitBetter-528"><a href="#GitBetter-528"><span class="linenos">528</span></a>        <span class="sd">&quot;&quot;&quot;Undo all uncommitted changes.</span>
+</span><span id="GitBetter-529"><a href="#GitBetter-529"><span class="linenos">529</span></a><span class="sd">        &gt;&gt;&gt; git checkout .&quot;&quot;&quot;</span>
+</span><span id="GitBetter-530"><a href="#GitBetter-530"><span class="linenos">530</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">undo</span><span class="p">()</span>
+</span><span id="GitBetter-531"><a href="#GitBetter-531"><span class="linenos">531</span></a>
+</span><span id="GitBetter-532"><a href="#GitBetter-532"><span class="linenos">532</span></a>    <span class="nd">@with_parser</span><span class="p">(</span><span class="n">parsers</span><span class="o">.</span><span class="n">add_files_parser</span><span class="p">)</span>
+</span><span id="GitBetter-533"><a href="#GitBetter-533"><span class="linenos">533</span></a>    <span class="k">def</span> <span class="nf">do_untrack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">):</span>
+</span><span id="GitBetter-534"><a href="#GitBetter-534"><span class="linenos">534</span></a>        <span class="sd">&quot;&quot;&quot;Untrack files matching provided path/pattern list.</span>
+</span><span id="GitBetter-535"><a href="#GitBetter-535"><span class="linenos">535</span></a>
+</span><span id="GitBetter-536"><a href="#GitBetter-536"><span class="linenos">536</span></a><span class="sd">        For each path/pattern, equivalent to:</span>
+</span><span id="GitBetter-537"><a href="#GitBetter-537"><span class="linenos">537</span></a><span class="sd">        &gt;&gt;&gt; git rm --cached {path}&quot;&quot;&quot;</span>
+</span><span id="GitBetter-538"><a href="#GitBetter-538"><span class="linenos">538</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">untrack</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">files</span><span class="p">)</span>
+</span><span id="GitBetter-539"><a href="#GitBetter-539"><span class="linenos">539</span></a>
+</span><span id="GitBetter-540"><a href="#GitBetter-540"><span class="linenos">540</span></a>    <span class="nd">@with_parser</span><span class="p">(</span><span class="n">parsers</span><span class="o">.</span><span class="n">rename_file_parser</span><span class="p">)</span>
+</span><span id="GitBetter-541"><a href="#GitBetter-541"><span class="linenos">541</span></a>    <span class="k">def</span> <span class="nf">do_rename_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">):</span>
+</span><span id="GitBetter-542"><a href="#GitBetter-542"><span class="linenos">542</span></a>        <span class="sd">&quot;&quot;&quot;Renames a file.</span>
+</span><span id="GitBetter-543"><a href="#GitBetter-543"><span class="linenos">543</span></a><span class="sd">        After renaming the file, the renaming change is staged for commit.&quot;&quot;&quot;</span>
+</span><span id="GitBetter-544"><a href="#GitBetter-544"><span class="linenos">544</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">rename_file</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">file</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">new_name</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -3839,6 +3854,32 @@ When off, an <code>unknown syntax</code> message will be printed and no commands
 
 
                             </div>
+                            <div id="GitBetter.do_merge_to" class="classattr">
+                                        <input id="GitBetter.do_merge_to-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">do_merge_to</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">branch</span><span class="p">:</span> <span class="nb">str</span></span><span class="return-annotation">):</span></span>
+
+                <label class="view-source-button" for="GitBetter.do_merge_to-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#GitBetter.do_merge_to"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="GitBetter.do_merge_to-501"><a href="#GitBetter.do_merge_to-501"><span class="linenos">501</span></a>    <span class="k">def</span> <span class="nf">do_merge_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="GitBetter.do_merge_to-502"><a href="#GitBetter.do_merge_to-502"><span class="linenos">502</span></a>        <span class="sd">&quot;&quot;&quot;Merge the current branch into the provided branch after switching to the provided branch.</span>
+</span><span id="GitBetter.do_merge_to-503"><a href="#GitBetter.do_merge_to-503"><span class="linenos">503</span></a>
+</span><span id="GitBetter.do_merge_to-504"><a href="#GitBetter.do_merge_to-504"><span class="linenos">504</span></a><span class="sd">        If no branch name is given, &quot;main&quot; will be used.&quot;&quot;&quot;</span>
+</span><span id="GitBetter.do_merge_to-505"><a href="#GitBetter.do_merge_to-505"><span class="linenos">505</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">merge_to</span><span class="p">(</span><span class="n">branch</span> <span class="ow">or</span> <span class="s2">&quot;main&quot;</span><span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Merge the current branch into the provided branch after switching to the provided branch.</p>
+
+<p>If no branch name is given, "main" will be used.</p>
+</div>
+
+
+                            </div>
                             <div id="GitBetter.do_new_branch" class="classattr">
                                         <input id="GitBetter.do_new_branch-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
@@ -3850,9 +3891,9 @@ When off, an <code>unknown syntax</code> message will be printed and no commands
 
     </div>
     <a class="headerlink" href="#GitBetter.do_new_branch"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="GitBetter.do_new_branch-501"><a href="#GitBetter.do_new_branch-501"><span class="linenos">501</span></a>    <span class="k">def</span> <span class="nf">do_new_branch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="GitBetter.do_new_branch-502"><a href="#GitBetter.do_new_branch-502"><span class="linenos">502</span></a>        <span class="sd">&quot;&quot;&quot;Create and switch to a new branch with this `name`.&quot;&quot;&quot;</span>
-</span><span id="GitBetter.do_new_branch-503"><a href="#GitBetter.do_new_branch-503"><span class="linenos">503</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">create_new_branch</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="GitBetter.do_new_branch-507"><a href="#GitBetter.do_new_branch-507"><span class="linenos">507</span></a>    <span class="k">def</span> <span class="nf">do_new_branch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="GitBetter.do_new_branch-508"><a href="#GitBetter.do_new_branch-508"><span class="linenos">508</span></a>        <span class="sd">&quot;&quot;&quot;Create and switch to a new branch with this `name`.&quot;&quot;&quot;</span>
+</span><span id="GitBetter.do_new_branch-509"><a href="#GitBetter.do_new_branch-509"><span class="linenos">509</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">create_new_branch</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -3873,12 +3914,12 @@ When off, an <code>unknown syntax</code> message will be printed and no commands
 
     </div>
     <a class="headerlink" href="#GitBetter.do_new_gh_remote"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="GitBetter.do_new_gh_remote-505"><a href="#GitBetter.do_new_gh_remote-505"><span class="linenos">505</span></a>    <span class="nd">@with_parser</span><span class="p">(</span><span class="n">parsers</span><span class="o">.</span><span class="n">new_remote_parser</span><span class="p">)</span>
-</span><span id="GitBetter.do_new_gh_remote-506"><a href="#GitBetter.do_new_gh_remote-506"><span class="linenos">506</span></a>    <span class="k">def</span> <span class="nf">do_new_gh_remote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">):</span>
-</span><span id="GitBetter.do_new_gh_remote-507"><a href="#GitBetter.do_new_gh_remote-507"><span class="linenos">507</span></a>        <span class="sd">&quot;&quot;&quot;Create a remote GitHub repository for this repo.</span>
-</span><span id="GitBetter.do_new_gh_remote-508"><a href="#GitBetter.do_new_gh_remote-508"><span class="linenos">508</span></a>
-</span><span id="GitBetter.do_new_gh_remote-509"><a href="#GitBetter.do_new_gh_remote-509"><span class="linenos">509</span></a><span class="sd">        GitHub CLI must be installed and configured for this to work.&quot;&quot;&quot;</span>
-</span><span id="GitBetter.do_new_gh_remote-510"><a href="#GitBetter.do_new_gh_remote-510"><span class="linenos">510</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">create_remote_from_cwd</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">public</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="GitBetter.do_new_gh_remote-511"><a href="#GitBetter.do_new_gh_remote-511"><span class="linenos">511</span></a>    <span class="nd">@with_parser</span><span class="p">(</span><span class="n">parsers</span><span class="o">.</span><span class="n">new_remote_parser</span><span class="p">)</span>
+</span><span id="GitBetter.do_new_gh_remote-512"><a href="#GitBetter.do_new_gh_remote-512"><span class="linenos">512</span></a>    <span class="k">def</span> <span class="nf">do_new_gh_remote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">):</span>
+</span><span id="GitBetter.do_new_gh_remote-513"><a href="#GitBetter.do_new_gh_remote-513"><span class="linenos">513</span></a>        <span class="sd">&quot;&quot;&quot;Create a remote GitHub repository for this repo.</span>
+</span><span id="GitBetter.do_new_gh_remote-514"><a href="#GitBetter.do_new_gh_remote-514"><span class="linenos">514</span></a>
+</span><span id="GitBetter.do_new_gh_remote-515"><a href="#GitBetter.do_new_gh_remote-515"><span class="linenos">515</span></a><span class="sd">        GitHub CLI must be installed and configured for this to work.&quot;&quot;&quot;</span>
+</span><span id="GitBetter.do_new_gh_remote-516"><a href="#GitBetter.do_new_gh_remote-516"><span class="linenos">516</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">create_remote_from_cwd</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">public</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -3900,9 +3941,9 @@ When off, an <code>unknown syntax</code> message will be printed and no commands
 
     </div>
     <a class="headerlink" href="#GitBetter.do_new_repo"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="GitBetter.do_new_repo-512"><a href="#GitBetter.do_new_repo-512"><span class="linenos">512</span></a>    <span class="k">def</span> <span class="nf">do_new_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="GitBetter.do_new_repo-513"><a href="#GitBetter.do_new_repo-513"><span class="linenos">513</span></a>        <span class="sd">&quot;&quot;&quot;Create a new git repo in this directory.&quot;&quot;&quot;</span>
-</span><span id="GitBetter.do_new_repo-514"><a href="#GitBetter.do_new_repo-514"><span class="linenos">514</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">new_repo</span><span class="p">()</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="GitBetter.do_new_repo-518"><a href="#GitBetter.do_new_repo-518"><span class="linenos">518</span></a>    <span class="k">def</span> <span class="nf">do_new_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="GitBetter.do_new_repo-519"><a href="#GitBetter.do_new_repo-519"><span class="linenos">519</span></a>        <span class="sd">&quot;&quot;&quot;Create a new git repo in this directory.&quot;&quot;&quot;</span>
+</span><span id="GitBetter.do_new_repo-520"><a href="#GitBetter.do_new_repo-520"><span class="linenos">520</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">new_repo</span><span class="p">()</span>
 </span></pre></div>
 
 
@@ -3922,10 +3963,10 @@ When off, an <code>unknown syntax</code> message will be printed and no commands
 
     </div>
     <a class="headerlink" href="#GitBetter.do_push_new"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="GitBetter.do_push_new-516"><a href="#GitBetter.do_push_new-516"><span class="linenos">516</span></a>    <span class="k">def</span> <span class="nf">do_push_new</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="GitBetter.do_push_new-517"><a href="#GitBetter.do_push_new-517"><span class="linenos">517</span></a>        <span class="sd">&quot;&quot;&quot;Push current branch to origin with `-u` flag.</span>
-</span><span id="GitBetter.do_push_new-518"><a href="#GitBetter.do_push_new-518"><span class="linenos">518</span></a><span class="sd">        &gt;&gt;&gt; git push -u origin {this_branch}&quot;&quot;&quot;</span>
-</span><span id="GitBetter.do_push_new-519"><a href="#GitBetter.do_push_new-519"><span class="linenos">519</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">push_new_branch</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">current_branch</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="GitBetter.do_push_new-522"><a href="#GitBetter.do_push_new-522"><span class="linenos">522</span></a>    <span class="k">def</span> <span class="nf">do_push_new</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="GitBetter.do_push_new-523"><a href="#GitBetter.do_push_new-523"><span class="linenos">523</span></a>        <span class="sd">&quot;&quot;&quot;Push current branch to origin with `-u` flag.</span>
+</span><span id="GitBetter.do_push_new-524"><a href="#GitBetter.do_push_new-524"><span class="linenos">524</span></a><span class="sd">        &gt;&gt;&gt; git push -u origin {this_branch}&quot;&quot;&quot;</span>
+</span><span id="GitBetter.do_push_new-525"><a href="#GitBetter.do_push_new-525"><span class="linenos">525</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">push_new_branch</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">current_branch</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -3950,10 +3991,10 @@ When off, an <code>unknown syntax</code> message will be printed and no commands
 
     </div>
     <a class="headerlink" href="#GitBetter.do_undo"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="GitBetter.do_undo-521"><a href="#GitBetter.do_undo-521"><span class="linenos">521</span></a>    <span class="k">def</span> <span class="nf">do_undo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="GitBetter.do_undo-522"><a href="#GitBetter.do_undo-522"><span class="linenos">522</span></a>        <span class="sd">&quot;&quot;&quot;Undo all uncommitted changes.</span>
-</span><span id="GitBetter.do_undo-523"><a href="#GitBetter.do_undo-523"><span class="linenos">523</span></a><span class="sd">        &gt;&gt;&gt; git checkout .&quot;&quot;&quot;</span>
-</span><span id="GitBetter.do_undo-524"><a href="#GitBetter.do_undo-524"><span class="linenos">524</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">undo</span><span class="p">()</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="GitBetter.do_undo-527"><a href="#GitBetter.do_undo-527"><span class="linenos">527</span></a>    <span class="k">def</span> <span class="nf">do_undo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="GitBetter.do_undo-528"><a href="#GitBetter.do_undo-528"><span class="linenos">528</span></a>        <span class="sd">&quot;&quot;&quot;Undo all uncommitted changes.</span>
+</span><span id="GitBetter.do_undo-529"><a href="#GitBetter.do_undo-529"><span class="linenos">529</span></a><span class="sd">        &gt;&gt;&gt; git checkout .&quot;&quot;&quot;</span>
+</span><span id="GitBetter.do_undo-530"><a href="#GitBetter.do_undo-530"><span class="linenos">530</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">undo</span><span class="p">()</span>
 </span></pre></div>
 
 
@@ -3979,13 +4020,13 @@ When off, an <code>unknown syntax</code> message will be printed and no commands
 
     </div>
     <a class="headerlink" href="#GitBetter.do_untrack"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="GitBetter.do_untrack-526"><a href="#GitBetter.do_untrack-526"><span class="linenos">526</span></a>    <span class="nd">@with_parser</span><span class="p">(</span><span class="n">parsers</span><span class="o">.</span><span class="n">add_files_parser</span><span class="p">)</span>
-</span><span id="GitBetter.do_untrack-527"><a href="#GitBetter.do_untrack-527"><span class="linenos">527</span></a>    <span class="k">def</span> <span class="nf">do_untrack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">):</span>
-</span><span id="GitBetter.do_untrack-528"><a href="#GitBetter.do_untrack-528"><span class="linenos">528</span></a>        <span class="sd">&quot;&quot;&quot;Untrack files matching provided path/pattern list.</span>
-</span><span id="GitBetter.do_untrack-529"><a href="#GitBetter.do_untrack-529"><span class="linenos">529</span></a>
-</span><span id="GitBetter.do_untrack-530"><a href="#GitBetter.do_untrack-530"><span class="linenos">530</span></a><span class="sd">        For each path/pattern, equivalent to:</span>
-</span><span id="GitBetter.do_untrack-531"><a href="#GitBetter.do_untrack-531"><span class="linenos">531</span></a><span class="sd">        &gt;&gt;&gt; git rm --cached {path}&quot;&quot;&quot;</span>
-</span><span id="GitBetter.do_untrack-532"><a href="#GitBetter.do_untrack-532"><span class="linenos">532</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">untrack</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">files</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="GitBetter.do_untrack-532"><a href="#GitBetter.do_untrack-532"><span class="linenos">532</span></a>    <span class="nd">@with_parser</span><span class="p">(</span><span class="n">parsers</span><span class="o">.</span><span class="n">add_files_parser</span><span class="p">)</span>
+</span><span id="GitBetter.do_untrack-533"><a href="#GitBetter.do_untrack-533"><span class="linenos">533</span></a>    <span class="k">def</span> <span class="nf">do_untrack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">):</span>
+</span><span id="GitBetter.do_untrack-534"><a href="#GitBetter.do_untrack-534"><span class="linenos">534</span></a>        <span class="sd">&quot;&quot;&quot;Untrack files matching provided path/pattern list.</span>
+</span><span id="GitBetter.do_untrack-535"><a href="#GitBetter.do_untrack-535"><span class="linenos">535</span></a>
+</span><span id="GitBetter.do_untrack-536"><a href="#GitBetter.do_untrack-536"><span class="linenos">536</span></a><span class="sd">        For each path/pattern, equivalent to:</span>
+</span><span id="GitBetter.do_untrack-537"><a href="#GitBetter.do_untrack-537"><span class="linenos">537</span></a><span class="sd">        &gt;&gt;&gt; git rm --cached {path}&quot;&quot;&quot;</span>
+</span><span id="GitBetter.do_untrack-538"><a href="#GitBetter.do_untrack-538"><span class="linenos">538</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">untrack</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="o">.</span><span class="n">files</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -4013,11 +4054,11 @@ When off, an <code>unknown syntax</code> message will be printed and no commands
 
     </div>
     <a class="headerlink" href="#GitBetter.do_rename_file"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="GitBetter.do_rename_file-534"><a href="#GitBetter.do_rename_file-534"><span class="linenos">534</span></a>    <span class="nd">@with_parser</span><span class="p">(</span><span class="n">parsers</span><span class="o">.</span><span class="n">rename_file_parser</span><span class="p">)</span>
-</span><span id="GitBetter.do_rename_file-535"><a href="#GitBetter.do_rename_file-535"><span class="linenos">535</span></a>    <span class="k">def</span> <span class="nf">do_rename_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">):</span>
-</span><span id="GitBetter.do_rename_file-536"><a href="#GitBetter.do_rename_file-536"><span class="linenos">536</span></a>        <span class="sd">&quot;&quot;&quot;Renames a file.</span>
-</span><span id="GitBetter.do_rename_file-537"><a href="#GitBetter.do_rename_file-537"><span class="linenos">537</span></a><span class="sd">        After renaming the file, the renaming change is staged for commit.&quot;&quot;&quot;</span>
-</span><span id="GitBetter.do_rename_file-538"><a href="#GitBetter.do_rename_file-538"><span class="linenos">538</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">rename_file</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">file</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">new_name</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="GitBetter.do_rename_file-540"><a href="#GitBetter.do_rename_file-540"><span class="linenos">540</span></a>    <span class="nd">@with_parser</span><span class="p">(</span><span class="n">parsers</span><span class="o">.</span><span class="n">rename_file_parser</span><span class="p">)</span>
+</span><span id="GitBetter.do_rename_file-541"><a href="#GitBetter.do_rename_file-541"><span class="linenos">541</span></a>    <span class="k">def</span> <span class="nf">do_rename_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">):</span>
+</span><span id="GitBetter.do_rename_file-542"><a href="#GitBetter.do_rename_file-542"><span class="linenos">542</span></a>        <span class="sd">&quot;&quot;&quot;Renames a file.</span>
+</span><span id="GitBetter.do_rename_file-543"><a href="#GitBetter.do_rename_file-543"><span class="linenos">543</span></a><span class="sd">        After renaming the file, the renaming change is staged for commit.&quot;&quot;&quot;</span>
+</span><span id="GitBetter.do_rename_file-544"><a href="#GitBetter.do_rename_file-544"><span class="linenos">544</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">rename_file</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">file</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">new_name</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -4068,8 +4109,8 @@ After renaming the file, the renaming change is staged for commit.</p>
 
     </div>
     <a class="headerlink" href="#main"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="main-541"><a href="#main-541"><span class="linenos">541</span></a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-</span><span id="main-542"><a href="#main-542"><span class="linenos">542</span></a>    <span class="n">GitBetter</span><span class="p">()</span><span class="o">.</span><span class="n">cmdloop</span><span class="p">()</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="main-547"><a href="#main-547"><span class="linenos">547</span></a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span><span id="main-548"><a href="#main-548"><span class="linenos">548</span></a>    <span class="n">GitBetter</span><span class="p">()</span><span class="o">.</span><span class="n">cmdloop</span><span class="p">()</span>
 </span></pre></div>
 
 

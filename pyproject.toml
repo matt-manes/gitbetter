@@ -1,7 +1,7 @@
 [project]
 name = "gitbetter"
 description = "Custom git shell to type less and commit more."
-version = "3.4.0"
+version = "3.5.0"
 dependencies = ["argshell", "pathier", "morbin", "noiftimer"]
 readme = "README.md"
 keywords = ["git", "shell", "cli", "terminal", "commit"]
