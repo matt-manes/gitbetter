@@ -1,5 +1,12 @@
 # Changelog
 
+## v4.0.0 (2024-02-08)
+
+#### Refactorings
+
+* BREAKING update morbin version and separate github bindings into their own class
+
+
 ## v3.5.0 (2024-01-14)
 
 #### New Features
