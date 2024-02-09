@@ -5,7 +5,7 @@ from argshell import ArgShell, Namespace, with_parser
 from noiftimer import Timer
 from pathier import Pathier
 
-from gitbetter import Git, parsers
+from gitbetter import Git, GitHub, parsers
 
 
 class GitArgShell(ArgShell):
@@ -133,7 +133,7 @@ class GitBetter(GitArgShell):
         """Directly execute `git {args}`.
 
         i.e. You can still do everything directly invoking git can do."""
-        self.git.git(args)
+        self.git.run(args)
 
     # Seat
 
@@ -463,7 +463,7 @@ class GitBetter(GitArgShell):
         GitHub CLI must be installed and configured.
 
         May require you to reauthorize and rerun command."""
-        self.git.delete_remote()
+        GitHub().delete_remote()
 
     def do_dob(self, _: str):
         """Date of this repo's first commit."""
@@ -489,13 +489,13 @@ class GitBetter(GitArgShell):
         """Make the GitHub remote for this repo private.
 
         This repo must exist and GitHub CLI must be installed and configured."""
-        self.git.make_private()
+        GitHub().make_private()
 
     def do_make_public(self, _: str):
         """Make the GitHub remote for this repo public.
 
         This repo must exist and GitHub CLI must be installed and configured."""
-        self.git.make_public()
+        GitHub().make_public()
 
     def do_merge_to(self, branch: str):
         """Merge the current branch into the provided branch after switching to the provided branch.
@@ -512,7 +512,7 @@ class GitBetter(GitArgShell):
         """Create a remote GitHub repository for this repo.
 
         GitHub CLI must be installed and configured for this to work."""
-        self.git.create_remote_from_cwd(args.public)
+        GitHub().create_remote_from_cwd(args.public)
 
     def do_new_repo(self, _: str):
         """Create a new git repo in this directory."""
