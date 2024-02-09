@@ -367,7 +367,7 @@
 </span><span id="L-5"><a href="#L-5"><span class="linenos">  5</span></a><span class="kn">from</span> <span class="nn">noiftimer</span> <span class="kn">import</span> <span class="n">Timer</span>
 </span><span id="L-6"><a href="#L-6"><span class="linenos">  6</span></a><span class="kn">from</span> <span class="nn">pathier</span> <span class="kn">import</span> <span class="n">Pathier</span>
 </span><span id="L-7"><a href="#L-7"><span class="linenos">  7</span></a>
-</span><span id="L-8"><a href="#L-8"><span class="linenos">  8</span></a><span class="kn">from</span> <span class="nn">gitbetter</span> <span class="kn">import</span> <span class="n">Git</span><span class="p">,</span> <span class="n">parsers</span>
+</span><span id="L-8"><a href="#L-8"><span class="linenos">  8</span></a><span class="kn">from</span> <span class="nn">gitbetter</span> <span class="kn">import</span> <span class="n">Git</span><span class="p">,</span> <span class="n">GitHub</span><span class="p">,</span> <span class="n">parsers</span>
 </span><span id="L-9"><a href="#L-9"><span class="linenos">  9</span></a>
 </span><span id="L-10"><a href="#L-10"><span class="linenos"> 10</span></a>
 </span><span id="L-11"><a href="#L-11"><span class="linenos"> 11</span></a><span class="k">class</span> <span class="nc">GitArgShell</span><span class="p">(</span><span class="n">ArgShell</span><span class="p">):</span>
@@ -495,7 +495,7 @@
 </span><span id="L-133"><a href="#L-133"><span class="linenos">133</span></a>        <span class="sd">&quot;&quot;&quot;Directly execute `git {args}`.</span>
 </span><span id="L-134"><a href="#L-134"><span class="linenos">134</span></a>
 </span><span id="L-135"><a href="#L-135"><span class="linenos">135</span></a><span class="sd">        i.e. You can still do everything directly invoking git can do.&quot;&quot;&quot;</span>
-</span><span id="L-136"><a href="#L-136"><span class="linenos">136</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">git</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+</span><span id="L-136"><a href="#L-136"><span class="linenos">136</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
 </span><span id="L-137"><a href="#L-137"><span class="linenos">137</span></a>
 </span><span id="L-138"><a href="#L-138"><span class="linenos">138</span></a>    <span class="c1"># Seat</span>
 </span><span id="L-139"><a href="#L-139"><span class="linenos">139</span></a>
@@ -825,7 +825,7 @@
 </span><span id="L-463"><a href="#L-463"><span class="linenos">463</span></a><span class="sd">        GitHub CLI must be installed and configured.</span>
 </span><span id="L-464"><a href="#L-464"><span class="linenos">464</span></a>
 </span><span id="L-465"><a href="#L-465"><span class="linenos">465</span></a><span class="sd">        May require you to reauthorize and rerun command.&quot;&quot;&quot;</span>
-</span><span id="L-466"><a href="#L-466"><span class="linenos">466</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">delete_remote</span><span class="p">()</span>
+</span><span id="L-466"><a href="#L-466"><span class="linenos">466</span></a>        <span class="n">GitHub</span><span class="p">()</span><span class="o">.</span><span class="n">delete_remote</span><span class="p">()</span>
 </span><span id="L-467"><a href="#L-467"><span class="linenos">467</span></a>
 </span><span id="L-468"><a href="#L-468"><span class="linenos">468</span></a>    <span class="k">def</span> <span class="nf">do_dob</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 </span><span id="L-469"><a href="#L-469"><span class="linenos">469</span></a>        <span class="sd">&quot;&quot;&quot;Date of this repo&#39;s first commit.&quot;&quot;&quot;</span>
@@ -851,13 +851,13 @@
 </span><span id="L-489"><a href="#L-489"><span class="linenos">489</span></a>        <span class="sd">&quot;&quot;&quot;Make the GitHub remote for this repo private.</span>
 </span><span id="L-490"><a href="#L-490"><span class="linenos">490</span></a>
 </span><span id="L-491"><a href="#L-491"><span class="linenos">491</span></a><span class="sd">        This repo must exist and GitHub CLI must be installed and configured.&quot;&quot;&quot;</span>
-</span><span id="L-492"><a href="#L-492"><span class="linenos">492</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">make_private</span><span class="p">()</span>
+</span><span id="L-492"><a href="#L-492"><span class="linenos">492</span></a>        <span class="n">GitHub</span><span class="p">()</span><span class="o">.</span><span class="n">make_private</span><span class="p">()</span>
 </span><span id="L-493"><a href="#L-493"><span class="linenos">493</span></a>
 </span><span id="L-494"><a href="#L-494"><span class="linenos">494</span></a>    <span class="k">def</span> <span class="nf">do_make_public</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 </span><span id="L-495"><a href="#L-495"><span class="linenos">495</span></a>        <span class="sd">&quot;&quot;&quot;Make the GitHub remote for this repo public.</span>
 </span><span id="L-496"><a href="#L-496"><span class="linenos">496</span></a>
 </span><span id="L-497"><a href="#L-497"><span class="linenos">497</span></a><span class="sd">        This repo must exist and GitHub CLI must be installed and configured.&quot;&quot;&quot;</span>
-</span><span id="L-498"><a href="#L-498"><span class="linenos">498</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">make_public</span><span class="p">()</span>
+</span><span id="L-498"><a href="#L-498"><span class="linenos">498</span></a>        <span class="n">GitHub</span><span class="p">()</span><span class="o">.</span><span class="n">make_public</span><span class="p">()</span>
 </span><span id="L-499"><a href="#L-499"><span class="linenos">499</span></a>
 </span><span id="L-500"><a href="#L-500"><span class="linenos">500</span></a>    <span class="k">def</span> <span class="nf">do_merge_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 </span><span id="L-501"><a href="#L-501"><span class="linenos">501</span></a>        <span class="sd">&quot;&quot;&quot;Merge the current branch into the provided branch after switching to the provided branch.</span>
@@ -874,7 +874,7 @@
 </span><span id="L-512"><a href="#L-512"><span class="linenos">512</span></a>        <span class="sd">&quot;&quot;&quot;Create a remote GitHub repository for this repo.</span>
 </span><span id="L-513"><a href="#L-513"><span class="linenos">513</span></a>
 </span><span id="L-514"><a href="#L-514"><span class="linenos">514</span></a><span class="sd">        GitHub CLI must be installed and configured for this to work.&quot;&quot;&quot;</span>
-</span><span id="L-515"><a href="#L-515"><span class="linenos">515</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">create_remote_from_cwd</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">public</span><span class="p">)</span>
+</span><span id="L-515"><a href="#L-515"><span class="linenos">515</span></a>        <span class="n">GitHub</span><span class="p">()</span><span class="o">.</span><span class="n">create_remote_from_cwd</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">public</span><span class="p">)</span>
 </span><span id="L-516"><a href="#L-516"><span class="linenos">516</span></a>
 </span><span id="L-517"><a href="#L-517"><span class="linenos">517</span></a>    <span class="k">def</span> <span class="nf">do_new_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 </span><span id="L-518"><a href="#L-518"><span class="linenos">518</span></a>        <span class="sd">&quot;&quot;&quot;Create a new git repo in this directory.&quot;&quot;&quot;</span>
@@ -1119,6 +1119,7 @@ If using 'help cmd' and the cmd is decorated with a parser, the parser help will
             <div><dt>argshell.argshell.ArgShell</dt>
                                 <dd id="GitArgShell.do_quit" class="function">do_quit</dd>
                 <dd id="GitArgShell.do_sys" class="function">do_sys</dd>
+                <dd id="GitArgShell.do_reload" class="function">do_reload</dd>
                 <dd id="GitArgShell.cmdloop" class="function">cmdloop</dd>
                 <dd id="GitArgShell.emptyline" class="function">emptyline</dd>
 
@@ -1187,7 +1188,7 @@ If using 'help cmd' and the cmd is decorated with a parser, the parser help will
 </span><span id="GitBetter-134"><a href="#GitBetter-134"><span class="linenos">134</span></a>        <span class="sd">&quot;&quot;&quot;Directly execute `git {args}`.</span>
 </span><span id="GitBetter-135"><a href="#GitBetter-135"><span class="linenos">135</span></a>
 </span><span id="GitBetter-136"><a href="#GitBetter-136"><span class="linenos">136</span></a><span class="sd">        i.e. You can still do everything directly invoking git can do.&quot;&quot;&quot;</span>
-</span><span id="GitBetter-137"><a href="#GitBetter-137"><span class="linenos">137</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">git</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+</span><span id="GitBetter-137"><a href="#GitBetter-137"><span class="linenos">137</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
 </span><span id="GitBetter-138"><a href="#GitBetter-138"><span class="linenos">138</span></a>
 </span><span id="GitBetter-139"><a href="#GitBetter-139"><span class="linenos">139</span></a>    <span class="c1"># Seat</span>
 </span><span id="GitBetter-140"><a href="#GitBetter-140"><span class="linenos">140</span></a>
@@ -1517,7 +1518,7 @@ If using 'help cmd' and the cmd is decorated with a parser, the parser help will
 </span><span id="GitBetter-464"><a href="#GitBetter-464"><span class="linenos">464</span></a><span class="sd">        GitHub CLI must be installed and configured.</span>
 </span><span id="GitBetter-465"><a href="#GitBetter-465"><span class="linenos">465</span></a>
 </span><span id="GitBetter-466"><a href="#GitBetter-466"><span class="linenos">466</span></a><span class="sd">        May require you to reauthorize and rerun command.&quot;&quot;&quot;</span>
-</span><span id="GitBetter-467"><a href="#GitBetter-467"><span class="linenos">467</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">delete_remote</span><span class="p">()</span>
+</span><span id="GitBetter-467"><a href="#GitBetter-467"><span class="linenos">467</span></a>        <span class="n">GitHub</span><span class="p">()</span><span class="o">.</span><span class="n">delete_remote</span><span class="p">()</span>
 </span><span id="GitBetter-468"><a href="#GitBetter-468"><span class="linenos">468</span></a>
 </span><span id="GitBetter-469"><a href="#GitBetter-469"><span class="linenos">469</span></a>    <span class="k">def</span> <span class="nf">do_dob</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 </span><span id="GitBetter-470"><a href="#GitBetter-470"><span class="linenos">470</span></a>        <span class="sd">&quot;&quot;&quot;Date of this repo&#39;s first commit.&quot;&quot;&quot;</span>
@@ -1543,13 +1544,13 @@ If using 'help cmd' and the cmd is decorated with a parser, the parser help will
 </span><span id="GitBetter-490"><a href="#GitBetter-490"><span class="linenos">490</span></a>        <span class="sd">&quot;&quot;&quot;Make the GitHub remote for this repo private.</span>
 </span><span id="GitBetter-491"><a href="#GitBetter-491"><span class="linenos">491</span></a>
 </span><span id="GitBetter-492"><a href="#GitBetter-492"><span class="linenos">492</span></a><span class="sd">        This repo must exist and GitHub CLI must be installed and configured.&quot;&quot;&quot;</span>
-</span><span id="GitBetter-493"><a href="#GitBetter-493"><span class="linenos">493</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">make_private</span><span class="p">()</span>
+</span><span id="GitBetter-493"><a href="#GitBetter-493"><span class="linenos">493</span></a>        <span class="n">GitHub</span><span class="p">()</span><span class="o">.</span><span class="n">make_private</span><span class="p">()</span>
 </span><span id="GitBetter-494"><a href="#GitBetter-494"><span class="linenos">494</span></a>
 </span><span id="GitBetter-495"><a href="#GitBetter-495"><span class="linenos">495</span></a>    <span class="k">def</span> <span class="nf">do_make_public</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 </span><span id="GitBetter-496"><a href="#GitBetter-496"><span class="linenos">496</span></a>        <span class="sd">&quot;&quot;&quot;Make the GitHub remote for this repo public.</span>
 </span><span id="GitBetter-497"><a href="#GitBetter-497"><span class="linenos">497</span></a>
 </span><span id="GitBetter-498"><a href="#GitBetter-498"><span class="linenos">498</span></a><span class="sd">        This repo must exist and GitHub CLI must be installed and configured.&quot;&quot;&quot;</span>
-</span><span id="GitBetter-499"><a href="#GitBetter-499"><span class="linenos">499</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">make_public</span><span class="p">()</span>
+</span><span id="GitBetter-499"><a href="#GitBetter-499"><span class="linenos">499</span></a>        <span class="n">GitHub</span><span class="p">()</span><span class="o">.</span><span class="n">make_public</span><span class="p">()</span>
 </span><span id="GitBetter-500"><a href="#GitBetter-500"><span class="linenos">500</span></a>
 </span><span id="GitBetter-501"><a href="#GitBetter-501"><span class="linenos">501</span></a>    <span class="k">def</span> <span class="nf">do_merge_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">branch</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 </span><span id="GitBetter-502"><a href="#GitBetter-502"><span class="linenos">502</span></a>        <span class="sd">&quot;&quot;&quot;Merge the current branch into the provided branch after switching to the provided branch.</span>
@@ -1566,7 +1567,7 @@ If using 'help cmd' and the cmd is decorated with a parser, the parser help will
 </span><span id="GitBetter-513"><a href="#GitBetter-513"><span class="linenos">513</span></a>        <span class="sd">&quot;&quot;&quot;Create a remote GitHub repository for this repo.</span>
 </span><span id="GitBetter-514"><a href="#GitBetter-514"><span class="linenos">514</span></a>
 </span><span id="GitBetter-515"><a href="#GitBetter-515"><span class="linenos">515</span></a><span class="sd">        GitHub CLI must be installed and configured for this to work.&quot;&quot;&quot;</span>
-</span><span id="GitBetter-516"><a href="#GitBetter-516"><span class="linenos">516</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">create_remote_from_cwd</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">public</span><span class="p">)</span>
+</span><span id="GitBetter-516"><a href="#GitBetter-516"><span class="linenos">516</span></a>        <span class="n">GitHub</span><span class="p">()</span><span class="o">.</span><span class="n">create_remote_from_cwd</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">public</span><span class="p">)</span>
 </span><span id="GitBetter-517"><a href="#GitBetter-517"><span class="linenos">517</span></a>
 </span><span id="GitBetter-518"><a href="#GitBetter-518"><span class="linenos">518</span></a>    <span class="k">def</span> <span class="nf">do_new_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 </span><span id="GitBetter-519"><a href="#GitBetter-519"><span class="linenos">519</span></a>        <span class="sd">&quot;&quot;&quot;Create a new git repo in this directory.&quot;&quot;&quot;</span>
@@ -1726,7 +1727,7 @@ When off, an <code>unknown syntax</code> message will be printed and no commands
 </span><span id="GitBetter.do_git-134"><a href="#GitBetter.do_git-134"><span class="linenos">134</span></a>        <span class="sd">&quot;&quot;&quot;Directly execute `git {args}`.</span>
 </span><span id="GitBetter.do_git-135"><a href="#GitBetter.do_git-135"><span class="linenos">135</span></a>
 </span><span id="GitBetter.do_git-136"><a href="#GitBetter.do_git-136"><span class="linenos">136</span></a><span class="sd">        i.e. You can still do everything directly invoking git can do.&quot;&quot;&quot;</span>
-</span><span id="GitBetter.do_git-137"><a href="#GitBetter.do_git-137"><span class="linenos">137</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">git</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+</span><span id="GitBetter.do_git-137"><a href="#GitBetter.do_git-137"><span class="linenos">137</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -3693,7 +3694,7 @@ When off, an <code>unknown syntax</code> message will be printed and no commands
 </span><span id="GitBetter.do_delete_gh_repo-464"><a href="#GitBetter.do_delete_gh_repo-464"><span class="linenos">464</span></a><span class="sd">        GitHub CLI must be installed and configured.</span>
 </span><span id="GitBetter.do_delete_gh_repo-465"><a href="#GitBetter.do_delete_gh_repo-465"><span class="linenos">465</span></a>
 </span><span id="GitBetter.do_delete_gh_repo-466"><a href="#GitBetter.do_delete_gh_repo-466"><span class="linenos">466</span></a><span class="sd">        May require you to reauthorize and rerun command.&quot;&quot;&quot;</span>
-</span><span id="GitBetter.do_delete_gh_repo-467"><a href="#GitBetter.do_delete_gh_repo-467"><span class="linenos">467</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">delete_remote</span><span class="p">()</span>
+</span><span id="GitBetter.do_delete_gh_repo-467"><a href="#GitBetter.do_delete_gh_repo-467"><span class="linenos">467</span></a>        <span class="n">GitHub</span><span class="p">()</span><span class="o">.</span><span class="n">delete_remote</span><span class="p">()</span>
 </span></pre></div>
 
 
@@ -3817,7 +3818,7 @@ When off, an <code>unknown syntax</code> message will be printed and no commands
 </span><span id="GitBetter.do_make_private-490"><a href="#GitBetter.do_make_private-490"><span class="linenos">490</span></a>        <span class="sd">&quot;&quot;&quot;Make the GitHub remote for this repo private.</span>
 </span><span id="GitBetter.do_make_private-491"><a href="#GitBetter.do_make_private-491"><span class="linenos">491</span></a>
 </span><span id="GitBetter.do_make_private-492"><a href="#GitBetter.do_make_private-492"><span class="linenos">492</span></a><span class="sd">        This repo must exist and GitHub CLI must be installed and configured.&quot;&quot;&quot;</span>
-</span><span id="GitBetter.do_make_private-493"><a href="#GitBetter.do_make_private-493"><span class="linenos">493</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">make_private</span><span class="p">()</span>
+</span><span id="GitBetter.do_make_private-493"><a href="#GitBetter.do_make_private-493"><span class="linenos">493</span></a>        <span class="n">GitHub</span><span class="p">()</span><span class="o">.</span><span class="n">make_private</span><span class="p">()</span>
 </span></pre></div>
 
 
@@ -3843,7 +3844,7 @@ When off, an <code>unknown syntax</code> message will be printed and no commands
 </span><span id="GitBetter.do_make_public-496"><a href="#GitBetter.do_make_public-496"><span class="linenos">496</span></a>        <span class="sd">&quot;&quot;&quot;Make the GitHub remote for this repo public.</span>
 </span><span id="GitBetter.do_make_public-497"><a href="#GitBetter.do_make_public-497"><span class="linenos">497</span></a>
 </span><span id="GitBetter.do_make_public-498"><a href="#GitBetter.do_make_public-498"><span class="linenos">498</span></a><span class="sd">        This repo must exist and GitHub CLI must be installed and configured.&quot;&quot;&quot;</span>
-</span><span id="GitBetter.do_make_public-499"><a href="#GitBetter.do_make_public-499"><span class="linenos">499</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">make_public</span><span class="p">()</span>
+</span><span id="GitBetter.do_make_public-499"><a href="#GitBetter.do_make_public-499"><span class="linenos">499</span></a>        <span class="n">GitHub</span><span class="p">()</span><span class="o">.</span><span class="n">make_public</span><span class="p">()</span>
 </span></pre></div>
 
 
@@ -3919,7 +3920,7 @@ When off, an <code>unknown syntax</code> message will be printed and no commands
 </span><span id="GitBetter.do_new_gh_remote-513"><a href="#GitBetter.do_new_gh_remote-513"><span class="linenos">513</span></a>        <span class="sd">&quot;&quot;&quot;Create a remote GitHub repository for this repo.</span>
 </span><span id="GitBetter.do_new_gh_remote-514"><a href="#GitBetter.do_new_gh_remote-514"><span class="linenos">514</span></a>
 </span><span id="GitBetter.do_new_gh_remote-515"><a href="#GitBetter.do_new_gh_remote-515"><span class="linenos">515</span></a><span class="sd">        GitHub CLI must be installed and configured for this to work.&quot;&quot;&quot;</span>
-</span><span id="GitBetter.do_new_gh_remote-516"><a href="#GitBetter.do_new_gh_remote-516"><span class="linenos">516</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">create_remote_from_cwd</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">public</span><span class="p">)</span>
+</span><span id="GitBetter.do_new_gh_remote-516"><a href="#GitBetter.do_new_gh_remote-516"><span class="linenos">516</span></a>        <span class="n">GitHub</span><span class="p">()</span><span class="o">.</span><span class="n">create_remote_from_cwd</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">public</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -4091,6 +4092,7 @@ After renaming the file, the renaming change is staged for commit.</p>
             <div><dt>argshell.argshell.ArgShell</dt>
                                 <dd id="GitBetter.do_quit" class="function">do_quit</dd>
                 <dd id="GitBetter.do_sys" class="function">do_sys</dd>
+                <dd id="GitBetter.do_reload" class="function">do_reload</dd>
                 <dd id="GitBetter.cmdloop" class="function">cmdloop</dd>
                 <dd id="GitBetter.emptyline" class="function">emptyline</dd>
 
