@@ -12,7 +12,7 @@ class GitArgShell(ArgShell):
     git_header = "Built in Git commands (type '{command} -h' or '{command} --help'):"
     convenience_header = "Convenience commands (type 'help {command}'):"
 
-    def do_help(self, arg):
+    def do_help(self, arg: str):
         """List available commands with "help" or detailed help with "help cmd".
         If using 'help cmd' and the cmd is decorated with a parser, the parser help will also be printed.
         """
@@ -43,9 +43,9 @@ class GitArgShell(ArgShell):
             func()
         else:
             names = self.get_names()
-            cmds_doc = []
-            cmds_undoc = []
-            topics = set()
+            cmds_doc: list[str] = []
+            cmds_undoc: list[str] = []
+            topics: set[str] = set()
             for name in names:
                 if name[:5] == "help_":
                     topics.add(name[5:])
@@ -68,8 +68,8 @@ class GitArgShell(ArgShell):
             # |========================Modification Start========================|
             content = Pathier(__file__).read_text()
             convenience_index = content.rfind("=Convenience=")
-            git_commands = []
-            convenience_commands = []
+            git_commands: list[str] = []
+            convenience_commands: list[str] = []
             for cmd in cmds_doc:
                 if content.find(f"do_{cmd}") < convenience_index:
                     git_commands.append(cmd)
