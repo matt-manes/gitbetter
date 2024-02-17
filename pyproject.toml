@@ -1,7 +1,7 @@
 [project]
 name = "gitbetter"
 description = "Custom git shell to type less and commit more."
-version = "4.0.0"
+version = "4.0.1"
 dependencies = ["argshell", "pathier", "morbin", "noiftimer"]
 readme = "README.md"
 keywords = ["git", "shell", "cli", "terminal", "commit"]
@@ -26,7 +26,7 @@ addopts = ["--import-mode=importlib"]
 pythonpath = "src"
 
 [tool.hatch.build.targets.sdist]
-exclude = [".coverage", ".pytest_cache", ".vscode", "tests", "htmlcov","docs","*.md"]
+exclude = [".coverage", ".pytest_cache", ".vscode", "tests", "htmlcov", "docs", "*.md"]
 
 [build-system]
 requires = ["hatchling"]
